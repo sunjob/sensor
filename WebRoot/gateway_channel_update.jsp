@@ -43,7 +43,7 @@ function checkform(){
 	<td width="25%" height="25" align="right"><strong><font color="#333333">*数据通道</font></strong></td>
 	<td width="75%" align="left">
 	  <label>
-		<s:textfield cssClass="ck" id="channel" name="channel" cssStyle="width:80%"></s:textfield>
+		<s:textfield cssClass="ck" id="channel" name="channel" cssStyle="width:80%"></s:textfield> 
 	  </label></td>
 </tr>
 
