@@ -1,0 +1,29 @@
+/* CSS Document */
+
+.pfline{
+	width: auto;
+	border-top-width: 0px;
+	border-right-width: 1px;
+	border-bottom-width: 1px;
+	border-left-width: 1px;
+	border-top-style: none;
+	border-right-style: dotted;
+	border-bottom-style: dotted;
+	border-left-style: dotted;
+	border-top-color: #999;
+	border-right-color: #999;
+	border-bottom-color: #999;
+	border-left-color: #999;
+	height: auto;
+	padding-top: 3px;
+	padding-left: 15px;
+	
+}
+.pfbox{
+	height: 50px;
+	padding-top: 8px;
+	border-top-width: 1px;
+	border-top-style: dotted;
+	border-top-color: #CCCCCC;
+	padding-bottom: 10px;
+}

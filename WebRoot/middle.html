@@ -1,0 +1,38 @@
+<HTML>
+<HEAD>
+<TITLE>框架显示/隐藏</TITLE>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+<style>
+.navPoint {
+ COLOR: white; CURSOR: hand; FONT-FAMILY: Webdings; FONT-SIZE: 9pt
+}
+</style>
+<SCRIPT type="text/javascript">
+function switchSysBar(){
+  
+
+ if (switchPoint.innerText==3){
+  switchPoint.innerText=4;
+  parent.document.getElementById("pageframe").cols="0,10,*";
+ }
+ else{
+  switchPoint.innerText=3;
+  parent.document.getElementById("pageframe").cols="187,10,*";
+ }
+}
+</SCRIPT>
+</HEAD>
+<BODY bgColor=skyblue scroll=no style="MARGIN: 0px">
+          <TABLE border=0 cellPadding=0 cellSpacing=0 height="100%">
+            <TBODY>
+              <TR> 
+                <TD onclick=switchSysBar() style="HEIGHT: 100%">
+                  <SPAN class=navPoint 
+              id=switchPoint title=关闭/打开左栏>3</SPAN>
+                </TD>
+              </TR>
+            </TBODY>
+          </TABLE>
+</BODY>
+</HTML>

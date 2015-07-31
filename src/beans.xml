@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:cxf="http://cxf.apache.org/core"
+	xmlns:jaxws="http://cxf.apache.org/jaxws" 
+	xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-2.5.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+           http://www.springframework.org/schema/tx 
+           http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+           http://cxf.apache.org/core
+		   http://cxf.apache.org/schemas/core.xsd
+		   http://cxf.apache.org/jaxws 
+		   http://cxf.apache.org/schemas/jaxws.xsd
+		   http://cxf.apache.org/jaxrs
+		   http://cxf.apache.org/schemas/jaxrs.xsd
+           ">
+	<context:annotation-config />
+	<context:component-scan base-package="com.jlj" />
+	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+
+	<bean
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<value>classpath:jdbc.properties</value>
+		</property>
+	</bean>
+	
+	<bean id="dataSource" destroy-method="close"
+		class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName"
+			value="${jdbc.driverClassName}" />
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+		<property name="maxWait" value="${jdbc.maxWait}" />
+        <property name="initialSize" value="${jdbc.initialSize}" />
+        <property name="maxActive" value="${jdbc.maxActive}" />
+        <property name="maxIdle" value="${jdbc.maxIdle}" />
+		<property name="minEvictableIdleTimeMillis" value="${jdbc.minEvictableIdleTimeMillis}"/> 
+		<property name="validationQuery" value="${jdbc.validationQuery}" />
+		<property name="testWhileIdle" value="${jdbc.testWhileIdle}" />
+		<property name="timeBetweenEvictionRunsMillis" value="${jdbc.timeBetweenEvictionRunsMillis}" />
+		<property name="numTestsPerEvictionRun" value="${jdbc.numTestsPerEvictionRun}" />
+		<property name="removeAbandoned" value="${jdbc.removeAbandoned}" />
+        <property name="removeAbandonedTimeout" value="${jdbc.removeAbandonedTimeout}" />
+		
+	</bean>
+	
+	
+
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		 <property name="packagesToScan">
+			<list>
+				<value>com.jlj.model</value>
+				
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">
+					org.hibernate.dialect.MySQLDialect
+				</prop>
+				<prop key="hibernate.show_sql">false</prop>
+				<prop key="hibernate.format_sql">false</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<bean id="hibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+
+	<bean id="txManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<aop:config>
+		<aop:pointcut id="bussinessService"
+			expression="execution(public * com.jlj.service.*.*(..))" />
+		<aop:advisor pointcut-ref="bussinessService"
+			advice-ref="txAdvice" />
+	</aop:config>
+
+	<tx:advice id="txAdvice" transaction-manager="txManager">
+		<tx:attributes>
+			<tx:method name="exists" read-only="true" />
+			<tx:method name="add*" propagation="REQUIRED"/>
+			<tx:method name="update*" propagation="REQUIRED"/>
+			<tx:method name="delete*" propagation="REQUIRED"/>
+			<tx:method name="process*" propagation="REQUIRED"/>
+		</tx:attributes>
+	</tx:advice>
+	
+	 	<!-- webservice -->
+	<import resource="classpath:META-INF/cxf/cxf.xml"/>
+	<import resource="classpath:META-INF/cxf/cxf-extension-soap.xml"/>
+	<import resource="classpath:META-INF/cxf/cxf-servlet.xml"/>
+	
+	<bean id="userservice" class="com.jlj.service.imp.UserServiceImp"/>
+	<bean id="sysconfservice" class="com.jlj.service.imp.SysconfServiceImp"/>
+	<!-- 这里的地址很重要，客户端需要通过这个地址来访问WebService -->
+	<jaxrs:server id="restServiceContainer" address="/rest">
+	    <jaxrs:serviceBeans>
+	        <ref bean="userservice"/>
+	        <ref bean="sysconfservice"/>
+	    </jaxrs:serviceBeans>
+	    <jaxrs:extensionMappings>
+	        <entry key="json" value="application/json" />
+	        <entry key="xml" value="application/xml" />
+	    </jaxrs:extensionMappings>
+	    <jaxrs:languageMappings>
+	           <entry key="en" value="en-gb"/>  
+	    </jaxrs:languageMappings>
+	</jaxrs:server>
+	
+	<!-- mina -->
+	<!-- 构造属性编辑器 -->
+    <bean class="org.springframework.beans.factory.config.CustomEditorConfigurer">
+	    <property name="customEditors">
+	      <map>
+	        <entry key="java.net.SocketAddress">
+	          <bean class="org.apache.mina.integration.beans.InetSocketAddressEditor" />
+	        </entry>
+	      </map>
+	    </property>
+	</bean>
+  <!-- The IoHandler implementation -->
+  <bean id="chatHandler" class="mina.TimeServerHandler" />
+  <!-- the IoFilters -->
+	<bean id="codecFilter"  
+		   class="org.apache.mina.filter.codec.ProtocolCodecFilter"> 
+		   <constructor-arg>  
+<!--		    <bean   class="org.apache.mina.filter.codec.textline.TextLineCodecFactory" />  -->
+					<bean class="mina.MyBytesCodecFactory" /> 
+	   	</constructor-arg>  
+	</bean> 
+	<bean id="loggingFilter"  class="org.apache.mina.filter.logging.LoggingFilter" />  
+
+<!--	  filterChainBuilder  -->
+  <bean id="filterChainBuilder"  
+		   class="org.apache.mina.core.filterchain.DefaultIoFilterChainBuilder">  
+			   <property name="filters">  
+			    <map>  
+			     <entry key="codecFilter" value-ref="codecFilter" />  
+			     <entry key="loggingFilter" value-ref="loggingFilter" />  
+			    </map>  
+		  	 </property>  
+	</bean>
+	
+	<!-- session config 通过工厂方法注入 -->
+    <bean id="sessionConfig" factory-bean="ioAcceptor" factory-method="getSessionConfig" >
+        <property name="readerIdleTime" value="180"/>
+        <property name="minReadBufferSize" value="1024"/>
+        <property name="maxReadBufferSize" value="11240"/>
+    </bean>
+<!--ioAcceptor	-->
+	 <bean id="ioAcceptor" class="org.apache.mina.transport.socket.nio.NioSocketAcceptor" init-method="bind" destroy-method="unbind">
+	    <property name="defaultLocalAddress" value=":60000" />
+	    <property name="handler" ref="chatHandler" />
+	    <property name="reuseAddress" value="true" />
+	    <property name="filterChainBuilder" ref="filterChainBuilder" /> 
+	  </bean>
+</beans>
