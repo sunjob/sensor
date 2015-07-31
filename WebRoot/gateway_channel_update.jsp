@@ -40,7 +40,7 @@ function checkform(){
 </tr>
 
 <tr align="center" bgcolor="#FFFFFF" onMouseMove="javascript:this.bgColor='#FCFDEE';" onMouseOut="javascript:this.bgColor='#FFFFFF';" height="25" >
-	<td width="25%" height="25" align="right"><strong><font color="#333333">*无线数据通道</font></strong></td>
+	<td width="25%" height="25" align="right"><strong><font color="#333333">*数据通道</font></strong></td>
 	<td width="75%" align="left">
 	  <label>
 		<s:textfield cssClass="ck" id="channel" name="channel" cssStyle="width:80%"></s:textfield>
