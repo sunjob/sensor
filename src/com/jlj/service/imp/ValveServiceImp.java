@@ -281,6 +281,14 @@ public class ValveServiceImp implements IValveService {
 		Object[] values = new Object[] { gatewayid,valveaddress };
 		return valveDao.queryByNamedParam(queryString, paramNames, values);
 	}
+	//根据网关id、开关位置号以及外设地址来查询出该外设对象，并修改其控制值以及控制状态
+	public void updateStatusByConditionAndGatewayid(int controlvalue,
+			int status, int valveaddress, int locatenumber, int gatewayid) {
+		String queryString = "update Valve mo set mo.controlvalue=:controlvalue,mo.status=:status where mo.valveaddress=:valveaddress and mo.locatenumber=:locatenumber and mo.gateway.id=:gatewayid ";
+		String[] paramNames = new String[] {"controlvalue", "status", "valveaddress", "locatenumber", "gatewayid" };
+		Object[] values = new Object[] {controlvalue, status, valveaddress, locatenumber, gatewayid};
+		valveDao.updateByHql(queryString, paramNames, values);
+	}
 	
 	
 	

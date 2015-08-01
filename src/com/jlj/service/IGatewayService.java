@@ -58,4 +58,6 @@ public interface IGatewayService {
 
 	public abstract Gateway getGatewayByIp(String sessionIP1);
 
+	public abstract void updateChannelById(int channel, int gatewayid);
+
 }

@@ -318,6 +318,15 @@ public class SensorServiceImp implements ISensorService {
 		Object[] values = new Object[] { projectid };
 		return sensorDao.queryList(queryString, paramNames, values);
 	}
+	//根据网关id和传感器节点地址修改该传感器的采样间隔
+	public void updateIntervaltimeByGatewayIdAndSensoraddress(int intervaltime,int gatewayid,
+			int sensoraddress) {
+		String queryString = "update Sensor mo set mo.intervaltime=:intervaltime where mo.gateway.id=:gatewayid and mo.sensoraddress=:sensoraddress";
+		String[] paramNames = new String[] {"intervaltime","gatewayid", "sensoraddress" };
+		Object[] values = new Object[] { intervaltime,gatewayid,sensoraddress};
+		sensorDao.updateByHql(queryString, paramNames, values);
+		
+	}
 	
 	
 }

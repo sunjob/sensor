@@ -55,4 +55,7 @@ public interface IValveService {
 	public abstract Valve getValveByGatewayIdAndValveaddress(int gatewayid,
 			int valveaddress);
 
+	public abstract void updateStatusByConditionAndGatewayid(int controlvalue,
+			int status, int valveaddress, int locatenumber, int gatewayid);
+
 }

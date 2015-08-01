@@ -777,7 +777,7 @@ public class TimeServerHandler  implements IoHandler {
 				
 				System.out.println("[信道配置]========================================成功");
 				
-				int gateaddress = data[0];
+				int gateaddress = data[0];//网关地址
 				Receivelog receivelog= new Receivelog();
 				receivelog.setLoginfo("网关[地址："+gateaddress+"]信道配置成功");
 				receivelog.setNowtime(new Date());
@@ -785,12 +785,15 @@ public class TimeServerHandler  implements IoHandler {
 				Gateway gateway1= gatewayService.getGatewayByIp(sessionIP1);
 				receivelog.setProject(gateway1.getLine().getProject());
 				receivelogService.add(receivelog);
-				//修改网关的信道
+				//修改网关的信道----------
+				int channel = data[3];//无线数据通道
+				gatewayService.updateChannelById(channel,gateway1.getId());
+				
 				
 			}else if(data[1] == 0x44){
 				System.out.println("[节点配置]========================================成功");
 				
-				int gateaddress = data[0];
+				int gateaddress = data[0];//网关地址
 				Receivelog receivelog= new Receivelog();
 				receivelog.setLoginfo("网关[地址："+gateaddress+"]节点配置成功");
 				receivelog.setNowtime(new Date());
@@ -799,11 +802,14 @@ public class TimeServerHandler  implements IoHandler {
 				receivelog.setProject(gateway1.getLine().getProject());
 				receivelogService.add(receivelog);
 				//修改网关的下属传感器的采样间隔
+				int sensoraddress = data[3];//节点地址
+				int intervaltime = ((data[4]&0xff)<<8)+(data[5]&0xff);//采样间隔
+				sensorService.updateIntervaltimeByGatewayIdAndSensoraddress(intervaltime,gateway1.getId(),sensoraddress);
 				
 			}else if(data[1] == 0x45){
 				System.out.println("[外设控制]========================================成功");
 				
-				int gateaddress = data[0];
+				int gateaddress = data[0];//网关地址
 				Receivelog receivelog= new Receivelog();
 				receivelog.setLoginfo("网关[地址："+gateaddress+"]外设控制成功");
 				receivelog.setNowtime(new Date());
@@ -812,6 +818,16 @@ public class TimeServerHandler  implements IoHandler {
 				receivelog.setProject(gateway1.getLine().getProject());
 				receivelogService.add(receivelog);
 				//修改网关的下属传感器的状态
+				int valveaddress = data[3];//外设地址
+				int locatenumber = data[4];//外设控制位置号
+				int controlvalue = data[5];//控制值
+				int status = 0;//状态：0-关闭状态；1-开启状态
+				if(controlvalue==0){
+					status = 0;
+				}else{
+					status = 1;
+				}
+				valveService.updateStatusByConditionAndGatewayid(controlvalue,status,valveaddress,locatenumber,gateway1.getId());
 				
 			}else if(data[1]== 0x46){
 				//(设备地址   功能代码   数据长度，外设地址，数值类型，4个字节的浮点数    校验码)

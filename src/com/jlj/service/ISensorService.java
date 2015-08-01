@@ -63,4 +63,7 @@ public interface ISensorService {
 	public abstract List<Sensor> getSensorsByLinetext(int projectid,
 			String linetext);
 
+	public abstract void updateIntervaltimeByGatewayIdAndSensoraddress(
+			int intervaltime,int gatewayid, int sensoraddress);
+
 }

@@ -281,6 +281,13 @@ public class GatewayServiceImp implements IGatewayService{
 		Object[] values = new Object[] { sessionIP1 };
 		return gatewayDao.queryByNamedParam(queryString, paramNames, values);
 	}
+	//修改该网关的无线通信数据
+	public void updateChannelById(int channel, int gatewayid) {
+		String queryString = "update Gateway mo set mo.channel=:channel where mo.id=:gatewayid";
+		String[] paramNames = new String[] { "channel","gatewayid" };
+		Object[] values = new Object[] { channel,gatewayid };
+		gatewayDao.updateByHql(queryString, paramNames, values);
+	}
 	
 	
 }
