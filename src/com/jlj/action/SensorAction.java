@@ -197,7 +197,7 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 //		int intervaltime = 0;
 //		String gatewayIP ="";
 //		
-//		gateway = gatewayService.getGatewayById(sensor.getGateway().getId());
+		gateway = gatewayService.getGatewayById(sensor.getGateway().getId());
 //		if(gateway.getGateaddress()!=null)
 //		{
 //			 gateaddress = gateway.getGateaddress();//网关地址（即协议文件中的设备地址:0xXX）
@@ -458,7 +458,7 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 	 */
 	private int sensorid;
 	private int intervaltime;//2个字节的采样间隔,范围5~1440
-	public String sendchannel(){
+	public String sendinterval(){
 		//判断session会话是否用户是否失效
 		User usero=(User)session.get("user");
 		if(usero==null){
@@ -466,8 +466,8 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 		}
 		//根据参数查询出该传感器对象和网关对象
 		sensor = sensorService.loadById(sensorid);
-//		gateway = gatewayService.getGatewayById(sensor.getGateway().getId());
-		gateway = sensor.getGateway();
+		gateway = gatewayService.getGatewayById(sensor.getGateway().getId());
+//		gateway = sensor.getGateway();
 		
 		
 		//获取当前IoSession

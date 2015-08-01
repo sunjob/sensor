@@ -72,7 +72,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   	<td width="8%" align="center">经度</td>
   	<td width="8%" align="center">纬度</td>
   	<td width="7%" align="center">位置描述</td>
-  	<td width="8%" align="center">街景图片</td>
+  	<td width="5%" align="center">街景图片</td>
 	<td width="5%" align="center">修改</td>
 	<td width="5%" align="center">采样间隔</td>
 	<td width="5%" align="center">删除</td>
