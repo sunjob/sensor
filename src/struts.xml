@@ -140,6 +140,7 @@
 			<result name="list">/sensor_manage.jsp</result>
 			<result name="add">/sensor_add.jsp</result>
 			<result name="load">/sensor_update.jsp</result>
+			<result name="loadsendinterval">/sensor_update_interval.jsp</result>
 			<result name="view">/sensor_view.jsp</result>
 			<result name="streetpic">/sensor_streetpic.jsp</result>
 			

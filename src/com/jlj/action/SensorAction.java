@@ -191,63 +191,63 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 		if(user==null){
 			return "opsessiongo";
 		}
-		System.out.println(isDataUpdated);
-		int gateaddress = 0;
-		int sensoraddress = 0;
-		int intervaltime = 0;
-		String gatewayIP ="";
-		
-		gateway = gatewayService.getGatewayById(sensor.getGateway().getId());
-		if(gateway.getGateaddress()!=null)
-		{
-			 gateaddress = gateway.getGateaddress();//网关地址（即协议文件中的设备地址:0xXX）
-		}
-		if(sensor.getSensoraddress()!=null)
-		{
-			 sensoraddress = sensor.getSensoraddress();//传感器地址：1~255
-		}
-		if(sensor.getIntervaltime()!=null)
-		{
-			 intervaltime = sensor.getIntervaltime();//2个字节的采样间隔,范围5~1440
-		}
-		
-		if(gateway!=null)
-		{
-			gatewayIP = gateway.getIp();//最新的网关表中的ip地址
-		}
-		//1-判断采样间隔是否被改变，若已修改发送节点配置命令(即传感器配置命令)-for LQ-----------------
-		if(isDataUpdated==1){
-			//true：已确认数据被修改,发送命令-for SL-----------------
-			//（设备地址0xXX:gateaddress  功能代码0x44  数据长度0x03,传感器地址0xXX:sensoraddress范围1~255,2个字节的采样间隔范围如0x00,0x05：intervaltime范围5~1440  CRC16:2个字节）
-			//0xXX 0x44 0x03,0xXX,0x00,0x05 0xXX 0xXX
-			/*
-			SL代码
-			
-			*/
-			byte send_byte[] = new byte[6];
-			send_byte[0] = (byte) gateaddress;
-			send_byte[1] = 0x44;
-			send_byte[2] = 0x03;
-			send_byte[3] = (byte) sensoraddress;
-			send_byte[4] = (byte) (intervaltime&0xff);
-			send_byte[5] = (byte) (intervaltime>>8);
-			
-			byte send_byte_final[] = CRC_16.getSendBuf(DataConvertor.toHexString(send_byte));
-			
-			for (int i = 0; i < send_byte_final.length; i++) {
-				System.out.println("sensor action send_byte_final["+i+"] is "+send_byte_final[i]);
-			}
-			
-			//发送命令
-			String uid = gateway.getMacaddress();
-			if(uid!=null&&!uid.equals("")){
-				IoSession currentSession = this.getCurrrenIoSession(uid);
-				if(currentSession!=null){
-					currentSession.write(send_byte_final);
-				}
-			}
-			
-		}
+//		System.out.println(isDataUpdated);
+//		int gateaddress = 0;
+//		int sensoraddress = 0;
+//		int intervaltime = 0;
+//		String gatewayIP ="";
+//		
+//		gateway = gatewayService.getGatewayById(sensor.getGateway().getId());
+//		if(gateway.getGateaddress()!=null)
+//		{
+//			 gateaddress = gateway.getGateaddress();//网关地址（即协议文件中的设备地址:0xXX）
+//		}
+//		if(sensor.getSensoraddress()!=null)
+//		{
+//			 sensoraddress = sensor.getSensoraddress();//传感器地址：1~255
+//		}
+//		if(sensor.getIntervaltime()!=null)
+//		{
+//			 intervaltime = sensor.getIntervaltime();//2个字节的采样间隔,范围5~1440
+//		}
+//		
+//		if(gateway!=null)
+//		{
+//			gatewayIP = gateway.getIp();//最新的网关表中的ip地址
+//		}
+//		//1-判断采样间隔是否被改变，若已修改发送节点配置命令(即传感器配置命令)-for LQ-----------------
+//		if(isDataUpdated==1){
+//			//true：已确认数据被修改,发送命令-for SL-----------------
+//			//（设备地址0xXX:gateaddress  功能代码0x44  数据长度0x03,传感器地址0xXX:sensoraddress范围1~255,2个字节的采样间隔范围如0x00,0x05：intervaltime范围5~1440  CRC16:2个字节）
+//			//0xXX 0x44 0x03,0xXX,0x00,0x05 0xXX 0xXX
+//			/*
+//			SL代码
+//			
+//			*/
+//			byte send_byte[] = new byte[6];
+//			send_byte[0] = (byte) gateaddress;
+//			send_byte[1] = 0x44;
+//			send_byte[2] = 0x03;
+//			send_byte[3] = (byte) sensoraddress;
+//			send_byte[4] = (byte) (intervaltime&0xff);
+//			send_byte[5] = (byte) (intervaltime>>8);
+//			
+//			byte send_byte_final[] = CRC_16.getSendBuf(DataConvertor.toHexString(send_byte));
+//			
+//			for (int i = 0; i < send_byte_final.length; i++) {
+//				System.out.println("sensor action send_byte_final["+i+"] is "+send_byte_final[i]);
+//			}
+//			
+//			//发送命令
+//			String uid = gateway.getMacaddress();
+//			if(uid!=null&&!uid.equals("")){
+//				IoSession currentSession = this.getCurrrenIoSession(uid);
+//				if(currentSession!=null){
+//					currentSession.write(send_byte_final);
+//				}
+//			}
+//			
+//		}
 		
 		if(picture!=null){
 			String imageName=DateTimeKit.getDateRandom()+pictureFileName.substring(pictureFileName.indexOf("."));
@@ -448,6 +448,98 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 			}
 		}
 		return NONE;
+	}
+	
+	
+	
+	/**
+	 * 发送采样间隔命令
+	 * @return
+	 */
+	private int sensorid;
+	private int intervaltime;//2个字节的采样间隔,范围5~1440
+	public String sendchannel(){
+		//判断session会话是否用户是否失效
+		User usero=(User)session.get("user");
+		if(usero==null){
+			return "opsessiongo";
+		}
+		//根据参数查询出该传感器对象和网关对象
+		sensor = sensorService.loadById(sensorid);
+//		gateway = gatewayService.getGatewayById(sensor.getGateway().getId());
+		gateway = sensor.getGateway();
+		
+		
+		//获取当前IoSession
+		IoSession currentSession=null;
+		if(sensor!=null){
+			String uid = gateway.getMacaddress();
+			currentSession = this.getCurrrenIoSession(uid);
+		}else{
+			request.put("errorInfo", "发送命令失败，未查询到该网关！");
+			return "operror";
+		}
+		//如果当前IoSession是否为空
+		if(currentSession!=null){
+			int gateaddress = 0;//网关地址（即协议文件中的设备地址0xXX）
+			int sensoraddress = 0;//传感器地址：1~255
+			if(gateway.getGateaddress()==null||gateway.getGateaddress()==0)
+			{
+				request.put("errorInfo", "发送命令失败，网关地址未配置！");
+				return "operror";
+			}else{
+				gateaddress = gateway.getGateaddress();//网关地址（即协议文件中的设备地址0xXX）
+			}
+			if(sensor.getSensoraddress()==null||sensor.getSensoraddress()==0)
+			{
+				request.put("errorInfo", "发送命令失败，网关地址未配置！");
+				return "operror";
+			}else{
+				sensoraddress = sensor.getSensoraddress();
+			}
+			//true：已确认数据被修改,发送命令-for SL-----------------
+			//（设备地址0xXX:gateaddress  功能代码0x44  数据长度0x03,传感器地址0xXX:sensoraddress范围1~255,2个字节的采样间隔范围如0x00,0x05：intervaltime范围5~1440  CRC16:2个字节）
+			//0xXX 0x44 0x03,0xXX,0x00,0x05 0xXX 0xXX
+			/*
+			SL代码
+			
+			*/
+			byte send_byte[] = new byte[6];
+			send_byte[0] = (byte) gateaddress;
+			send_byte[1] = 0x44;
+			send_byte[2] = 0x03;
+			send_byte[3] = (byte) sensoraddress;
+			send_byte[4] = (byte) (intervaltime&0xff);
+			send_byte[5] = (byte) (intervaltime>>8);
+			
+			byte send_byte_final[] = CRC_16.getSendBuf(DataConvertor.toHexString(send_byte));
+			
+			for (int i = 0; i < send_byte_final.length; i++) {
+				System.out.println("sensor action send_byte_final["+i+"] is "+send_byte_final[i]);
+			}
+			
+			//发送命令
+			currentSession.write(send_byte_final);
+			
+				
+			request.put("errorInfo", "命令已发送！点这里查看-<a href='receivelogAction!list?projectid="+usero.getProject().getId()+"' target='rightFrame'>应答数据</a>-");
+			return "operror";
+		}else{
+			request.put("errorInfo", "发送命令失败，请检查当前网关是否断开！");
+			return "operror";
+		}
+	}
+	/**
+	 * 跳转到发送采样间隔配置命令的界面
+	 * @return
+	 */
+	public String loadsendinterval(){
+		User usero=(User)session.get("user");
+		if(usero==null){
+			return "opsessiongo";
+		}
+		sensor=sensorService.loadById(id);//当前修改用户的id
+		return "loadsendinterval";
 	}
 	//get、set-------------------------------------------
 	// 获得HttpServletResponse对象
@@ -659,6 +751,18 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 	}
 	public void setAddresslists(List<Addresslist> addresslists) {
 		this.addresslists = addresslists;
+	}
+	public int getSensorid() {
+		return sensorid;
+	}
+	public void setSensorid(int sensorid) {
+		this.sensorid = sensorid;
+	}
+	public int getIntervaltime() {
+		return intervaltime;
+	}
+	public void setIntervaltime(int intervaltime) {
+		this.intervaltime = intervaltime;
 	}
 	
 }

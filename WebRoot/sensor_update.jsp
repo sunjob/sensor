@@ -107,6 +107,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	</s:else>
 	
 	<s:hidden name="sensor.status"></s:hidden>
+	<s:hidden name="sensor.intervaltime"></s:hidden>
 	<s:hidden name="sensor.iscanalarm"></s:hidden>
 	<s:hidden name="sensor.iscanalarm2"></s:hidden>
 	<s:hidden id="isDataUpdated" name="isDataUpdated"></s:hidden>
@@ -352,7 +353,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<s:textfield cssClass="ck" id="normalbmtemp"   name="sensor.normalbmtemp" style="width:40%"></s:textfield>
 	  </label></td>
 </tr>
- -->
+
 <tr align="center" bgcolor="#FFFFFF" onMouseMove="javascript:this.bgColor='#FCFDEE';" onMouseOut="javascript:this.bgColor='#FFFFFF';" height="30" >
 	<td width="25%" height="25" align="right"><strong><font color="#333333">采样间隔</font></strong></td>
 	<td width="75%" align="left">
@@ -360,7 +361,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<s:textfield cssClass="ck" id="intervaltime" name="sensor.intervaltime" cssStyle="width:40%" onblur="setDataUpdated()"></s:textfield>
 	  </label></td>
 </tr>
-
+ -->
 </table>
 
 <table width="98%" border="0" cellspacing="0" cellpadding="0" align="center">

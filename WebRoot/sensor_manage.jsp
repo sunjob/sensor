@@ -22,7 +22,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 <table width="98%" border="0" cellpadding="2" cellspacing="1" bgcolor="#D1DDAA" align="center" style="margin-top:8px">
 <tr bgcolor="#E7E7E7">
-	<td height="33" colspan="13" align="center">&nbsp;<b>传感器管理</b>&nbsp;
+	<td height="33" colspan="14" align="center">&nbsp;<b>传感器管理</b>&nbsp;
     <!--
 <input type="hidden" name="publicaccount" value="" id="publicaccount"/>
   -->
@@ -30,7 +30,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	</td>
 </tr>
 <tr bgcolor="#E7E7E7">
-  <td height="33" colspan="13" bgcolor="#FFFFE5"><table width="60%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <td height="33" colspan="14" bgcolor="#FFFFE5"><table width="60%" border="0" align="center" cellpadding="0" cellspacing="0">
     <tr>
         <td width="15%" align="right" style="padding-right: 50px;">
           <!--
@@ -74,10 +74,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   	<td width="7%" align="center">位置描述</td>
   	<td width="8%" align="center">街景图片</td>
 	<td width="5%" align="center">修改</td>
+	<td width="5%" align="center">采样间隔</td>
 	<td width="5%" align="center">删除</td>
 </tr>
 <s:if test="%{sensors.size()==0}">
-				<td colspan="13" align="center">
+				<td colspan="14" align="center">
 					暂无该信息
 				</td>
 			</s:if>
@@ -123,6 +124,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		</s:else>
 		</td>
 		<td>
+			<a href="sensorAction!loadsendinterval?id=<s:property value="id" />" >配置</a>
+		</td>
+		<td>
 			<a href="sensorAction!delete?id=<s:property value="id" />" onclick="return confirm('你确定删除该信息吗？')"><img src="skin/images/frame/huiwu_2.gif" width="20" height="20" border="0"></a>
 		</td>
 	</tr>
@@ -130,7 +134,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 <tr align="right" bgcolor="#EEF4EA">
   
-  <td height="34" colspan="13" align="center">记录数：<s:property value="totalCount" />
+  <td height="34" colspan="14" align="center">记录数：<s:property value="totalCount" />
   &nbsp;&nbsp;&nbsp; 
   <a href="javascript:jumpLinePage('sensorAction!list',1,<s:property value="con"/>,'<s:property value="convalue"/>');" target="rightFrame">首页</a>&nbsp;&nbsp; 
   <a href="javascript:jumpLinePage('sensorAction!list',<s:property value="page-1"/>,<s:property value="con"/>,'<s:property value="convalue"/>');" target="rightFrame">上一页</a>&nbsp;&nbsp;&nbsp; 

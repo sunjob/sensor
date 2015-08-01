@@ -13,6 +13,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script type="text/javascript" src="js/jquery.js"></script>
 
 <script type="text/javascript">
+	var oldDate = <s:property  value="gateway.channel"/>;
+	var channel = <s:property  value="gateway.channel"/>;
 function checkform(){
 	var channel = document.getElementById("channel");
 	if(channel.value.length==0||channel.value==''){
@@ -26,6 +28,7 @@ function checkform(){
 }
 
 </script>
+<script type="text/javascript" src="js/jsp_util.js"></script>
 </head>
 <body leftmargin="8" topmargin="8" >
 <div class="linedwon"><img src="skin/images/frame/jiantou.gif" width="20" height="20" border="0">当前位置：系统管理&gt;&gt;<a href='javascript:history.back();' target='main'>网关管理</a>&gt;&gt;配置无线数据通道&nbsp;<a href="javascript:history.back();" style=" color:red;">[返回]</a></div>
@@ -43,7 +46,7 @@ function checkform(){
 	<td width="25%" height="25" align="right"><strong><font color="#333333">*数据通道</font></strong></td>
 	<td width="75%" align="left">
 	  <label>
-		<s:textfield cssClass="ck" id="channel" name="channel" cssStyle="width:80%"></s:textfield> 
+		<s:textfield cssClass="ck" id="channel" name="channel" value="%{gateway.channel}" cssStyle="width:80%" onblur="checkChannel()"></s:textfield> 
 	  </label></td>
 </tr>
 
