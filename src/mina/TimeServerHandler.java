@@ -785,6 +785,7 @@ public class TimeServerHandler  implements IoHandler {
 				Gateway gateway1= gatewayService.getGatewayByIp(sessionIP1);
 				receivelog.setProject(gateway1.getLine().getProject());
 				receivelogService.add(receivelog);
+				//修改网关的信道
 				
 			}else if(data[1] == 0x44){
 				System.out.println("[节点配置]========================================成功");
@@ -797,6 +798,7 @@ public class TimeServerHandler  implements IoHandler {
 				Gateway gateway1= gatewayService.getGatewayByIp(sessionIP1);
 				receivelog.setProject(gateway1.getLine().getProject());
 				receivelogService.add(receivelog);
+				//修改网关的下属传感器的采样间隔
 				
 			}else if(data[1] == 0x45){
 				System.out.println("[外设控制]========================================成功");
@@ -809,6 +811,7 @@ public class TimeServerHandler  implements IoHandler {
 				Gateway gateway1= gatewayService.getGatewayByIp(sessionIP1);
 				receivelog.setProject(gateway1.getLine().getProject());
 				receivelogService.add(receivelog);
+				//修改网关的下属传感器的状态
 				
 			}else if(data[1]== 0x46){
 				//(设备地址   功能代码   数据长度，外设地址，数值类型，4个字节的浮点数    校验码)
