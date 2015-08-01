@@ -35,6 +35,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   
   <div id="updateform">
 <!--  内容列表   -->
+<form name="form2" action="sensorAction!sendinterval" method="post" onsubmit="return checkform();">
 <font style="font: normal bold 12px;"></font>
 <table width="98%" border="0" cellpadding="2" cellspacing="1" bgcolor="#D1DDAA" align="center" style="margin-top:8px">
 <tr bgcolor="#E7E7E7">
