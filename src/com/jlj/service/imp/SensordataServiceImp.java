@@ -588,4 +588,12 @@ public class SensordataServiceImp implements ISensordataService{
 		queryString += " order by mo.sensor.gateway.line.name asc,mo.sensor.gateway.name asc,mo.sensor.name asc,mo.id asc ";
 		return sensordataDao.getObjectsByCondition(queryString, p);
 	}
+	//查询出该传感器数据最新的数据对象
+	public Sensordata getOldestSensordataBySensorId(int sensorid, int page,
+			int size) {
+		String queryString = "from Sensordata mo where mo.sensor.id = ? order by mo.id desc";
+		Object[] p = new Object[]{sensorid};
+		List<Sensordata> sensordatas = sensordataDao.pageList(queryString,p,page,size);
+		return sensordatas.size()==1?sensordatas.get(0):null;
+	}
 }

@@ -91,7 +91,7 @@ public interface ISensordataService {
 	//查询数据库的总容量
 	public abstract float getMysqlDatabaseSize();
 
-	public abstract Sensordata getOldestSensordata(int i, int j);
+	public abstract Sensordata getOldestSensordata(int page, int size);
 
 	public abstract void deleteByDate(String startdate, String enddate);
 
@@ -103,4 +103,7 @@ public interface ISensordataService {
 
 	public abstract List<Sensordata> queryExportManageList(String starttime,
 			String endtime, int con, String convalue, int stype, String linetext);
+
+	public abstract Sensordata getOldestSensordataBySensorId(int sensorid, int page,
+			int size);
 }

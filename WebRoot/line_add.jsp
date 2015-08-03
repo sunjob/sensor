@@ -37,7 +37,7 @@ function checkform(){
 <table width="98%" border="0" cellpadding="2" cellspacing="1" bgcolor="#D1DDAA" align="center" style="margin-top:8px">
 <tr bgcolor="#E7E7E7">
 	<td height="33" colspan="2" align="center"><strong>新增线路</strong>
-
+		<s:hidden name="line.orderid" value="0"></s:hidden>
 		
 	</td>
 </tr>

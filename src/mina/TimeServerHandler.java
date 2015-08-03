@@ -803,7 +803,7 @@ public class TimeServerHandler  implements IoHandler {
 				receivelogService.add(receivelog);
 				//修改网关的下属传感器的采样间隔
 				int sensoraddress = data[3];//节点地址
-				int intervaltime = ((data[4]&0xff)<<8)+(data[5]&0xff);//采样间隔
+				int intervaltime = ((data[5]&0xff)<<8)+(data[4]&0xff);//采样间隔
 				sensorService.updateIntervaltimeByGatewayIdAndSensoraddress(intervaltime,gateway1.getId(),sensoraddress);
 				
 			}else if(data[1] == 0x45){

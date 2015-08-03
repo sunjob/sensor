@@ -9,7 +9,9 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.InetSocketAddress;
 import java.net.URLDecoder;
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -36,15 +38,16 @@ import com.jlj.model.Gateway;
 import com.jlj.model.Line;
 import com.jlj.model.Project;
 import com.jlj.model.Sensor;
+import com.jlj.model.Sensordata;
 import com.jlj.model.User;
 import com.jlj.service.IAddresslistService;
 import com.jlj.service.IGatewayService;
 import com.jlj.service.ILineService;
 import com.jlj.service.IProjectService;
 import com.jlj.service.ISensorService;
+import com.jlj.service.ISensordataService;
 import com.jlj.util.DateTimeKit;
 import com.jlj.util.LogInterceptor;
-import com.jlj.vo.GatewayStatus;
 import com.jlj.vo.SensorStatus;
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -66,6 +69,7 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 	 * service层对象
 	 */
 	private ISensorService sensorService;
+	private ISensordataService sensordataService;
 	private IProjectService projectService;
 	private IGatewayService gatewayService;
 	private ILineService lineService;
@@ -418,8 +422,9 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 	/**
 	 * 地图重画时-状态展示
 	 * @return
+	 * @throws ParseException 
 	 */
-	public String sensorStatus(){
+	public String sensorStatus() throws ParseException{
 		sensors = sensorService.getSensorsByLineid(lineid);
 		if(sensors!=null&&sensors.size()>0){
 			List<SensorStatus> sensorstatuses = new ArrayList<SensorStatus>();
@@ -429,13 +434,37 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 				if(sensor.getLasttime()!=null){
 					lasttimestr=DateTimeKit.getDateTimeString(sensor.getLasttime());
 				}
+				//查出该传感器的实时状态
+				int status=1;//传感器状态；0断开-1正常-2温度过高
+				Sensordata sensordata1 = sensordataService.getOldestSensordataBySensorId(sensor.getId(),1, 1);
+				if(sensordata1!=null&&sensor.getIntervaltime()!=null){
+					int intervaltime = sensor.getIntervaltime();//采样间隔，单位分钟
+					Date newtime = sensordata1.getSdatetime();//该传感器最新数据的时间
+					Date nowtime = new Date();
+					
+					
+					int minutes = DateTimeKit.minutesBetweenD(newtime, nowtime);
+					if(minutes>3*intervaltime){
+						status=0;
+						System.out.println("~~minutes>3*intervaltime;minutes="+minutes+",intervaltime="+intervaltime);
+					}else{
+						status=1;
+						//若温度过高
+						if(sensor.getStatus()!=null&&sensor.getStatus()==2){
+							status=2;
+						}
+					}
+				}else{
+					status=0;
+					//System.out.println("~~sensordata1!=null&&sensor.getIntervaltime()!=null:"+sensordata1+","+sensor.getIntervaltime());
+				}
 				
-				SensorStatus sensorStatus = new SensorStatus(sensor.getId(),sensor.getName()==null?"":sensor.getName(),sensor.getLng()==null?"":sensor.getLng(),sensor.getLat()==null?"":sensor.getLat(),sensor.getNowtemp()==null?"":sensor.getNowtemp().toString(),sensor.getNowvoltage()==null?"":sensor.getNowvoltage().toString(),sensor.getStatus()==null?0:sensor.getStatus(),sensor.getStreetpic()==null?"":sensor.getStreetpic(),lasttimestr);
+				SensorStatus sensorStatus = new SensorStatus(sensor.getId(),sensor.getName()==null?"":sensor.getName(),sensor.getLng()==null?"":sensor.getLng(),sensor.getLat()==null?"":sensor.getLat(),sensor.getNowtemp()==null?"":sensor.getNowtemp().toString(),sensor.getNowvoltage()==null?"":sensor.getNowvoltage().toString(),status,sensor.getStreetpic()==null?"":sensor.getStreetpic(),lasttimestr);
 				sensorstatuses.add(sensorStatus);
 			}
 			// 将list转化成JSON对象
 			JSONArray jsonArray = JSONArray.fromObject(sensorstatuses);
-//			System.out.println(jsonArray.toString());
+			//System.out.println(jsonArray.toString());
 			PrintWriter out;
 			try {
 				response.setCharacterEncoding("UTF-8"); 
@@ -763,6 +792,13 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 	}
 	public void setIntervaltime(int intervaltime) {
 		this.intervaltime = intervaltime;
+	}
+	public ISensordataService getSensordataService() {
+		return sensordataService;
+	}
+	@Resource
+	public void setSensordataService(ISensordataService sensordataService) {
+		this.sensordataService = sensordataService;
 	}
 	
 }

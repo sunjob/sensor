@@ -49,7 +49,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<td width="25%" height="25" align="right"><strong><font color="#333333">采样间隔</font></strong></td>
 	<td width="75%" align="left">
 	  <label>
-		<s:textfield cssClass="ck" id="intervaltime" name="sensor.intervaltime" cssStyle="width:40%" onblur="setDataUpdated()"></s:textfield>
+		<s:textfield cssClass="ck" id="intervaltime" name="intervaltime" value="%{sensor.intervaltime}" cssStyle="width:40%" onblur="setDataUpdated()"></s:textfield>
 	  </label></td>
 </tr>
 

@@ -175,6 +175,48 @@ public class DateTimeKit {
     	
     } 
     
+    /**  
+     * 计算两个日期之间相差的分钟  
+     * @param smdate 较小的时间 
+     * @param bdate  较大的时间 
+     * @return 相差天数 
+     * @throws ParseException  
+     */    
+    public static int minutesBetweenStr(String smdate,String bdate) throws java.text.ParseException    
+    {    
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm");  
+        Date smdateD=sdf.parse(smdate);  
+        Date bdateD=sdf.parse(bdate);  
+        Calendar cal = Calendar.getInstance();    
+        cal.setTime(smdateD);    
+        long time1 = cal.getTimeInMillis();                 
+        cal.setTime(bdateD);    
+        long time2 = cal.getTimeInMillis();         
+        long between_days=(time2-time1)/(1000*60);  
+            
+       return Integer.parseInt(String.valueOf(between_days));           
+    } 
+    
+    /**  
+     * 计算两个日期之间相差的分钟  
+     * @param smdate 较小的时间 
+     * @param bdate  较大的时间 
+     * @return 相差天数 
+     * @throws ParseException  
+     */    
+    public static int minutesBetweenD(Date smdate,Date bdate) throws java.text.ParseException    
+    {    
+        Calendar cal = Calendar.getInstance();    
+        cal.setTime(smdate);    
+        long time1 = cal.getTimeInMillis();                 
+        cal.setTime(bdate);    
+        long time2 = cal.getTimeInMillis();         
+        long between_days=(time2-time1)/(1000*60);  
+            
+       return Integer.parseInt(String.valueOf(between_days));           
+    } 
+    
+    
     public static void main(String[] args) throws java.text.ParseException {
 //    	System.out.println(DateTimeKit.daysBetween("2012-09-08","2012-09-09")); 
     	System.out.println(dateBeforethis("2015-07-05",5));
