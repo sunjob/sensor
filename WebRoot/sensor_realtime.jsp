@@ -200,9 +200,19 @@
 		
 		if(sensorlist[j][5]==0){
 			//断开灰色---------------------------------------
-			var icons = "img/huise1.png"; //这个是你要显示坐标的图片的相对路径
-			var icon = new BMap.Icon(icons, new BMap.Size(23, 25)); //显示图标大小
-			marker1.setIcon(icon);//设置标签的图标为自定义图标
+			var myIcon = new BMap.Icon("img/huise1.png", new BMap.Size(23, 25), {    
+				// 指定定位位置。   
+				// 当标注显示在地图上时，其所指向的地理位置距离图标左上    
+				// 角各偏移10像素和25像素。您可以看到在本例中该位置即是   
+				// 图标中央下端的尖角位置。    
+			   	anchor: new BMap.Size(10, 25),    
+				// 设置图片偏移。   
+				// 当您需要从一幅较大的图片中截取某部分作为标注图标时，您   
+				// 需要指定大图的偏移位置，此做法与css sprites技术类似。    
+				//imageOffset: new BMap.Size(0, 0 - index * 25)   // 设置图片偏移    
+			});      
+			// 创建标注对象并添加到地图   
+			marker1 = new BMap.Marker(point1, {icon: myIcon});    
 			map.addOverlay(marker1);            //增加点
 		}else if(sensorlist[j][5]==1){
 			//正常绿色---------------------------------------
@@ -297,10 +307,20 @@
 			
 			if(sensorarray[x][6]==0){
 				//断开灰色---------------------------------------
-				var icons = "img/huise1.png"; //这个是你要显示坐标的图片的相对路径
-				var icon = new BMap.Icon(icons, new BMap.Size(23, 25)); //显示图标大小
-				markernew.setIcon(icon);//设置标签的图标为自定义图标
-				map.addOverlay(markernew);
+				var myIcon = new BMap.Icon("img/huise1.png", new BMap.Size(23, 25), {    
+					// 指定定位位置。   
+					// 当标注显示在地图上时，其所指向的地理位置距离图标左上    
+					// 角各偏移10像素和25像素。您可以看到在本例中该位置即是   
+					// 图标中央下端的尖角位置。    
+				   	anchor: new BMap.Size(10, 25),    
+					// 设置图片偏移。   
+					// 当您需要从一幅较大的图片中截取某部分作为标注图标时，您   
+					// 需要指定大图的偏移位置，此做法与css sprites技术类似。    
+					//imageOffset: new BMap.Size(0, 0 - index * 25)   // 设置图片偏移    
+				});      
+				// 创建标注对象并添加到地图   
+				markernew = new BMap.Marker(pointnew, {icon: myIcon}); 
+				map.addOverlay(markernew); 
 			}else if(sensorarray[x][6]==1){
 				//正常绿色---------------------------------------
 				//从markers图片中获取
