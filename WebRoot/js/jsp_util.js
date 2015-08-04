@@ -168,6 +168,7 @@ function checkChannel()
 							 	{
 							 		$("#channel").val("");
 							 	}
+							 	return ;
 							 }
 						 }
 					}
@@ -453,6 +454,23 @@ $(document).ready(function(){
 			{
 				alert("无线数据通道输入不正确,请输入正确数字");
 				$(this).val(0);
+				return;
+			}
+		
+		}
+		else if(ckid!=null&&ckid=='intervaltime')
+		{
+			ckvalue = Number(ckvalue);
+			if(isNaN(ckvalue))
+			{
+				alert("采样间隔输入不正确,请输入正确数字");
+				$(this).val(5);
+				return;
+			}
+			if(ckvalue>1440||ckvalue<5)
+			{
+				alert("采样间隔超出范围,默认范围为5~1440");
+				$(this).val(5);
 				return;
 			}
 		

@@ -228,7 +228,8 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 		if(user==null){
 			return "opsessiongo";
 		}
-//		logInterceptor.addLog("外设信息操作", user.getUsername()+"新增外设["+valve.toString()+"]", valve.getProject().getId());
+		Gateway gateway1 = gatewayService.loadById(valve.getGateway().getId());
+		logInterceptor.addLog("外设信息操作", user.getUsername()+"新增外设["+valve.toString()+"]", gateway1.getLine().getProject().getId());
 		valveService.add(valve);
 		arg[0]="valveAction!list";
 		arg[1]="外设管理";
@@ -245,7 +246,8 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 			return "opsessiongo";
 		}
 		valve = valveService.loadById(id);
-//		logInterceptor.addLog("外设信息操作", user.getUsername()+"删除外设["+valve.toString()+"]", valve.getProject().getId());
+		
+		logInterceptor.addLog("外设信息操作", user.getUsername()+"删除外设["+valve.toString()+"]", valve.getGateway().getLine().getProject().getId());
 		valveService.deleteById(id);
 		
 		arg[0]="valveAction!list";
@@ -262,8 +264,8 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 		if(user==null){
 			return "opsessiongo";
 		}
-		
-//		logInterceptor.addLog("外设信息操作", user.getUsername()+"修改外设["+valve.toString()+"]",  valve.getProject().getId());
+		Gateway gateway1 = gatewayService.loadById(valve.getGateway().getId());
+		logInterceptor.addLog("外设信息操作", user.getUsername()+"修改外设["+valve.toString()+"]",  gateway1.getLine().getProject().getId());
 		//修改数据库
 		valveService.update(valve);
 		arg[0]="valveAction!list";
@@ -323,6 +325,7 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 		}
 		IoSession currentSession=null;
 		valve = valveService.loadById(valveid);
+		Gateway gateway1 = gatewayService.getGatewayById(valve.getGateway().getId());
 		if(valve!=null){
 			if(valve.getGateway()!=null){
 				String uid = valve.getGateway().getMacaddress();
@@ -355,7 +358,7 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 			
 			byte[] sbuf1 = CRC_16.getSendBuf(DataConvertor.toHexString(send_byte));
 	        currentSession.write(sbuf1); 
-			
+	        logInterceptor.addLog("外设操作", usero.getUsername()+(status==1?"开启":"关闭")+"外设", gateway1.getLine().getProject().getId());
 			request.put("errorInfo", "命令已发送！点这里查看-<a href='receivelogAction!list?projectid="+usero.getProject().getId()+"' target='rightFrame'>应答数据</a>-");
 			return "operror";
 		}else{
@@ -369,9 +372,14 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 	 * @return
 	 */
 	public String datalistsend(){
+		User usero=(User)session.get("user");
+		if(usero==null){
+			return "opsessiongo";
+		}
 		//发送接收数据的命令------------------------------------------------------------
 		IoSession currentSession=null;
 		valve = valveService.loadById(valveid);
+		Gateway gateway1 = gatewayService.getGatewayById(valve.getGateway().getId());
 		if(valve!=null){
 			if(valve.getGateway()!=null){
 				String uid = valve.getGateway().getMacaddress();
@@ -401,6 +409,9 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 				System.out.println("valve action sbuf1["+i+"] is "+sbuf1[i]);
 			}
 	        currentSession.write(sbuf1); 
+	        
+	        
+			logInterceptor.addLog("外设操作", usero.getUsername()+"发送接收外设数据命令", gateway1.getLine().getProject().getId());
 	        request.put("errorInfo", "命令已发送！点这里查看-<a href='valveAction!datalist?valveid="+valveid+"' target='rightFrame'>接收数据历史记录</a>-");
 			return "operror";
 			

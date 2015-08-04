@@ -67,7 +67,7 @@
         
         
      	  <s:select list="#{0:'选择属性',1:'线路名称',2:'网关名称',3:'传感器编号'}" name="con" listKey="key" listValue="value" cssStyle="width:120px" onchange="changeConvalue(this.value)"></s:select>:
-			<select id="convalue" name="convalue" style="width:150px;">
+			<select id="convalue" name="convalue" style="width:180px;">
 				<option value="未选择">未选择</option>
 			</select>
 			<!-- 

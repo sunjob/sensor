@@ -446,7 +446,7 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 					int minutes = DateTimeKit.minutesBetweenD(newtime, nowtime);
 					if(minutes>3*intervaltime){
 						status=0;
-						System.out.println("~~minutes>3*intervaltime;minutes="+minutes+",intervaltime="+intervaltime);
+//						System.out.println("~~minutes>3*intervaltime;minutes="+minutes+",intervaltime="+intervaltime);
 					}else{
 						status=1;
 						//若温度过高
@@ -550,7 +550,7 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 			//发送命令
 			currentSession.write(send_byte_final);
 			
-				
+			logInterceptor.addLog("传感器信息操作", usero.getUsername()+"发送采样间隔配置命令", gateway.getLine().getProject().getId());
 			request.put("errorInfo", "命令已发送！点这里查看-<a href='receivelogAction!list?projectid="+usero.getProject().getId()+"' target='rightFrame'>应答数据</a>-");
 			return "operror";
 		}else{

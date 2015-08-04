@@ -38,7 +38,7 @@ function checkform(){
 <table width="30%" border="0" cellpadding="2" cellspacing="1" bgcolor="#D1DDAA" align="center" style="margin-top:8px">
 <tr bgcolor="#E7E7E7">
 	<td height="33" colspan="2" align="center"><strong>配置无线数据通道</strong>
-	<s:hidden name="gatewayid" value="%{gateway.id}"/>
+	<s:hidden name="gatewayid" id="gid" value="%{gateway.id}"/>
 	</td>
 </tr>
 

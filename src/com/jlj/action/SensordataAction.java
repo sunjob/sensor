@@ -714,7 +714,12 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 					Line lineone = lines.get(i);
 					ConvalueVO convalueVO = new ConvalueVO();
 					convalueVO.setId(lineone.getId());
-					convalueVO.setCvalue(lineone.getName());
+					if(lineone.getOrderid()==1){
+						convalueVO.setCvalue(lineone.getProject().getName()+"-"+lineone.getName());
+					}else{
+						convalueVO.setCvalue(lineone.getName());
+					}
+					
 					convaluevos.add(convalueVO);
 				}
 				

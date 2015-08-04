@@ -699,7 +699,7 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 				
 				//发送命令
 				currentSession.write(send_byte_final);
-				
+				logInterceptor.addLog("网关信息操作", usero.getUsername()+"发送通道配置命令", gateway.getLine().getProject().getId());
 			request.put("errorInfo", "命令已发送！点这里查看-<a href='receivelogAction!list?projectid="+usero.getProject().getId()+"' target='rightFrame'>应答数据</a>-");
 			return "operror";
 		}else{
