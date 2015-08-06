@@ -383,6 +383,7 @@ public class TimeServerHandler  implements IoHandler {
 							sensor.setStatus(1);
 							sensor.setSensortype(1);//默认传感器类型：温度传感器
 							sensor.setIscanalarm(1);
+							sensor.setIscanalarm2(1);
 							//插入报警表的默认报警值
 							Project projectobj = null;
 							if(gateway.getLine()!=null&&gateway.getLine().getProject()!=null){
