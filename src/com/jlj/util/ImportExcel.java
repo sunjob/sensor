@@ -53,10 +53,10 @@ public class ImportExcel {
      * @param cells
      * @param rowIndex
      */
-    public static void createTableRow(List<String> cells,short rowIndex)
+    public static void createTableRow(List<String> cells,int rowIndex)
     {
         //创建第rowIndex行
-        HSSFRow row = demoSheet.createRow((short) rowIndex);
+        HSSFRow row = demoSheet.createRow(rowIndex);
         for(short i = 0;i < cells.size();i++)
         {
             //创建第i个单元格
@@ -113,7 +113,7 @@ public class ImportExcel {
     			list.add(typename);
     			list.add(sensordata.getSdata().toString());
     			list.add(sensordata.getVdata().toString());
-    			createTableRow(list,(short)(k+1));
+    			createTableRow(list,(k+1));
     		}
 		} catch (Exception e) {
 			e.printStackTrace();

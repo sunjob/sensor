@@ -31,7 +31,7 @@ function checkform(){
 <script type="text/javascript" src="js/jsp_util.js"></script>
 </head>
 <body leftmargin="8" topmargin="8" >
-<div class="linedwon"><img src="skin/images/frame/jiantou.gif" width="20" height="20" border="0">当前位置：系统管理&gt;&gt;<a href='javascript:history.back();' target='main'>网关管理</a>&gt;&gt;配置无线数据通道&nbsp;<a href="javascript:history.back();" style=" color:red;">[返回]</a></div>
+<div class="linedwon"><img src="skin/images/frame/jiantou.gif" width="20" height="20" border="0">当前位置：系统管理&gt;&gt;<a href='javascript:history.go(-1);location.reload();' target='rightFrame'>网关管理</a>&gt;&gt;配置无线数据通道&nbsp;<a href="javascript:history.go(-1);location.reload();" style=" color:red;">[返回]</a></div>
 <!--  内容列表   -->
 <form name="form2" action="gatewayAction!sendchannel" method="post" onsubmit="return checkform();">
 
@@ -56,7 +56,7 @@ function checkform(){
   <tr>
     <td height="29" align="center" valign="bottom">
       <input type='submit' class="coolbg np" value='发送命令' style="width:80" />&nbsp;&nbsp;
-      <input type='button' class="coolbg np" onClick="javascript:history.back();" value='返回' style="width:80" />&nbsp;&nbsp;</td>
+      <input type='button' class="coolbg np" onClick="self.location=document.referrer;" value='返回并刷新' style="width:100" />&nbsp;&nbsp;</td>
   </tr>
   <tr>
     <td height="18" align="center">&nbsp;</td>

@@ -49,7 +49,7 @@ function checkform(){
 	<td width="10%" height="25" align="right"><strong><font color="#333333">命令选择</font></strong></td>
 	<td width="90%" align="left">
 	  <label>
-		<s:select list="commands" listKey="command" listValue="name" onblur="document.getElementById('cmd').value=this.value"></s:select>
+		<s:select list="commands" listKey="command" listValue="name" onclick="document.getElementById('cmd').value=this.value"></s:select>
 	  </label></td>
 </tr>
 
@@ -57,7 +57,7 @@ function checkform(){
 	<td width="10%" height="25" align="right"><strong><font color="#333333">数据</font></strong></td>
 	<td width="90%" align="left">
 	  <label>
-		<input type="text" name="cmd" id="cmd" style="width:90%"/>
+		<input type="text" name="cmd" id="cmd" style="width:90%" readonly="readonly" onclick="alert('不能修改数据');"/>
 	  </label></td>
 </tr>
 

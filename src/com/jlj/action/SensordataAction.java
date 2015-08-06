@@ -89,7 +89,7 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 		String enddate = req.getParameter("enddate");
 		List<Sensordata> sensordatas = sensordataService.getTempsByDates(startdate,enddate);
 		System.out.println("sensordatas数量"+sensordatas.size());
-		String filename = "output/"+DateTimeKit.getDateRandom()+"_temps.xls";
+		String filename = "output\\"+DateTimeKit.getDateRandom()+"_temps.xls";
 		String savePath = ServletActionContext.getServletContext().getRealPath("/")+filename;
 //		System.out.println("[--------------------savePath="+savePath);
 		boolean isexport = ImportExcel.exportExcel(savePath,sensordatas);
@@ -591,7 +591,7 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 			}
 			List<Sensordata> sensordatas = sensordataService.getTempsByDates(startdate,enddate);
 			//System.out.println("sensordatas数量"+sensordatas.size());
-			String filename = "output/"+DateTimeKit.getDateRandom()+"_temps.xls";
+			String filename = "output\\"+DateTimeKit.getDateRandom()+"_temps.xls";
 			String savePath = ServletActionContext.getServletContext().getRealPath("/")+filename;
 //			System.out.println("[--------------------savePath="+savePath);
 			boolean isexport = ImportExcel.exportExcel(savePath,sensordatas);
@@ -665,7 +665,7 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 		}
 		if(sensordatas.size()>0){
 			//导出数据---------------------------------------------
-			String filename = "output/"+DateTimeKit.getDateRandom()+"_temps.xls";
+			String filename = "output\\"+DateTimeKit.getDateRandom()+"_temps.xls";
 			String savePath = ServletActionContext.getServletContext().getRealPath("/")+filename;
 //			System.out.println("[--------------------savePath="+savePath);
 //			System.out.println("[--------------------size="+sensordatas.size());

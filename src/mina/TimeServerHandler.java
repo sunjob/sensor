@@ -777,57 +777,70 @@ public class TimeServerHandler  implements IoHandler {
 			}else if(data[1] == 0x43){
 				
 				System.out.println("[信道配置]========================================成功");
-				
-				int gateaddress = data[0];//网关地址
-				Receivelog receivelog= new Receivelog();
-				receivelog.setLoginfo("网关[地址："+gateaddress+"]信道配置成功");
-				receivelog.setNowtime(new Date());
 				String sessionIP1 = ((InetSocketAddress)session.getRemoteAddress()).getAddress().getHostAddress();//当前session的ip地址
 				Gateway gateway1= gatewayService.getGatewayByIp(sessionIP1);
+				
+				int gateaddress = data[0];//网关地址
+				int channel = data[3];//无线数据通道
+				
+				Receivelog receivelog= new Receivelog();
+				receivelog.setLoginfo("项目["+gateway1.getLine().getProject().getName()+"]线路["+gateway1.getLine().getName()+"]网关["+gateway1.getName()+"]信道配置成功[数据通道："+channel+"]");
+				receivelog.setNowtime(new Date());
 				receivelog.setProject(gateway1.getLine().getProject());
 				receivelogService.add(receivelog);
 				//修改网关的信道----------
-				int channel = data[3];//无线数据通道
 				gatewayService.updateChannelById(channel,gateway1.getId());
 				
 				
 			}else if(data[1] == 0x44){
 				System.out.println("[节点配置]========================================成功");
-				
-				int gateaddress = data[0];//网关地址
-				Receivelog receivelog= new Receivelog();
-				receivelog.setLoginfo("网关[地址："+gateaddress+"]节点配置成功");
-				receivelog.setNowtime(new Date());
 				String sessionIP1 = ((InetSocketAddress)session.getRemoteAddress()).getAddress().getHostAddress();//当前session的ip地址
 				Gateway gateway1= gatewayService.getGatewayByIp(sessionIP1);
+				
+				int gateaddress = data[0];//网关地址
+				int sensoraddress = data[3];//节点地址
+				int intervaltime = ((data[5]&0xff)<<8)+(data[4]&0xff);//采样间隔
+				
+				//获取该传感器对象
+				Sensor sensor1 = sensorService.getSensorByGatewayidAndSensoraddress(gateway1.getId(), sensoraddress);
+				
+				Receivelog receivelog= new Receivelog();
+				receivelog.setLoginfo("项目["+gateway1.getLine().getProject().getName()+"]线路["+gateway1.getLine().getName()+"]网关["+gateway1.getName()+"]传感器["+sensor1.getName()+"]采样间隔["+intervaltime+"]配置成功");
+				receivelog.setNowtime(new Date());
+				
 				receivelog.setProject(gateway1.getLine().getProject());
 				receivelogService.add(receivelog);
 				//修改网关的下属传感器的采样间隔
-				int sensoraddress = data[3];//节点地址
-				int intervaltime = ((data[5]&0xff)<<8)+(data[4]&0xff);//采样间隔
 				sensorService.updateIntervaltimeByGatewayIdAndSensoraddress(intervaltime,gateway1.getId(),sensoraddress);
 				
 			}else if(data[1] == 0x45){
 				System.out.println("[外设控制]========================================成功");
-				
-				int gateaddress = data[0];//网关地址
-				Receivelog receivelog= new Receivelog();
-				receivelog.setLoginfo("网关[地址："+gateaddress+"]外设控制成功");
-				receivelog.setNowtime(new Date());
 				String sessionIP1 = ((InetSocketAddress)session.getRemoteAddress()).getAddress().getHostAddress();//当前session的ip地址
 				Gateway gateway1= gatewayService.getGatewayByIp(sessionIP1);
-				receivelog.setProject(gateway1.getLine().getProject());
-				receivelogService.add(receivelog);
-				//修改网关的下属传感器的状态
+				
+				int gateaddress = data[0];//网关地址
 				int valveaddress = data[3];//外设地址
 				int locatenumber = data[4];//外设控制位置号
 				int controlvalue = data[5];//控制值
 				int status = 0;//状态：0-关闭状态；1-开启状态
+				String statustr="";
 				if(controlvalue==0){
 					status = 0;
+					statustr = "关闭";
 				}else{
 					status = 1;
+					statustr = "开启";
 				}
+				
+				Receivelog receivelog= new Receivelog();
+				receivelog.setLoginfo("项目["+gateway1.getLine().getProject().getName()+"]线路["+gateway1.getLine().getName()+"]网关["+gateway1.getName()+"]外设[外设地址："+valveaddress+",位置号："+locatenumber+"]"+statustr+"成功");
+				receivelog.setNowtime(new Date());
+				
+				receivelog.setProject(gateway1.getLine().getProject());
+				receivelogService.add(receivelog);
+				//修改网关的下属传感器的状态
+				
+				
 				valveService.updateStatusByConditionAndGatewayid(controlvalue,status,valveaddress,locatenumber,gateway1.getId());
 				
 			}else if(data[1]== 0x46){
@@ -875,13 +888,14 @@ public class TimeServerHandler  implements IoHandler {
 				
 			}else if(data[1]== 0x47){
 				System.out.println("[0x47命令]========================================成功");
+				String sessionIP1 = ((InetSocketAddress)session.getRemoteAddress()).getAddress().getHostAddress();//当前session的ip地址
+				Gateway gateway1= gatewayService.getGatewayByIp(sessionIP1);
 				
 				int gateaddress = data[0];
 				Receivelog receivelog= new Receivelog();
-				receivelog.setLoginfo("网关[地址："+gateaddress+"]发送命令成功");
+				receivelog.setLoginfo("项目["+gateway1.getLine().getProject().getName()+"]线路["+gateway1.getLine().getName()+"]网关["+gateway1.getName()+"]0x47发送命令成功");
 				receivelog.setNowtime(new Date());
-				String sessionIP1 = ((InetSocketAddress)session.getRemoteAddress()).getAddress().getHostAddress();//当前session的ip地址
-				Gateway gateway1= gatewayService.getGatewayByIp(sessionIP1);
+				
 				receivelog.setProject(gateway1.getLine().getProject());
 				receivelogService.add(receivelog);
 			}

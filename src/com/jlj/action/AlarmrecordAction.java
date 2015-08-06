@@ -329,7 +329,7 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 		}
 		if(alarmrecords.size()>0){
 			//导出数据-------------------------------------
-			String filename = "output/"+DateTimeKit.getDateRandom()+"_temps.xls";
+			String filename = "output\\"+DateTimeKit.getDateRandom()+"_temps.xls";
 			String savePath = ServletActionContext.getServletContext().getRealPath("/")+filename;
 //			System.out.println("[--------------------savePath="+savePath);
 			boolean isexport = ExportExcelForAlarmRecord.exportExcel(savePath,alarmrecords);
