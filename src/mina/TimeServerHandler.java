@@ -375,7 +375,7 @@ public class TimeServerHandler  implements IoHandler {
 							sensor = new Sensor();
 							sensor.setGateway(gateway);
 							sensor.setSensoraddress(sensoraddress);
-							sensor.setName(gateaddress+"_"+sensoraddress);//默认产生一个传感器名称：根据网关地址+下划线+传感器地址
+							sensor.setName(gateaddress+"-"+sensoraddress);//默认产生一个传感器名称：根据网关地址+中划线+传感器地址
 							//记录现在的温度以及电池电压
 							sensor.setNowtemp(temperature);
 							sensor.setNowvoltage(BattVoltage);
