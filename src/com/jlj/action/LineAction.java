@@ -1,5 +1,7 @@
 package com.jlj.action;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URLDecoder;
 import java.util.List;
 import java.util.Map;
@@ -7,6 +9,8 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import net.sf.json.JSONObject;
 
 import org.apache.struts2.interceptor.RequestAware;
 import org.apache.struts2.interceptor.ServletRequestAware;
@@ -22,6 +26,7 @@ import com.jlj.service.ILineService;
 import com.jlj.service.IProjectService;
 import com.jlj.service.IUserService;
 import com.jlj.util.LogInterceptor;
+import com.jlj.vo.AjaxMessage;
 import com.jlj.vo.UserVO;
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -418,6 +423,29 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 		return "monitorshowformobile";
 	}
 	
+	private String linename;
+	public String checkLinename()
+	{
+		line = lineService.getLineByNameAndProject(linename,projectid);
+		if(line!=null)
+		{
+			AjaxMessage ajaxmsg = new AjaxMessage();
+			ajaxmsg.setMessage("该线路名称已经存在,请重新输入.");
+			JSONObject jsonObj = JSONObject.fromObject(ajaxmsg);
+			PrintWriter out;
+			try {
+				response.setContentType("text/html;charset=UTF-8");
+				out = response.getWriter();
+				out.print(jsonObj.toString());
+				out.flush();
+				out.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return  null;
+	}
+	
 	//get、set-------------------------------------------
 	public ILineService getLineService() {
 		return lineService;
@@ -592,6 +620,16 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 
 	public void setUpuserid(int upuserid) {
 		this.upuserid = upuserid;
+	}
+
+
+	public String getLinename() {
+		return linename;
+	}
+
+
+	public void setLinename(String linename) {
+		this.linename = linename;
 	}
 	
 	

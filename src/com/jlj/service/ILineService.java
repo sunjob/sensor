@@ -85,5 +85,7 @@ public interface ILineService {
 	public abstract Line getProjectTestLine(Integer id);
 	
 	public abstract Line getLineByProjectidAndOrderid(int projectid, int orderid);
+
+	public abstract Line getLineByNameAndProject(String linename, int projectid);
 	
 }

@@ -18,7 +18,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script type="text/javascript" src="js/jsp_util.js"></script>
 </head>
 <body leftmargin="8" topmargin="8" >
-<div class="linedwon"><img src="skin/images/frame/jiantou.gif" width="20" height="20" border="0">当前位置：系统管理&gt;&gt;<a href='javascript:history.back();' target='main'>用户管理</a>&gt;&gt;新增用户&nbsp;<a href="javascript:history.back();" style=" color:red;">[返回]</a></div>
+<div class="linedwon"><img src="skin/images/frame/jiantou.gif" width="20" height="20" border="0">当前位置：系统管理&gt;&gt;新增用户&nbsp;<a href="javascript:history.back();" style=" color:red;">[返回]</a></div>
   
 <!--  内容列表   -->
 <s:form name="form2" action="userAction!add" method="post"  enctype="multipart/form-data" >

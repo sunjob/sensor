@@ -59,7 +59,7 @@ function checkform(){
 </script>
 </head>
 <body leftmargin="8" topmargin="8" >
-<div class="linedwon"><img src="skin/images/frame/jiantou.gif" width="20" height="20" border="0">当前位置：系统管理&gt;&gt;<a href='javascript:history.back();' target='main'>网关管理</a>&gt;&gt;修改网关&nbsp;<a href="javascript:history.back();" style=" color:red;">[返回]</a></div>
+<div class="linedwon"><img src="skin/images/frame/jiantou.gif" width="20" height="20" border="0">当前位置：系统管理&gt;&gt;修改网关&nbsp;<a href="javascript:history.back();" style=" color:red;">[返回]</a></div>
 <!--  内容列表   -->
 <form name="form2" action="gatewayAction!update" method="post"  enctype="multipart/form-data"  onsubmit="return checkform();">
 

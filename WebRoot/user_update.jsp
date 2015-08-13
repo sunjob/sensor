@@ -14,11 +14,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script type="text/javascript" src="js/jquery.js"></script>
 <script>
 	var ulimit = <s:property value="ulimit" />;
+	console.log("后台传过来的ulimit="+ulimit);
 </script>
 <script type="text/javascript" src="js/jsp_util.js"></script>
 </head>
 <body leftmargin="8" topmargin="8" >
-<div class="linedwon"><img src="skin/images/frame/jiantou.gif" width="20" height="20" border="0">当前位置：修改用户信息&gt;&gt;<a href='javascript:history.back();' target='main'>用户管理</a>&gt;&gt;修改用户&nbsp;<a href="javascript:history.back();" style=" color:red;">[返回]</a></div>
+<div class="linedwon"><img src="skin/images/frame/jiantou.gif" width="20" height="20" border="0">当前位置：修改用户信息&gt;&gt;修改用户&nbsp;<a href="javascript:history.back();" style=" color:red;">[返回]</a></div>
   
 <!--  内容列表   -->
 <s:form name="form2" action="userAction!update" method="post"  enctype="multipart/form-data" >
@@ -31,7 +32,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   -->
   	   <s:hidden id="uid" name="user.id"/>
   	   <s:hidden name="user.upuserid"/>
-  	    <s:hidden  id="password" name="user.password"/>
+  	   <s:hidden name="user.limits"/>
+  	   <s:hidden  id="password" name="user.password"/>
   	   <s:hidden name="user.createdate"/>
   	   <s:hidden id="username" name="user.username"/>
 	</td>
@@ -77,7 +79,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   
 <!-- 权限0,1显示用户管理 -->
 <s:if test="session.user.limits==0">
-	<s:select list="#{0:'系统管理员',1:'超级管理员',2:'普通管理员',3:'普通用户'}" onchange="changeLimit_update()" id="limit" name="user.limits" listKey="key" listValue="value" value="ulimit"></s:select>
+	<s:select list="#{0:'系统管理员',1:'超级管理员',2:'普通管理员',3:'普通用户'}" onchange="changeLimit_update()" id="limit" name="ulimit" listKey="key" listValue="value" value="ulimit"></s:select>
 </s:if>
 <s:if test="session.user.limits==1">
 	<s:select list="#{1:'超级管理员',2:'普通管理员',3:'普通用户'}" onchange="changeLimit_update()" id="limit" name="user.limits" listKey="key" listValue="value" value="ulimit"></s:select>

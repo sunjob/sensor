@@ -365,8 +365,16 @@
 		</action>
 	</package>
 	
+	<package name="project_json" extends="json-default">
+		<action name="checkProjectname" class="projectAction" method="checkProjectname"/>
+	</package>
+	
 	<package name="user_json" extends="json-default">
 		<action name="checkUsername" class="userAction" method="checkUsername"/>
+	</package>
+	
+	<package name="line_json" extends="json-default">
+		<action name="checkLinename" class="lineAction" method="checkLinename"/>
 	</package>
 	
 	<package name="gateway_json" extends="json-default">

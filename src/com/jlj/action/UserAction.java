@@ -385,6 +385,7 @@ public class UserAction extends ActionSupport implements RequestAware,
 		
 		user.setLinetext(linetext);
 		logInterceptor.addLog("用户信息操作", usero.getUsername()+"修改用户["+user.toString()+"]", user.getProject().getId());
+		user.setLimits(ulimit);
 		userService.update(user);
 		arg[0] = "userAction!list";
 		arg[1] = "用户管理";
@@ -417,8 +418,15 @@ public class UserAction extends ActionSupport implements RequestAware,
 		}
 		usero.setPassword(password);
 		userService.update(usero);
-		arg[0] = "userAction!list";
-		arg[1] = "用户管理";
+		if(usero.getLimits()<2)
+		{
+			arg[0] = "userAction!list";
+			arg[1] = "用户管理";
+		}else
+		{
+			arg[0] = "index.html";
+			arg[1] = "主";
+		}
 		return SUCCESS;
 	}
 
@@ -437,6 +445,7 @@ public class UserAction extends ActionSupport implements RequestAware,
 	 * 
 	 * @return
 	 */
+	private int isChanging;//0：表示没有在选择用户权限 1：表示正在切换用户权限
 	public String load() throws Exception {
 		User usero=(User)session.get("user");
 		if(usero==null){
@@ -444,6 +453,11 @@ public class UserAction extends ActionSupport implements RequestAware,
 		}
 		//获取项目id作为查询的条件
 		user=userService.loadById(id);//当前修改用户的id
+		
+		if(isChanging==0)
+		{
+			ulimit = user.getLimits();
+		}
 		/*
 		 * 当前操作用户权限划分
 		 */
@@ -468,11 +482,6 @@ public class UserAction extends ActionSupport implements RequestAware,
 			break;
 		default:
 			break;
-		}
-		//获得其自身的权限
-		if(ulimit==0)
-		{
-			ulimit = user.getLimits();
 		}
 		return "load";
 	}
@@ -763,6 +772,12 @@ public class UserAction extends ActionSupport implements RequestAware,
 	}
 	public void setReq(javax.servlet.http.HttpServletRequest req) {
 		this.req = req;
+	}
+	public int getIsChanging() {
+		return isChanging;
+	}
+	public void setIsChanging(int isChanging) {
+		this.isChanging = isChanging;
 	}
 
 	

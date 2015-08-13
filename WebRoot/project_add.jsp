@@ -55,7 +55,7 @@ function checkform(){
 </script>
 </head>
 <body leftmargin="8" topmargin="8" >
-<div class="linedwon"><img src="skin/images/frame/jiantou.gif" width="20" height="20" border="0">当前位置：系统设置&gt;&gt;修改项目信息&nbsp;<a href="javascript:history.back();" style=" color:red;">[返回]</a></div>
+<div class="linedwon"><img src="skin/images/frame/jiantou.gif" width="20" height="20" border="0">当前位置：系统设置&gt;&gt;新增项目信息&nbsp;<a href="javascript:history.back();" style=" color:red;">[返回]</a></div>
   
 <!--  内容列表   -->
 <form name="form2" action="projectAction!add" method="post" onsubmit="return checkform();">
@@ -88,7 +88,7 @@ function checkform(){
 	<td width="25%" height="25" align="right"><strong><font color="#333333">*项目名称</font></strong></td>
 	<td width="75%" align="left">
 	  <label>
-	  <s:textfield name="project.name" cssStyle="width:80%" id="projectname"></s:textfield>
+	  <s:textfield name="project.name"  cssStyle="width:80%" id="projectname"></s:textfield>
 	  </label></td>
 </tr>
 

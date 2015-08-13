@@ -21,11 +21,12 @@ function changeProject_update()
 
 function changeLimit_update()
 {
- 	console.log("changeProject_update coming....................");
+ 	console.log("changeUserlimit_update coming....................");
 	var projectid = $("#projects").val();
 	var uid = $("#uid").val();
 	var ulimit = $("#limit").val();
-	var url = "userAction!load?projectid="+projectid+"&id="+uid+"&ulimit="+ulimit;
+	var url = "userAction!load?projectid="+projectid+"&id="+uid+"&ulimit="+ulimit+"&isChanging="+1;
+	console.log(url);
 	url = encodeURI(url);
 	location.href  = url;
 }
@@ -36,6 +37,7 @@ function changeLimit_add()
 	var projectid = $("#projects").val();
 	var ulimit = $("#limit").val();
 	var url = "userAction!goToAdd?projectid="+projectid+"&ulimit="+ulimit;
+	
 	url = encodeURI(url);
 	location.href  = url;
 }
@@ -334,7 +336,8 @@ function checkUsername()
 
 function checkPhone()
 {
-	  if(!(/(^(\d{3,4}-)?\d{7,8})$|(^1[3|4|5|8][0-9]{9})/.test($("#phone").val()))){
+	  var partten = /^1[3,5,8]\d{9}$/;
+	  if(!partten.test($("#phone").val())){
         alert("不是正确的11位手机号或者正确的固话");
         $(document).ready(function(){ 
 				 			$("#phone").val('');
@@ -385,11 +388,15 @@ function checkUser()
 
 function changePassword()
 {
-	alert("密码重置为123456");
-	$(document).ready(function(){
+	if(confirm("您确定要重置密码?"))
+	{
+		alert("密码已重置为123456,需保存之后才能修改.");
+		$(document).ready(function(){
+		
+			$("#password").val("123456");
+		});
+	}
 	
-		$("#password").val("123456");
-	});
 }
 
 $(document).ready(function(){
@@ -477,8 +484,9 @@ $(document).ready(function(){
 		}
 		else if(ckid!=null&&ckid=='phonenumber')
 		{
-		
-			if(!(/(^(\d{3,4}-)?\d{7,8})$|(^1[3|4|5|8][0-9]{9})/.test(ckvalue))){
+			
+			  var partten = /^1[3,5,8]\d{9}$/;
+	 			 if(!partten.test($("#phone").val())){
 		        alert("不是正确的11位手机号或者正确的固话");
 		         $(this).val('');
 				return;
@@ -502,6 +510,63 @@ $(document).ready(function(){
 		}
 		
 		$(this).val(ckvalue);
+		
+	});
+	
+	$("#projectname").blur(function(){
+	
+		var projectname = $(this).val();
+		console.log(projectname);
+		$.ajax({   
+	            url:'checkProjectname',//这里是你的action或者servlert的路径地址   
+	            type:'post', //数据发送方式   
+	            async:false,
+	            data: { "projectname":projectname},
+	            dataType:'json',
+	            error: function(msg)
+	            { //失败   
+	            	console.log('post失败');   
+	            },   
+	            success: function(msg)
+	            { //成功
+					 if(msg!=null)
+					 {
+					 	alert(msg.message);
+				 		$(document).ready(function(){ 
+				 			$("#projectname").val('');
+				 		});
+					 }
+				}
+			});
+		
+	});
+	
+	
+	$("#linename").blur(function(){
+	
+		var linename = $(this).val();
+		var projectid = $("#projects").val();
+		$.ajax({   
+	            url:'checkLinename',//这里是你的action或者servlert的路径地址   
+	            type:'post', //数据发送方式   
+	            async:false,
+	            data: { "linename":linename,"projectid":projectid},
+	            dataType:'json',
+	            error: function(msg)
+	            { //失败   
+	            	console.log('post失败');   
+	            },   
+	            success: function(msg)
+	            { //成功
+					 if(msg!=null)
+					 {
+					 	alert(msg.message);
+				 		$(document).ready(function(){ 
+				 			$("#linename").val('');
+				 		});
+					 }
+				}
+			});
 		
 	});
 
@@ -552,5 +617,16 @@ function checkGateway()
 		alert("排序编号不能为空.");
 		return false;
 	}
+}
+
+function checkUser()
+{
+	var password = $("#password").val();
+	if(password=='')
+	{
+		alert("密码不能为空.");
+		return false;
+	}
+
 }
 

@@ -252,5 +252,11 @@ public class LineServiceImp implements ILineService {
 		Object[] values = new Object[] { projectid,orderid };
 		return lineDao.queryByNamedParam(queryString, paramNames, values);
 	}
+	public Line getLineByNameAndProject(String linename, int projectid) {
+		String queryString = "from Line mo where mo.project.id=:projectid and mo.name=:linename";
+		String[] paramNames = new String[] { "projectid","linename" };
+		Object[] values = new Object[] { projectid,linename };
+		return lineDao.queryByNamedParam(queryString, paramNames, values);
+	}
 	
 }

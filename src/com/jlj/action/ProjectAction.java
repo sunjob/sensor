@@ -1,5 +1,7 @@
 package com.jlj.action;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URLDecoder;
 import java.util.Date;
 import java.util.List;
@@ -8,6 +10,8 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import net.sf.json.JSONObject;
 
 import org.apache.struts2.interceptor.RequestAware;
 import org.apache.struts2.interceptor.ServletRequestAware;
@@ -28,6 +32,8 @@ import com.jlj.service.IGatewayService;
 import com.jlj.service.ILineService;
 import com.jlj.service.IProjectService;
 import com.jlj.util.LogInterceptor;
+import com.jlj.vo.AjaxMessage;
+import com.jlj.vo.UserVO;
 import com.opensymphony.xwork2.ActionSupport;
 
 @Component("projectAction")
@@ -299,6 +305,33 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 		arg[1]="我的项目信息";
 		return SUCCESS;
 	}
+	
+	
+	/**
+	 * 检查用户名是否存在
+	 */
+	private String projectname;
+	public String checkProjectname()
+	{
+		project = projectService.getProjectByName(projectname);
+		if(project!=null)
+		{
+			AjaxMessage ajaxmsg = new AjaxMessage();
+			ajaxmsg.setMessage("该项目名称已经存在,请重新输入.");
+			JSONObject jsonObj = JSONObject.fromObject(ajaxmsg);
+			PrintWriter out;
+			try {
+				response.setContentType("text/html;charset=UTF-8");
+				out = response.getWriter();
+				out.print(jsonObj.toString());
+				out.flush();
+				out.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return  null;
+	}
 	//get、set-------------------------------------------
 	public ICommandService getCommandService() {
 		return commandService;
@@ -454,6 +487,12 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 	@Resource
 	public void setAlarmService(IAlarmService alarmService) {
 		this.alarmService = alarmService;
+	}
+	public String getProjectname() {
+		return projectname;
+	}
+	public void setProjectname(String projectname) {
+		this.projectname = projectname;
 	}
 	
 	
