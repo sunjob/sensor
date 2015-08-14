@@ -38,7 +38,13 @@ ${demo.css}
 			var minutes = date1.substring(14,16);
 			var seconds =  date1.substring(17,19);
 			sensordatalist[<s:property value="#index.count-1" />][0] = Date.UTC(year,month,day,hour,minutes,seconds);
-			sensordatalist[<s:property value="#index.count-1" />][1] = <s:property value="sdata" />;
+			<s:if test="stype==1&&othertype==1">
+				sensordatalist[<s:property value="#index.count-1" />][1] = <s:property value="vdata" />;
+			</s:if>
+			<s:else>
+				sensordatalist[<s:property value="#index.count-1" />][1] = <s:property value="sdata" />;
+			</s:else>
+			
 		</s:iterator>
 	}
 $(function () {
@@ -53,12 +59,13 @@ $(function () {
                                                                                     
                         // set up the updating of the chart each second             
                         var series = this.series[0];      
-                        var sensorid = <s:property value="sensor.id" />;                          
+                        var sensorid = <s:property value="sensor.id" />; 
+                        var starttime = document.getElementById("startdate").value;                         
                         setInterval(function() { 
                         	$.ajax({   
 					            url:'getnewtemp',//这里是你的action或者servlert的路径地址   
 					            type:'get', //数据发送方式
-					            data: { "sensorid":sensorid},   
+					            data: { "sensorid":sensorid,"starttimestr":starttime},   
 					            async:false,
 					            dataType:'json',
 					            error: function(msg)
@@ -204,7 +211,31 @@ $(function () {
 									类型：
 									</td>
 									<td>
-									<s:select list="#{1:'温度/电池电压',2:'压力',3:'流量',5:'表面温度'}" name="stype" listKey="key" listValue="value"></s:select>
+										<div id="showstype" style="float: left;">
+											<s:select list="#{1:'温度/电池电压',2:'压力',3:'流量',5:'表面温度'}" name="stype" listKey="key" listValue="value" onchange="checkstype(this.value);"></s:select>&nbsp;
+										</div>
+									<script type="text/javascript">
+										function checkstype(svalue){
+											
+											var otherid=document.getElementById("otherid");
+											if(svalue==1){
+												otherid.style.display="block";
+											}else{
+												otherid.style.display="none";
+											}
+										}
+									</script>
+										<s:if test="stype==1">
+											<div id="otherid" style="float: left;">
+												<s:radio list="#{0:'温度',1:'电池电压'}" name="othertype" listKey="key" listValue="value"></s:radio>
+											</div>
+										</s:if>
+										<s:else>
+											<div id="otherid" style="float: left;display: none;">
+												<s:radio list="#{0:'温度',1:'电池电压'}" name="othertype" listKey="key" listValue="value"></s:radio>
+											</div>
+										</s:else>
+										
 									</td>
 								</tr>
 								

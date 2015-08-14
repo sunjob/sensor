@@ -109,6 +109,7 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 	private int mapsize;
 	private String lng;
 	private String lat;
+	private int othertype;
 	public String listline() throws Exception{
 		//判断会话是否失效//游客模式能查看的不限制
 //		User user=(User)session.get("user");
@@ -172,20 +173,21 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 	 * @return
 	 */
 	private static int lastdata;
+	private String starttimestr;
 	public String getnewtemp()
 	{			
 		//1-查询出该sensorid和stype的最新温度值
 		stype=1;
 		sensordata = sensordataService.getSensordataBySensoridAndStype(stype,sensorid);
 		Date newtimeDate = sensordata.getSdatetime();
-//		Date nowDate = new Date();
+		String nowDatestr = DateTimeKit.getDateString(new Date());
 //		String newtime = DateTimeKit.getDateMinuteString(newtimeDate);
 //		String nowtime = DateTimeKit.getDateMinuteString(nowDate);
 		//System.out.println(stype+","+sensorid);
 		int tablelastdata = sensordata.getId();
 		//发现是新数据，做相应的发送
 //		if(sensordata!=null&&newtime!=null&&!newtime.equals(nowtime)&&nowDate.before(newtimeDate)){
-		if(sensordata!=null&&tablelastdata!=lastdata){
+		if(sensordata!=null&&tablelastdata!=lastdata&&nowDatestr.equals(starttimestr)){
 				//System.out.println("sensordata!=null");
 				
 				
@@ -365,9 +367,9 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 		}else if(limits==3){
 			//普通用户，查看他的上级管理员所管理的线路===============================
 //			User upuser = userService.loadById(user.getUpuserid());
-			User upuser = userService.loadById(upuserid);
-			if(upuser!=null){
-				linetext = upuser.getLinetext();
+//			User upuser = userService.loadById(upuserid);
+//			if(upuser!=null){
+//				linetext = upuser.getLinetext();
 				if(page<1){
 					page=1;
 				}
@@ -382,10 +384,10 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 				//所有当前页记录对象
 //				sensordatas=sensordataService.queryManageList(starttime,endtime,gatewayname,stype,sensorname,linetext,page,size);
 				sensordatas=sensordataService.queryManageList(starttime,endtime,con,convalue,stype,linetext,page,size);
-			}else{
-				System.out.println("-------------无上级用户---------");
-				return NONE;
-			}
+//			}else{
+//				System.out.println("-------------无上级用户---------");
+//				return NONE;
+//			}
 		}
 		return "reportdetail";
 	}
@@ -457,9 +459,9 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 		}else if(limits==3){
 			//普通用户，查看他的上级管理员所管理的线路===============================
 //			User upuser = userService.loadById(user.getUpuserid());
-			User upuser = userService.loadById(upuserid);
-			if(upuser!=null){
-				linetext = upuser.getLinetext();
+//			User upuser = userService.loadById(upuserid);
+//			if(upuser!=null){
+//				linetext = upuser.getLinetext();
 				if(page<1){
 					page=1;
 				}
@@ -472,10 +474,10 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 				}
 				//所有当前页记录对象
 				sensordatas=sensordataService.queryManageList(starttime,endtime,con,convalue,stype,linetext,page,size);
-			}else{
-				System.out.println("-------------无上级用户---------");
-				return NONE;
-			}
+//			}else{
+//				System.out.println("-------------无上级用户---------");
+//				return NONE;
+//			}
 		}
 		return "reportdetailformobile";
 	}
@@ -551,10 +553,12 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 			sensordatas=sensordataService.queryManageList(starttime,endtime,con,convalue,stype,linetext,page,size);
 		}else if(limits==3){
 			//普通用户，查看他的上级管理员所管理的线路===============================
-			User upuser = userService.loadById(user.getUpuserid());
+			
 //			User upuser = userService.loadById(upuserid);
-			if(upuser!=null){
-				linetext = upuser.getLinetext();
+			
+//			User upuser = userService.loadById(user.getUpuserid());
+//			if(upuser!=null){
+//				linetext = upuser.getLinetext();
 				if(page<1){
 					page=1;
 				}
@@ -567,10 +571,10 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 				}
 				//所有当前页记录对象
 				sensordatas=sensordataService.queryManageList(starttime,endtime,con,convalue,stype,linetext,page,size);
-			}else{
-				System.out.println("-------------无上级用户---------");
-				return NONE;
-			}
+//			}else{
+//				System.out.println("-------------无上级用户---------");
+//				return NONE;
+//			}
 		}
 		return "databak";
 	}
@@ -650,20 +654,21 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 			sensordatas=sensordataService.queryExportManageList(starttime,endtime,con,convalue,stype,linetext);
 		}else if(limits==3){
 			//普通用户，查看他的上级管理员所管理的线路===============================
-			User upuser = userService.loadById(upuserid);
-			if(upuser!=null){
-				linetext = upuser.getLinetext();
+//			User upuser = userService.loadById(upuserid);
+//			if(upuser!=null){
+//				linetext = upuser.getLinetext();
 				if(page<1){
 					page=1;
 				}
 				//所有当前页记录对象
 				sensordatas=sensordataService.queryExportManageList(starttime,endtime,con,convalue,stype,linetext);
-			}else{
-				System.out.println("-------------无上级用户---------");
-				return NONE;
-			}
+//			}else{
+//				System.out.println("-------------无上级用户---------");
+//				return NONE;
+//			}
 		}
 		if(sensordatas.size()>0){
+//			System.out.println(sensordatas.size());
 			//导出数据---------------------------------------------
 			String filename = "output\\"+DateTimeKit.getDateRandom()+"_temps.xls";
 			String savePath = ServletActionContext.getServletContext().getRealPath("/")+filename;
@@ -691,13 +696,31 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 	public String getconvaluelist(){
 		//判断会话是否失效
 		User user=(User)session.get("user");
+		List<ConvalueVO> convaluevos = new ArrayList<ConvalueVO>();
 		if(user==null){
+			ConvalueVO convalueVO = new ConvalueVO();
+			convalueVO.setId(0);
+			convalueVO.setCvalue("会话失效请重新进入");
+			convaluevos.add(convalueVO);
+			// 将list转化成JSON对象
+			JSONArray jsonArray = JSONArray.fromObject(convaluevos);
+			//System.out.println(jsonArray.toString());
+			PrintWriter out;
+			try {
+				response.setCharacterEncoding("UTF-8"); 
+				out = response.getWriter();
+				out.print(jsonArray);
+				out.flush();
+				out.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 			return NONE;
 		}
 		int limits = user.getLimits();
 		int projectid = user.getProject().getId();
 		String linetext = user.getLinetext();
-		List<ConvalueVO> convaluevos = new ArrayList<ConvalueVO>();
+		
 		if(what==1){
 			//线路
 			List<Line> lines=null;
@@ -1024,6 +1047,18 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 	}
 	public void setWhat(int what) {
 		this.what = what;
+	}
+	public int getOthertype() {
+		return othertype;
+	}
+	public void setOthertype(int othertype) {
+		this.othertype = othertype;
+	}
+	public String getStarttimestr() {
+		return starttimestr;
+	}
+	public void setStarttimestr(String starttimestr) {
+		this.starttimestr = starttimestr;
 	}
 	
 	

@@ -118,9 +118,9 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 			alarmrecords=alarmrecordService.queryList(starttime,endtime,con,convalue,linetext,page,size);
 		}else if(limits==3){
 			//普通用户，查看他的上级管理员所管理的线路===============================
-			User upuser = userService.loadById(upuserid);
-			if(upuser!=null){
-				linetext = upuser.getLinetext();
+//			User upuser = userService.loadById(upuserid);
+//			if(upuser!=null){
+//				linetext = upuser.getLinetext();
 				//总记录数
 				totalCount=alarmrecordService.getTotalCount(starttime,endtime,con,convalue,linetext);
 				//总页数
@@ -130,10 +130,10 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 				}
 				//所有当前页记录对象
 				alarmrecords=alarmrecordService.queryList(starttime,endtime,con,convalue,linetext,page,size);
-			}
-		}else{
-			System.out.println("-------------无上级用户---------");
-			return NONE;
+//			}
+//		}else{
+//			System.out.println("-------------无上级用户---------");
+//			return NONE;
 		}
 		return "list";
 	}
@@ -192,9 +192,9 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 			alarmrecords=alarmrecordService.queryList(starttime,endtime,con,convalue,linetext,page,size);
 		}else if(limits==3){
 			//普通用户，查看他的上级管理员所管理的线路===============================
-			User upuser = userService.loadById(upuserid);
-			if(upuser!=null){
-				linetext = upuser.getLinetext();
+//			User upuser = userService.loadById(upuserid);
+//			if(upuser!=null){
+//				linetext = upuser.getLinetext();
 				//总记录数
 				totalCount=alarmrecordService.getTotalCount(starttime,endtime,con,convalue,linetext);
 				//总页数
@@ -204,10 +204,10 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 				}
 				//所有当前页记录对象
 				alarmrecords=alarmrecordService.queryList(starttime,endtime,con,convalue,linetext,page,size);
-			}
-		}else{
-			System.out.println("-------------无上级用户---------");
-			return NONE;
+//			}
+//		}else{
+//			System.out.println("-------------无上级用户---------");
+//			return NONE;
 		}
 		return "alarmrecordformobile";
 	}
@@ -317,15 +317,15 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 			alarmrecords=alarmrecordService.queryExportList(starttime,endtime,con,convalue,linetext);
 		}else if(limits==3){
 			//普通用户，查看他的上级管理员所管理的线路===============================
-			User upuser = userService.loadById(upuserid);
-			if(upuser!=null){
-				linetext = upuser.getLinetext();
+//			User upuser = userService.loadById(upuserid);
+//			if(upuser!=null){
+//				linetext = upuser.getLinetext();
 				//所有当前页记录对象
 				alarmrecords=alarmrecordService.queryExportList(starttime,endtime,con,convalue,linetext);
-			}
-		}else{
-			request.put("errorInfo", "无上级用户");
-			return "operror";
+//			}
+//		}else{
+//			request.put("errorInfo", "无上级用户");
+//			return "operror";
 		}
 		if(alarmrecords.size()>0){
 			//导出数据-------------------------------------

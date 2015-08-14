@@ -24,10 +24,10 @@ public class ImportExcel {
 	 //表头-up
 //    public static final String[] tableHeader = {"传感器数据编号","接收详细时间","接收数据","接收电池电压数据","接收类型","所属传感器"};
     public static final String[] tableHeader = {"项目名称","线路名称","网关名称","传感器编号","时间","类型","数值","电池电压"};
-    //创建工作本
-    public static HSSFWorkbook demoWorkBook = new HSSFWorkbook();
-    //创建表-up
-    public static HSSFSheet demoSheet = demoWorkBook.createSheet("sensordateExcel");
+//    //创建工作本
+//    public static HSSFWorkbook demoWorkBook = new HSSFWorkbook();
+//    //创建表-up
+//    public static HSSFSheet demoSheet = demoWorkBook.createSheet("sensordateExcel");
     //表头的单元格个数目
     public static final short cellNumber = (short)tableHeader.length;
     //数据库表的列数-up
@@ -36,7 +36,7 @@ public class ImportExcel {
      * 创建表头
      * @return
      */
-    public static void createTableHeader()
+    public static void createTableHeader(HSSFSheet demoSheet)
     {
         HSSFHeader header = demoSheet.getHeader();
         header.setCenter("传感器数据导出数据");
@@ -53,7 +53,7 @@ public class ImportExcel {
      * @param cells
      * @param rowIndex
      */
-    public static void createTableRow(List<String> cells,int rowIndex)
+    public static void createTableRow(List<String> cells,int rowIndex,HSSFSheet demoSheet)
     {
         //创建第rowIndex行
         HSSFRow row = demoSheet.createRow(rowIndex);
@@ -71,10 +71,10 @@ public class ImportExcel {
      * @throws SQLException 
      *
      */
-    public static void createExcelSheeet(List<Sensordata> sensordatas)
+    public static void createExcelSheeet(List<Sensordata> sensordatas,HSSFSheet demoSheet)
     {
     	//生成表头
-        createTableHeader();
+        createTableHeader(demoSheet);
         try {
         	for (int k = 0;k < sensordatas.size(); k++) {
         		Sensordata sensordata = sensordatas.get(k);
@@ -113,7 +113,7 @@ public class ImportExcel {
     			list.add(typename);
     			list.add(sensordata.getSdata().toString());
     			list.add(sensordata.getVdata().toString());
-    			createTableRow(list,(k+1));
+    			createTableRow(list,(k+1),demoSheet);
     		}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -126,7 +126,7 @@ public class ImportExcel {
      * @param os
      * @throws IOException
      */
-    public void exportExcel(HSSFSheet sheet,OutputStream os) throws IOException
+    public void exportExcel(HSSFSheet sheet,OutputStream os,HSSFWorkbook demoWorkBook) throws IOException
     {
         sheet.setGridsPrinted(true);
         HSSFFooter footer = sheet.getFooter();
@@ -161,11 +161,15 @@ public class ImportExcel {
 //		String fileName = "D:/soft/Tomcat6/webapps/tempsensor/temps.xls";
 //		String fileName = savePath;
 		FileOutputStream fos = null;
+		//创建工作本
+	    HSSFWorkbook demoWorkBook = new HSSFWorkbook();
+	    //创建表-up
+	    HSSFSheet demoSheet = demoWorkBook.createSheet("sensordateExcel");
            try {
            	   ImportExcel pd = new ImportExcel();
-               createExcelSheeet(sensordatas);
+               createExcelSheeet(sensordatas,demoSheet);
                fos = new FileOutputStream(savePath);
-               pd.exportExcel(demoSheet,fos);
+               pd.exportExcel(demoSheet,fos,demoWorkBook);
                
            } catch (Exception e) {
                e.printStackTrace();

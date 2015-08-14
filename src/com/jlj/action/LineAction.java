@@ -306,9 +306,10 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 		}else if(limits==3){
 			//普通用户，查看他的上级管理员所管理的线路===============================
 //			User upuser = userService.loadById(user.getUpuserid());
-			User upuser = userService.loadById(upuserid);
-			if(upuser!=null){
-				linetext = upuser.getLinetext();
+//			
+//			User upuser = userService.loadById(upuserid);
+//			if(upuser!=null){
+//				linetext = upuser.getLinetext();
 				if(convalue!=null&&!convalue.equals("")){
 					convalue=URLDecoder.decode(convalue, "utf-8");
 				}
@@ -324,10 +325,10 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 				}
 				//所有当前页记录对象
 				lines=lineService.queryManageList(con,convalue,linetext,page,size);
-			}else{
-				System.out.println("-------------无上级用户---------");
-				return NONE;
-			}
+//			}else{
+//				System.out.println("-------------无上级用户---------");
+//				return NONE;
+//			}
 		}
 		return "monitorshow";
 	}
@@ -397,9 +398,9 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 		}else if(limits==3){
 			//普通用户，查看他的上级管理员所管理的线路===============================
 //			User upuser = userService.loadById(user.getUpuserid());
-			User upuser = userService.loadById(upuserid);
-			if(upuser!=null){
-				linetext = upuser.getLinetext();
+//			User upuser = userService.loadById(upuserid);
+//			if(upuser!=null){
+//				linetext = upuser.getLinetext();
 				if(convalue!=null&&!convalue.equals("")){
 					convalue=URLDecoder.decode(convalue, "utf-8");
 				}
@@ -415,10 +416,10 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 				}
 				//所有当前页记录对象
 				lines=lineService.queryManageList(con,convalue,linetext,page,size);
-			}else{
-				System.out.println("-------------无上级用户---------");
-				return NONE;
-			}
+//			}else{
+//				System.out.println("-------------无上级用户---------");
+//				return NONE;
+//			}
 		}
 		return "monitorshowformobile";
 	}

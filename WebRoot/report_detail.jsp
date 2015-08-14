@@ -36,9 +36,34 @@
 						
 					})     	 
 				}
+				
+	function loadwhat(what){
+		$("#convalue").empty();//清空  
+				  $.ajax({ 
+					type:'get', 
+					url:'getconvaluelist', 
+					dataType: 'json', 
+					data:'what='+what,
+						success:function(data){ 
+							var _tr = "";
+							$.each(data,function(i,list){ 
+								_tr += "["+list.id+","+list.cvalue+"]";
+								if(list.cvalue=='<s:property value="convalue"/>'){
+									$("#convalue").append("<option id='"+list.id+"' value='"+list.cvalue+"'  selected='selected'>"+list.cvalue+"</option>");
+								}else{
+									$("#convalue").append("<option id='"+list.id+"' value='"+list.cvalue+"'>"+list.cvalue+"</option>");
+								}
+								
+							}) 
+							console.log(_tr);
+						} 
+						
+					}) 
+		//document.getElementById('convalue').value='<s:property value="convalue"/>';
+	}
 </script>
 </head>
-<body leftmargin="8" topmargin="8" >
+<body leftmargin="8" topmargin="8" onload="loadwhat(document.getElementById('con').value);">
 <div class="linedwon"><img src="skin/images/frame/jiantou.gif" width="20" height="20" border="0">当前位置：显示查询>>报表查询>>详细查询</div>
 
   
@@ -70,9 +95,6 @@
 			<select id="convalue" name="convalue" style="width:180px;">
 				<option value="未选择">未选择</option>
 			</select>
-			<!-- 
-			<s:textfield name="convalue" cssStyle="width:150px;"></s:textfield>
-			 -->
 			设备类别：
 			<s:select list="#{0:'其他',1:'温度/电池电压',2:'压力',3:'流量',5:'表面温度'}" name="stype" cssStyle="width:150px;"></s:select>
 			
@@ -114,7 +136,7 @@
 		<td><s:property value="sensor.gateway.line.name"/></td>
 		<td><s:property value="sensor.gateway.name"/></td>
 		<td><s:property value="sensor.name"/></td>
-	  	<td><s:date name="sdatetime" format="yyyy-MM-dd HH:mm:ss" /></td>
+	  	<td>w<s:date name="sdatetime" format="yyyy-MM-dd HH:mm:ss" /></td>
 	    <td>
 	    	<s:if test="stype==1">
 	    		温度/电池电压

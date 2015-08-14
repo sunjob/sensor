@@ -434,9 +434,9 @@ public class TimeServerHandler  implements IoHandler {
 						//1-以前报过警（即iscanalarm=0），并且温度值保持在正常值以上温度的时间与最近报警的时间计算时间间隔，超过设置时间间隔天数，则再次报警
 						//2-判断温度是否超温，若超过报警温度并且可以报警（iscanalarm=1），则直接报警，并改为不可再次报警（iscanalarm=0）
 						//3-若温度有低于正常值，表示可以再次报警（即设置iscanalarm=1）
-						//*********************************报警温度上限*************************************
+						//*********************************报警温度上限和报警温度下限*************************************
 						if(sensor!=null&&sensor.getIscanalarm()!=null){
-							int iscanalarm = sensor.getIscanalarm();
+							int iscanalarm = sensor.getIscanalarm();//是否可以报警
 							
 							Alarm alarm = alarmService.getAlarmByProjectid(gateway.getLine().getProject().getId());//根据项目id查出该报警设置对象
 							
@@ -444,10 +444,15 @@ public class TimeServerHandler  implements IoHandler {
 							String nowtime = DateTimeKit.getDateTimeString(nowdate);//现在的时间-string
 							
 							if(iscanalarm==1){
-								float alarmtemp = 0f;//获取报警温度
+								float alarmtemp = 0f;//获取报警温度上限
+								float alarmtempdown = 0f;//获取报警温度上限
 								if(sensor.getAlarmtemp()!=null){
 									alarmtemp = sensor.getAlarmtemp();
 								}
+								if(sensor.getAlarmtempdown()!=null){
+									alarmtempdown = sensor.getAlarmtempdown();
+								}
+								//若温度高于报警温度
 								if(alarmtemp!=0&&temperature>alarmtemp){
 									//2温度超过某个值报警
 									System.out.println("[超温报警]++++++++++"+temperature);
@@ -484,81 +489,7 @@ public class TimeServerHandler  implements IoHandler {
 									iscanalarm = 0;
 									sensorService.updateSensorIscanalarm(iscanalarm,sensor.getId());
 								}
-							}else if(iscanalarm==0){
-								//3若温度有低于正常值，表示可以再次报警（即设置iscanalarm=1）
-								float normaltemp = 0f;//获取正常温度
-								if(sensor.getNormaltemp()!=null){
-									normaltemp = sensor.getNormaltemp();
-								}
-								if(normaltemp!=0&&temperature<normaltemp){
-									//修改可以再次报警iscanalarm=1
-									iscanalarm = 1;
-									sensorService.updateSensorIscanalarm(iscanalarm,sensor.getId());
-									//修改传感器实时状态为正常温度状态（即status=1）-------------------------
-									sensorService.updateStatusBySensorid(1,sensor.getId());
-								}
-								//1温度值保持在正常值以上温度的时间与最近报警的时间计算时间间隔，超过设置时间间隔天数，则再次报警
-								String lasttime = DateTimeKit.getDateTimeString(sensor.getLasttime());//数据库中记录的最新报警时间
-								int interalday = DateTimeKit.daysBetween(lasttime,nowtime);//相隔天数
-								
-								//查出该项目设置的报警相隔天数------------------------------
-								int temptime=0;//获取报警间隔天数
-								if(alarm==null){
-									System.out.println("[超温报警]--------------------该报警设置不存在，请联系管理员！");
-									temptime = 5;//默认5天
-								}else{
-									temptime = alarm.getTemptime();
-								}
-								 
-								if(interalday>temptime){
-									System.out.println("[超温报警]++++++++++"+temperature);
-									//发送报警短信------------------------start
-									String phones="";
-									if(sensor.getAlarmphones()!=null&&!sensor.getAlarmphones().equals("")){
-										phones = sensor.getAlarmphones();
-									}else{
-										phones = alarm.getPhones();
-									}
-									if(!phones.equals("")){
-										String smstemplate = alarm.getSmstemplate();
-										smstemplate = smstemplate.replace("#日期时间#", nowtime);
-										smstemplate = smstemplate.replace("#项目#-#线路#-#网关#-#传感器编号#-#温度#",gateway.getLine().getProject().getName()+"-"+gateway.getLine().getName()+"-"+gateway.getName()+"-"+sensor.getName()+"-"+temperature+"度");
-										String result = Send.sendSMS(phones, smstemplate);
-										//发送报警短信------------------------end
-										
-										//记录报警内容，报警短信和报警时间到数据库-------------------------start
-										Alarmrecord alarmrecord = new Alarmrecord();
-										alarmrecord.setAlarmdata(temperature);
-										alarmrecord.setAlarmtime(nowdate);
-										alarmrecord.setAlarmtype(1);
-										alarmrecord.setPhones(phones);
-										result = Send.parseSmsResultXml(result);
-										alarmrecord.setSendreturn(result);
-										alarmrecord.setSensor(sensor);
-										alarmrecordService.add(alarmrecord);
-										//记录报警内容，报警短信和报警时间到数据库-------------------------end
-									}
-									
-									
-								}
-								
-							}
-						}
-						
-						//*********************************报警温度下限*************************************
-						if(sensor!=null&&sensor.getIscanalarm()!=null){
-							int iscanalarm = sensor.getIscanalarm();
-							
-							Alarm alarm = alarmService.getAlarmByProjectid(gateway.getLine().getProject().getId());//根据项目id查出该报警设置对象
-							
-							Date nowdate = new Date();//现在的时间-util
-							String nowtime = DateTimeKit.getDateTimeString(nowdate);//现在的时间-string
-							
-							if(iscanalarm==1){
-								float alarmtempdown = 0f;//获取报警温度下限
-								if(sensor.getAlarmtempdown()!=null){
-									alarmtempdown = sensor.getAlarmtempdown();
-								}
+								//若温度低于报警温度
 								if(alarmtempdown!=0&&temperature<alarmtempdown){
 									//2温度低于某个值报警
 									System.out.println("[低温报警]++++++++++"+temperature);
@@ -595,13 +526,21 @@ public class TimeServerHandler  implements IoHandler {
 									iscanalarm = 0;
 									sensorService.updateSensorIscanalarm(iscanalarm,sensor.getId());
 								}
+								
 							}else if(iscanalarm==0){
+								//3若温度有低于正常值，表示可以再次报警（即设置iscanalarm=1）
+								float normaltemp = 0f;//获取正常温度上限
 								//3若温度有高于正常值下限，表示可以再次报警（即设置iscanalarm=1）
-								float normaltempdown = 0f;//获取正常温度
+								float normaltempdown = 0f;//获取正常温度下限
+								
+								if(sensor.getNormaltemp()!=null){
+									normaltemp = sensor.getNormaltemp();
+								}
 								if(sensor.getNormaltempdown()!=null){
 									normaltempdown = sensor.getNormaltempdown();
 								}
-								if(normaltempdown!=0&&temperature>normaltempdown){
+								
+								if(normaltemp!=0&&temperature<normaltemp&&temperature>normaltempdown){
 									//修改可以再次报警iscanalarm=1
 									iscanalarm = 1;
 									sensorService.updateSensorIscanalarm(iscanalarm,sensor.getId());
@@ -615,14 +554,14 @@ public class TimeServerHandler  implements IoHandler {
 								//查出该项目设置的报警相隔天数------------------------------
 								int temptime=0;//获取报警间隔天数
 								if(alarm==null){
-									System.out.println("[低温报警]--------------------该报警设置不存在，请联系管理员！");
+									System.out.println("[超温报警]--------------------该报警设置不存在，请联系管理员！");
 									temptime = 5;//默认5天
 								}else{
 									temptime = alarm.getTemptime();
 								}
 								 
 								if(interalday>temptime){
-									System.out.println("[低温报警]++++++++++"+temperature);
+									System.out.println("[超温报警/低温报警]++++++++++"+temperature);
 									//发送报警短信------------------------start
 									String phones="";
 									if(sensor.getAlarmphones()!=null&&!sensor.getAlarmphones().equals("")){
@@ -656,10 +595,11 @@ public class TimeServerHandler  implements IoHandler {
 							}
 						}
 						
+						
 //						float alarmpressure = sensor.getAlarmpressure();
 //						float alarmflow = sensor.getAlarmflow();
 //						float alarmbmtemp = sensor.getAlarmbmtemp();
-						//*********************************报警电压上限*************************************
+						//*********************************报警电压下限*************************************
 						if(sensor!=null&&sensor.getIscanalarm2()!=null){
 							int iscanalarm2 = sensor.getIscanalarm2();
 							

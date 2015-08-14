@@ -39,7 +39,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </tr>
 </s:if>
 <s:else>
-	<s:hidden name="command.project.id"></s:hidden>
+	<s:hidden name="addresslist.project.id"></s:hidden>
 </s:else>
 
 <tr align="center" bgcolor="#FFFFFF" onMouseMove="javascript:this.bgColor='#FCFDEE';" onMouseOut="javascript:this.bgColor='#FFFFFF';" height="30" >
