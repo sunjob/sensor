@@ -114,6 +114,7 @@ public class ImportExcel {
     			list.add(sensordata.getSdata().toString());
     			list.add(sensordata.getVdata().toString());
     			createTableRow(list,(k+1),demoSheet);
+//    			System.out.println("k:"+k);
     		}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -167,8 +168,8 @@ public class ImportExcel {
 	    HSSFSheet demoSheet = demoWorkBook.createSheet("sensordateExcel");
            try {
            	   ImportExcel pd = new ImportExcel();
-           	   fos = new FileOutputStream(savePath);
                createExcelSheeet(sensordatas,demoSheet);
+               fos = new FileOutputStream(savePath);
                pd.exportExcel(demoSheet,fos,demoWorkBook);
                
            } catch (Exception e) {
