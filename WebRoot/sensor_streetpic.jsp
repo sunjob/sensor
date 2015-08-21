@@ -17,7 +17,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 </head>
 <body leftmargin="8" topmargin="8" >
-<div class="linedwon"><img src="skin/images/frame/jiantou.gif" width="20" height="20" border="0">当前位置：系统设置&gt;&gt;传感器街景图片&nbsp;<a href="sensorAction!sensorrealtime?lineid=<s:property value="#parameters.lineid" />&mapsize=<s:property value="#parameters.mapsize" />&lng=<s:property value="#parameters.lng" />&lat=<s:property value="#parameters.lat" />" style=" color:red;">[返回]</a></div>
+<div class="linedwon"><img src="skin/images/frame/jiantou.gif" width="20" height="20" border="0">
+当前位置：系统设置&gt;&gt;传感器街景图片&nbsp;
+<s:if test="#parameters.nomaptype[0]==1">
+	<a href="javascript:history.back();" style=" color:red;">[返回]</a>
+</s:if>
+<s:else>
+	<a href="sensorAction!sensorrealtime?lineid=<s:property value="#parameters.lineid" />&mapsize=<s:property value="#parameters.mapsize" />&lng=<s:property value="#parameters.lng" />&lat=<s:property value="#parameters.lat" />" style=" color:red;">[返回]</a>
+</s:else>
+</div>
   
   
   <div id="updateform">

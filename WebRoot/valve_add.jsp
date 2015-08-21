@@ -36,7 +36,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </tr>
 
 <tr align="center" bgcolor="#FFFFFF" onMouseMove="javascript:this.bgColor='#FCFDEE';" onMouseOut="javascript:this.bgColor='#FFFFFF';" height="30" >
-	<td width="25%" height="25" align="right"><strong><font color="#333333">*外设编号</font></strong></td>
+	<td width="25%" height="25" align="right"><strong><font color="#333333">*外设名称</font></strong></td>
 	<td width="75%" align="left">
 	  <label>
 		<s:textfield  name="valve.name"  id="name"></s:textfield>

@@ -61,11 +61,13 @@ $(function () {
                         var series = this.series[0];      
                         var sensorid = <s:property value="sensor.id" />; 
                         var starttime = document.getElementById("startdate").value;                         
+                        var stype = <s:property value="stype"/>;                         
+                        var othertype = <s:property value="othertype"/>;                         
                         setInterval(function() { 
                         	$.ajax({   
 					            url:'getnewtemp',//这里是你的action或者servlert的路径地址   
 					            type:'get', //数据发送方式
-					            data: { "sensorid":sensorid,"starttimestr":starttime},   
+					            data: { "sensorid":sensorid,"starttimestr":starttime,"stype":stype,"othertype":othertype},   
 					            async:false,
 					            dataType:'json',
 					            error: function(msg)
@@ -102,7 +104,7 @@ $(function () {
                 
         },
         title: {
-            text: '<s:property value="sensor.gateway.line.name" />-<s:property value="sensor.gateway.name" />-<s:property value="sensor.name" />-温度曲线图'
+            text: '<s:property value="sensor.gateway.line.name" />-<s:property value="sensor.gateway.name" />-<s:property value="sensor.name" />-曲线图'
         },
         xAxis: {
             type: 'datetime',
@@ -212,7 +214,7 @@ $(function () {
 									</td>
 									<td>
 										<div id="showstype" style="float: left;">
-											<s:select list="#{1:'温度/电池电压',2:'压力',3:'流量',5:'表面温度'}" name="stype" listKey="key" listValue="value" onchange="checkstype(this.value);"></s:select>&nbsp;
+											<s:select list="#{1:'温度/电池电压',2:'压力',3:'流量',5:'表面温度'}" name="stype" listKey="key" listValue="value" onchange="checkstype(this.value);" id="stype"></s:select>&nbsp;
 										</div>
 									<script type="text/javascript">
 										function checkstype(svalue){
@@ -227,12 +229,13 @@ $(function () {
 									</script>
 										<s:if test="stype==1">
 											<div id="otherid" style="float: left;">
-												<s:radio list="#{0:'温度',1:'电池电压'}" name="othertype" listKey="key" listValue="value"></s:radio>
+												<s:radio list="#{0:'温度',1:'电池电压'}" name="othertype" listKey="key" listValue="value" id="othertype"></s:radio>
+												
 											</div>
 										</s:if>
 										<s:else>
 											<div id="otherid" style="float: left;display: none;">
-												<s:radio list="#{0:'温度',1:'电池电压'}" name="othertype" listKey="key" listValue="value"></s:radio>
+												<s:radio list="#{0:'温度',1:'电池电压'}" name="othertype" listKey="key" listValue="value" id="othertype"></s:radio>
 											</div>
 										</s:else>
 										
@@ -260,9 +263,9 @@ $(function () {
 										翻页：
 									</td>
 									<td height="50">
-										<input name="pagebefore" type="button" class="scbtn" value="上页"  onclick="javascript:jumpListlinePage('sensordataAction!listline',<s:property value="sensor.id" />,-1,'<s:property value="starttime"/>','<s:property value="endtime"/>',<s:property value="lineid" />,<s:property value="mapsize" />,'<s:property value="lng" />','<s:property value="lat" />');"/>
+										<input name="pagebefore" type="button" class="scbtn" value="上页"  onclick="javascript:jumpListlinePage('sensordataAction!listline',<s:property value="sensor.id" />,-1,'<s:property value="starttime"/>','<s:property value="endtime"/>',<s:property value="lineid" />,<s:property value="mapsize" />,'<s:property value="lng" />','<s:property value="lat" />',<s:property value="stype" />,<s:property value="othertype" />);"/>
 									
-										<input name="pagenext" type="button" class="scbtn" value="下页"  onclick="javascript:jumpListlinePage('sensordataAction!listline',<s:property value="sensor.id" />,1,'<s:property value="starttime"/>','<s:property value="endtime"/>',<s:property value="lineid" />,<s:property value="mapsize" />,'<s:property value="lng" />','<s:property value="lat" />');"/>
+										<input name="pagenext" type="button" class="scbtn" value="下页"  onclick="javascript:jumpListlinePage('sensordataAction!listline',<s:property value="sensor.id" />,1,'<s:property value="starttime"/>','<s:property value="endtime"/>',<s:property value="lineid" />,<s:property value="mapsize" />,'<s:property value="lng" />','<s:property value="lat" />',<s:property value="stype" />,<s:property value="othertype" />);"/>
 
 									</td>
 								</tr>
@@ -273,7 +276,7 @@ $(function () {
 	</body>
 </html>
 <script type="text/javascript">
-function jumpListlinePage(url,sensorid,page,starttime,endtime,lineid,mapsize,lng,lat){
+function jumpListlinePage(url,sensorid,page,starttime,endtime,lineid,mapsize,lng,lat,stype,othertype){
 	
 	var page=page;
 	if(isNaN(page)){
@@ -281,7 +284,7 @@ function jumpListlinePage(url,sensorid,page,starttime,endtime,lineid,mapsize,lng
 		page=parseInt(page2);
 	}
 	
-	var url=url+'?sensorid='+sensorid+'&page='+page+'&starttime='+starttime+'&endtime='+endtime+'&lineid='+lineid+'&mapsize='+mapsize+'&lng='+lng+'&lat='+lat;
+	var url=url+'?sensorid='+sensorid+'&page='+page+'&starttime='+starttime+'&endtime='+endtime+'&lineid='+lineid+'&mapsize='+mapsize+'&lng='+lng+'&lat='+lat+'&stype='+stype+'&othertype='+othertype;
 	url=encodeURI(url);
 	url=encodeURI(url);
 	window.location=url;

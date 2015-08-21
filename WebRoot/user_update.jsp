@@ -17,19 +17,34 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	console.log("后台传过来的ulimit="+ulimit);
 </script>
 <script type="text/javascript" src="js/jsp_util.js"></script>
+<script type="text/javascript">
+	function checkform(){
+		var userlines = document.getElementsByName("user.linetext");
+        var valueArray = new Array();
+        for(var i = 0; i < userlines.length; i++){
+        	if(userlines[i].checked)
+        	valueArray.push(userlines[i].value);
+        } 
+        var valueStr = valueArray.toString();
+		if(valueStr==""||valueStr.length==0){
+			alert("管理线路未选择");
+			return false;
+		}
+		return true;
+	}
+
+</script>
+
 </head>
 <body leftmargin="8" topmargin="8" >
 <div class="linedwon"><img src="skin/images/frame/jiantou.gif" width="20" height="20" border="0">当前位置：修改用户信息&gt;&gt;修改用户&nbsp;<a href="javascript:history.back();" style=" color:red;">[返回]</a></div>
   
 <!--  内容列表   -->
-<s:form name="form2" action="userAction!update" method="post"  enctype="multipart/form-data" >
+<s:form name="form2" action="userAction!update" method="post"  enctype="multipart/form-data" onsubmit="return checkform()">
 
 <table width="50%" border="0" cellpadding="2" cellspacing="1" bgcolor="#D1DDAA" align="center" style="margin-top:8px">
 <tr bgcolor="#E7E7E7">
 	<td height="33" colspan="2" align="center"><strong>修改用户</strong>
-    <!--
-<s:hidden name="bigtype.publicaccount" value="%{#session.pubclient.publicaccount}"></s:hidden>
-  -->
   	   <s:hidden id="uid" name="user.id"/>
   	   <s:hidden name="user.upuserid"/>
   	   <s:hidden name="user.limits"/>
@@ -68,7 +83,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <td width="25%" height="25" align="right"><strong><font color="#333333">管理线路</font></strong></td>
   <td width="75%" align="left">
     <label>
-	<s:checkboxlist name="user.linetext" list="lines"  listKey="id" listValue="name"  value="userlines.{id}"/>
+	<s:checkboxlist name="user.linetext" list="lines"  listKey="id" listValue="name"  value="userlines.{id}" />
     </label></td>
 </tr>
 </s:if>

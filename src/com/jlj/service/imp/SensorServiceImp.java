@@ -271,7 +271,7 @@ public class SensorServiceImp implements ISensorService {
 		return sensorDao.queryByNamedParam(queryString, paramNames, values);
 	}
 	public List<Sensor> getSensorsByLineid(int lineid) {
-		String queryString = "from Sensor mo where mo.gateway.line.id=:lineid";
+		String queryString = "from Sensor mo where mo.gateway.line.id=:lineid order by mo.orderid asc";
 		String[] paramNames = new String[] { "lineid" };
 		Object[] values = new Object[] { lineid};
 		return sensorDao.queryList(queryString, paramNames, values);

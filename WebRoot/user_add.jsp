@@ -16,12 +16,25 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	var ulimit = <s:property value="ulimit" />;
 </script>
 <script type="text/javascript" src="js/jsp_util.js"></script>
+<script type="text/javascript">
+	function checkform(){
+		var username = document.getElementById("username");
+		if(username.value.length==0||username.value==""){
+			alert("用户名不能为空");
+			username.value="";
+			username.focus();
+			return false;
+		}
+		
+		return true;
+	}
+</script>
 </head>
 <body leftmargin="8" topmargin="8" >
 <div class="linedwon"><img src="skin/images/frame/jiantou.gif" width="20" height="20" border="0">当前位置：系统管理&gt;&gt;新增用户&nbsp;<a href="javascript:history.back();" style=" color:red;">[返回]</a></div>
   
 <!--  内容列表   -->
-<s:form name="form2" action="userAction!add" method="post"  enctype="multipart/form-data" >
+<s:form name="form2" action="userAction!add" method="post"  enctype="multipart/form-data" onsubmit="return checkform();">
 <table width="50%" border="0" cellpadding="2" cellspacing="1" bgcolor="#D1DDAA" align="center" style="margin-top:8px">
 <tr bgcolor="#E7E7E7">
 	<td height="33" colspan="2" align="center"><strong>新增用户</strong>
@@ -44,7 +57,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 
 <tr align="center" bgcolor="#FFFFFF" onMouseMove="javascript:this.bgColor='#FCFDEE';" onMouseOut="javascript:this.bgColor='#FFFFFF';" height="25" >
-	<td width="25%" height="25" align="right"><strong><font color="#333333">用户名称</font></strong></td>
+	<td width="25%" height="25" align="right"><strong><font color="#333333">*用户名称</font></strong></td>
 	<td width="75%" align="left">
 	  <label>
 	      

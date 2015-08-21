@@ -384,6 +384,7 @@ public class TimeServerHandler  implements IoHandler {
 							sensor.setSensortype(1);//默认传感器类型：温度传感器
 							sensor.setIscanalarm(1);
 							sensor.setIscanalarm2(1);
+							sensor.setIntervaltime(5);//默认5分钟采样间隔
 							//插入报警表的默认报警值
 							Project projectobj = null;
 							if(gateway.getLine()!=null&&gateway.getLine().getProject()!=null){
@@ -396,17 +397,36 @@ public class TimeServerHandler  implements IoHandler {
 								if(alarmobj.getTemp()!=null){
 									sensor.setAlarmtemp(alarmobj.getTemp());//报警温度上限
 								}
+								if(alarmobj.getNormaltemp()!=null){
+									sensor.setNormaltemp(alarmobj.getNormaltemp());//正常温度上限
+								}
+								
+								if(alarmobj.getNormaltempdown()!=null){
+									sensor.setNormaltempdown(alarmobj.getNormaltempdown());//正常温度下限
+								}
+								
 								if(alarmobj.getTempdown()!=null){
 									sensor.setAlarmtempdown(alarmobj.getTempdown());//报警温度下限
 								}
+								
 								if(alarmobj.getVoltage()!=null){
 									sensor.setAlarmvoltage(alarmobj.getVoltage());//报警电压
 								}
+								if(alarmobj.getNormalvoltage()!=null){
+									sensor.setNormalvoltage(alarmobj.getNormalvoltage());//正常电压
+								}
+								
 								if(alarmobj.getFlow()!=null){
 									sensor.setAlarmflow(alarmobj.getFlow());//报警流量
 								}
+								if(alarmobj.getNormalflow()!=null){
+									sensor.setNormalflow(alarmobj.getNormalflow());//正常流量
+								}
 								if(alarmobj.getPressure()!=null){
 									sensor.setAlarmpressure(alarmobj.getPressure());//报警压力
+								}
+								if(alarmobj.getNormalpressure()!=null){
+									sensor.setNormalpressure(alarmobj.getNormalpressure());//正常压力
 								}
 //								if(alarmobj.getBmtemp()!=null){
 //									sensor.setAlarmbmtemp(alarmobj.getBmtemp());//报警表面温度

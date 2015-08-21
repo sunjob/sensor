@@ -104,7 +104,7 @@
         
              <input type="reset" class="coolbg np" value="重 置" />
              
-             <input type="button" class="coolbg np" value="导出数据"  onClick="javascript:jumpReportExportPage('sensordataAction!reportdetailexport',document.getElementById('page').value,'<s:property value="starttime"/>','<s:property value="endtime"/>',<s:property value="con"/>,'<s:property value="convalue"/>',<s:property value="stype"/>,<s:property value="limits"/>,<s:property value="projectid"/>,'<s:property value="linetext"/>',<s:property value="upuserid"/>);"/>
+             <input type="button" class="coolbg np" value="导出数据"  onClick="javascript:jumpReportExportPage('sensordataAction!reportdetailexport',document.getElementById('page').value,'<s:property value="starttime"/>','<s:property value="endtime"/>',<s:property value="con"/>,'<s:property value="convalue"/>',<s:property value="stype"/>,<s:property value="limits"/>,<s:property value="projectid"/>,'<s:property value="linetext"/>',<s:property value="upuserid"/>,<s:property value="totalCount" />);"/>
         </td>
       </tr>
     </table>
@@ -136,7 +136,7 @@
 		<td><s:property value="sensor.gateway.line.name"/></td>
 		<td><s:property value="sensor.gateway.name"/></td>
 		<td><s:property value="sensor.name"/></td>
-	  	<td>w<s:date name="sdatetime" format="yyyy-MM-dd HH:mm:ss" /></td>
+	  	<td><s:date name="sdatetime" format="yyyy-MM-dd HH:mm:ss" /></td>
 	    <td>
 	    	<s:if test="stype==1">
 	    		温度/电池电压

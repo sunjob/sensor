@@ -65,8 +65,12 @@ function jumpReportPage(url,page,starttime,endtime,con,convalue,stype,limits,pro
 }
 
 //报表导出数据
-function jumpReportExportPage(url,page,starttime,endtime,con,convalue,stype,limits,projectid,linetext,upuserid){
-	
+function jumpReportExportPage(url,page,starttime,endtime,con,convalue,stype,limits,projectid,linetext,upuserid,totalCount){
+	//alert(totalCount);
+	if(totalCount>60000){
+		alert("数据量超出范围，请缩小查询范围导出，1~60000条数据");
+		return;
+	}
 	var page=page;
 	if(isNaN(page)){
 		var page2=document.getElementById(page).value;

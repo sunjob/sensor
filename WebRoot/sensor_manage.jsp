@@ -73,8 +73,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   	<td width="8%" align="center">纬度</td>
   	<td width="7%" align="center">位置描述</td>
   	<td width="5%" align="center">街景图片</td>
-	<td width="5%" align="center">修改</td>
+	
 	<td width="5%" align="center">采样间隔</td>
+	<td width="5%" align="center">修改</td>
 	<td width="5%" align="center">删除</td>
 </tr>
 <s:if test="%{sensors.size()==0}">
@@ -88,7 +89,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<td><s:property value="gateway.line.project.name" /></td>
 		<td><s:property value="gateway.line.name" /></td>
 		<td><s:property value="gateway.name" /></td>
-	   <td><a href="sensorAction!view?id=<s:property value="id"/>"><s:property value="name"/></a></td>
+	   <td><s:property value="name"/></td>
 	   <td>
 	   	<s:if test="sensortype==0">
 	   			其他
@@ -114,7 +115,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<td><s:property value="lng" /></td>
 		<td><s:property value="lat" /></td>
 		<td><s:property value="location" /></td>
-		 <td><input type="button" value="查看" onclick="window.location.href='sensorAction!showStreetpic?id=<s:property value="id" />'"/></td>
+		 <td><input type="button" value="查看" onclick="window.location.href='sensorAction!showStreetpic?id=<s:property value="id" />&nomaptype=1'"/></td>
+		<td>
+			<a href="sensorAction!loadsendinterval?id=<s:property value="id" />" title="配置采样间隔"><s:property value="intervaltime" /></a>
+		</td>
 		<td>
 		<s:if test="lng==null||lng==''||lat==null||lat==''">
 			<a href="sensorAction!load?id=<s:property value="id" />"><img src="skin/images/frame/redpen.gif" width="20" height="20" border="0"></a>
@@ -123,9 +127,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<a href="sensorAction!load?id=<s:property value="id" />"><img src="skin/images/frame/huiwu_3.gif" width="20" height="20" border="0"></a>
 		</s:else>
 		</td>
-		<td>
-			<a href="sensorAction!loadsendinterval?id=<s:property value="id" />" >配置</a>
-		</td>
+		
 		<td>
 			<a href="sensorAction!delete?id=<s:property value="id" />" onclick="return confirm('你确定删除该信息吗？')"><img src="skin/images/frame/huiwu_2.gif" width="20" height="20" border="0"></a>
 		</td>

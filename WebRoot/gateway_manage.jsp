@@ -50,7 +50,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 <table width="98%" border="0" cellpadding="2" cellspacing="1" bgcolor="#D1DDAA" align="center" style="margin-top:8px">
 <tr bgcolor="#E7E7E7">
-	<td height="33" colspan="14" align="center">&nbsp;<b>网关管理</b>&nbsp;
+	<td height="33" colspan="13" align="center">&nbsp;<b>网关管理</b>&nbsp;
     <!--
 <input type="hidden" name="publicaccount" value="" id="publicaccount"/>
   -->
@@ -58,7 +58,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	</td>
 </tr>
 <tr bgcolor="#E7E7E7">
-  <td height="33" colspan="14" bgcolor="#FFFFE5"><table width="60%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <td height="33" colspan="13" bgcolor="#FFFFE5"><table width="60%" border="0" align="center" cellpadding="0" cellspacing="0">
     <tr>
         <td width="15%" align="right" style="padding-right: 50px;">
 
@@ -95,14 +95,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<td width="5%" align="center">状态</td>
 	<td width="5%" align="center">发送命令</td>
 	<td width="5%" align="center">修改</td>
-	<td width="5%" align="center">通道配置</td>
 	<td width="5%" align="center">删除</td>
 	</tr>
 
 	
   
 	<s:if test="%{gateways.size()==0}">
-				<td colspan="14" align="center">
+				<td colspan="13" align="center">
 					暂无该信息
 				</td>
 			</s:if>
@@ -116,7 +115,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
      <td><a href="gatewayAction!view?id=<s:property value="id" />"><s:property value="name" /></a></td>
        <td><s:property value="gateaddress" /></td>
           <td><s:property value="macaddress" /></td>
-          <td><s:property value="channel" /></td>
+          <td><a href="gatewayAction!loadchannel?id=<s:property value="id" />" title="配置通道"><s:property value="channel" /></a></td>
             <td><s:property value="phonenumber" /></td>
     <td><input type="button" value="查看" onclick="window.location.href='gatewayAction!showStreetpic?id=<s:property value="id" />'"/></td>
     
@@ -133,14 +132,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    <s:else>
    		<td><a href="gatewayAction!load?id=<s:property value="id" />"><img src="skin/images/frame/redpen.gif" width="20" height="20" border="0"></a></td>
    </s:else>
-    <td><a href="gatewayAction!loadchannel?id=<s:property value="id" />">配置</a></td>
     <td><a href="gatewayAction!delete?id=<s:property value="id" />" onclick="return confirm('网关下所有传感器及测试数据都将被删除，你确定删除该信息吗？')"><img src="skin/images/frame/huiwu_2.gif" width="20" height="20" border="0"></a></td>
   </tr>
 </s:iterator>
 
 <tr align="right" bgcolor="#EEF4EA">
   
- <td height="34" colspan="14" align="center">记录数：<s:property value="totalCount" />
+ <td height="34" colspan="13" align="center">记录数：<s:property value="totalCount" />
   &nbsp;&nbsp;&nbsp; 
   <a href="javascript:jumpLinePage('gatewayAction!list',1,<s:property value="con"/>,'<s:property value="convalue"/>');" target="rightFrame">首页</a>&nbsp;&nbsp; 
   <a href="javascript:jumpLinePage('gatewayAction!list',<s:property value="page-1"/>,<s:property value="con"/>,'<s:property value="convalue"/>');" target="rightFrame">上一页</a>&nbsp;&nbsp;&nbsp; 

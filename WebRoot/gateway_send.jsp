@@ -29,10 +29,12 @@ function checkform(){
 	}
 	return true;
 }
-
+function loaddata(){
+	document.getElementById('cmd').value=document.getElementById('commandsel').value;
+}
 </script>
 </head>
-<body leftmargin="8" topmargin="8" >
+<body leftmargin="8" topmargin="8" onload="loaddata()">
 <div class="linedwon"><img src="skin/images/frame/jiantou.gif" width="20" height="20" border="0">当前位置：系统管理&gt;&gt;命令发送&nbsp;<a href="javascript:history.back();" style=" color:red;">[返回]</a></div>
   
 <!--  内容列表   -->
@@ -49,7 +51,7 @@ function checkform(){
 	<td width="10%" height="25" align="right"><strong><font color="#333333">命令选择</font></strong></td>
 	<td width="90%" align="left">
 	  <label>
-		<s:select list="commands" listKey="command" listValue="name" onclick="document.getElementById('cmd').value=this.value"></s:select>
+		<s:select list="commands" listKey="command" listValue="name" onclick="document.getElementById('cmd').value=this.value" id="commandsel"></s:select>
 	  </label></td>
 </tr>
 

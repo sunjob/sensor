@@ -46,10 +46,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 
 <tr align="center" bgcolor="#FFFFFF" onMouseMove="javascript:this.bgColor='#FCFDEE';" onMouseOut="javascript:this.bgColor='#FFFFFF';" height="30" >
-	<td width="25%" height="25" align="right"><strong><font color="#333333">采样间隔</font></strong></td>
+	<td width="25%" height="25" align="right"><strong><font color="#333333">*采样间隔</font></strong></td>
 	<td width="75%" align="left">
 	  <label>
-		<s:textfield cssClass="ck" id="intervaltime" name="intervaltime" value="%{sensor.intervaltime}" cssStyle="width:40%"></s:textfield>
+		<s:textfield cssClass="ck" id="intervaltime" name="intervaltime" value="%{sensor.intervaltime}" cssStyle="width:40%"></s:textfield>&nbsp;(5-1440)分钟
 	  </label></td>
 </tr>
 

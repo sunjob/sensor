@@ -64,7 +64,7 @@ public class Receivelog implements java.io.Serializable {
 		this.project = project;
 	}
 
-	@Column(name = "loginfo", length = 30)
+	@Column(name = "loginfo", length = 65535)
 	public String getLoginfo() {
 		return loginfo;
 	}

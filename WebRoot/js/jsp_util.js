@@ -338,7 +338,7 @@ function checkPhone()
 {
 	  var partten = /^1[3,5,8]\d{9}$/;
 	  if(!partten.test($("#phone").val())){
-        alert("不是正确的11位手机号或者正确的固话");
+        alert("不是正确的11位手机号");
         $(document).ready(function(){ 
 				 			$("#phone").val('');
 				 		});
@@ -388,9 +388,9 @@ function checkUser()
 
 function changePassword()
 {
-	if(confirm("您确定要重置密码?"))
+	if(confirm("密码将被重置为123456，您确定要重置密码?"))
 	{
-		alert("密码已重置为123456,需保存之后才能修改.");
+		alert("需保存之后才能生效.");
 		$(document).ready(function(){
 		
 			$("#password").val("123456");
@@ -486,8 +486,8 @@ $(document).ready(function(){
 		{
 			
 			  var partten = /^1[3,5,8]\d{9}$/;
-	 			 if(!partten.test($("#phone").val())){
-		        alert("不是正确的11位手机号或者正确的固话");
+	 			 if(!partten.test($("#phonenumber").val())){
+		        alert("不是正确的11位手机号");
 		         $(this).val('');
 				return;
 		    }

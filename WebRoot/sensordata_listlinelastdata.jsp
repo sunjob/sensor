@@ -177,6 +177,7 @@ $(function () {
 	<body>
 <script src="js/highcharts.js"></script>
 <script src="js/modules/exporting.js"></script>
+<div class="linedwon"><img src="skin/images/frame/jiantou.gif" width="20" height="20" border="0">当前位置：监控显示&gt;&gt;<a href='javascript:history.back();' target='rightFrame'>返回</a>&nbsp;</div>
 
 <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
 

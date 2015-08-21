@@ -43,7 +43,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <td height="33" colspan="11" bgcolor="#FFFFE5"><table width="60%" border="0" align="center" cellpadding="0" cellspacing="0">
     <tr>
         <td width="15%" align="right" style="padding-right: 50px;">
-		         <s:select list="#{0:'选择类型',1:'所属线路',2:'所属网关',3:'外设编号'}" name="con" listKey="key" listValue="value" cssStyle="width:120px"></s:select>
+		         <s:select list="#{0:'选择类型',1:'所属线路',2:'所属网关',3:'外设名称'}" name="con" listKey="key" listValue="value" cssStyle="width:120px"></s:select>
         </td>
         <td width="25%">
           <input type="text" name="convalue" value="" id="convalue" style="width:80%"/>
@@ -66,7 +66,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<td width="10%" align="center">所属项目</td>
 	<td width="10%" align="center">所属线路</td>
 	<td width="10%" align="center">所属网关</td>
-  	<td width="10%" align="center">外设编号</td>
+  	<td width="10%" align="center">外设名称</td>
   	<td width="10%" align="center">外设地址</td>
   	<td width="10%" align="center">开关位置号</td>
   	<td width="10%" align="center">开关状态</td>

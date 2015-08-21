@@ -72,6 +72,7 @@ function checkform(){
 	<s:hidden name="gateway.channel"/>
 	<s:hidden name="gateway.orderid"/>
 	<s:hidden name="gateway.status"></s:hidden>
+	<s:hidden name="gateway.streetpic"></s:hidden>
 	<s:hidden id="isChannelUpdated" name="isChannelUpdated" />
 	</td>
 </tr>

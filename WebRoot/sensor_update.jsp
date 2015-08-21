@@ -18,6 +18,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			var lng = document.getElementById("lng");
 			var lat = document.getElementById("lat");
 			var sensorname = document.getElementById("sensorname");
+			var orderid = document.getElementById("orderid");
 			if(sensorname.value.length==0||sensorname.value==''){
 				alert("传感器编号不能为空");
 				sensorname.value="";
@@ -48,6 +49,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				lat.focus();
 				return false;
 			}
+			
+			if(orderid.value.length==0||orderid.value==''){
+				alert("地图排序编号不能为空");
+				orderid.value="";
+				orderid.focus();
+				return false;
+			}
+			if(isNaN(orderid.value)){
+				alert("地图排序编号输入不正确,请输入正确数字");
+				orderid.value="";
+				orderid.focus();
+				return false;
+			}
 			return true;
 		}
 </script>
@@ -69,8 +83,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<strong>传感器信息</strong></td>
 	<s:hidden name="sensor.id"></s:hidden>
 	<s:hidden name="sensor.gateway.id"></s:hidden>
-	<s:hidden name="sensor.orderid"></s:hidden>
 	<s:hidden name="sensor.sensoraddress"></s:hidden>
+	<s:hidden name="sensor.streetpic"></s:hidden>
 	<s:if test="sensor.nowtemp==0">
 		<s:hidden name="sensor.nowtemp" value=""></s:hidden>
 	</s:if>
@@ -170,7 +184,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	  </label></td>
 </tr>
 
-
+<tr align="center" bgcolor="#FFFFFF" onMouseMove="javascript:this.bgColor='#FCFDEE';" onMouseOut="javascript:this.bgColor='#FFFFFF';" height="30" >
+	<td width="25%" height="25" align="right"><strong><font color="#333333">*地图排序编号</font></strong></td>
+	<td width="75%" align="left">
+	  <label>
+				<s:textfield id="orderid"  name="sensor.orderid" cssStyle="width:80%"></s:textfield>
+	  </label></td>
+</tr>
 
 <tr align="center" bgcolor="#FFFFFF" onMouseMove="javascript:this.bgColor='#FCFDEE';" onMouseOut="javascript:this.bgColor='#FFFFFF';" height="30" >
 	<td width="25%" height="25" align="right"><strong><font color="#333333">传感器地址</font></strong></td>
@@ -270,13 +290,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	  </label></td>
 </tr>
 
-<tr align="center" bgcolor="#FFFFFF" onMouseMove="javascript:this.bgColor='#FCFDEE';" onMouseOut="javascript:this.bgColor='#FFFFFF';" height="30" >
-	<td width="25%" height="25" align="right"><strong><font color="#333333">报警温度下限</font></strong></td>
-	<td width="75%" align="left">
-	  <label>
-		<s:textfield cssClass="ck"  name="sensor.alarmtempdown" cssStyle="width:40%"></s:textfield> ℃
-	  </label></td>
-</tr>
+
 
 <tr align="center" bgcolor="#FFFFFF" onMouseMove="javascript:this.bgColor='#FCFDEE';" onMouseOut="javascript:this.bgColor='#FFFFFF';" height="30" >
 	<td width="25%" height="25" align="right"><strong><font color="#333333">正常温度下限</font></strong></td>
@@ -284,6 +298,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	  <label>
 
 		<s:textfield cssClass="ck" id="normaltemp" name="sensor.normaltempdown" cssStyle="width:40%"></s:textfield> ℃
+	  </label></td>
+</tr>
+
+<tr align="center" bgcolor="#FFFFFF" onMouseMove="javascript:this.bgColor='#FCFDEE';" onMouseOut="javascript:this.bgColor='#FFFFFF';" height="30" >
+	<td width="25%" height="25" align="right"><strong><font color="#333333">报警温度下限</font></strong></td>
+	<td width="75%" align="left">
+	  <label>
+		<s:textfield cssClass="ck"  name="sensor.alarmtempdown" cssStyle="width:40%"></s:textfield> ℃
 	  </label></td>
 </tr>
 
@@ -369,7 +391,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <td height="29" align="center" valign="bottom">
     <s:token></s:token>
       <input type='submit' class="coolbg np" onClick="" value='保存' style="width:80" />&nbsp;&nbsp;
-      <input type='reset' class="coolbg np" onClick="" value='取消' style="width:80" /></td>
+      <input type='reset' class="coolbg np" onClick="" value='重置' style="width:80" /></td>
   </tr>
   <tr>
     <td height="18" align="center">&nbsp;</td>

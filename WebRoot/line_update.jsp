@@ -11,7 +11,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <title>系统管理</title>
 <link rel="stylesheet" type="text/css" href="skin/css/base.css">
 <script type="text/javascript" src="js/jquery.js"></script>
-<script type="text/javascript" src="js/jsp_util.js"></script>
 <script type="text/javascript">
 function checkform(){
 	var linename = document.getElementById("linename");
@@ -64,7 +63,7 @@ function checkform(){
 
 
 <tr align="center" bgcolor="#FFFFFF" onMouseMove="javascript:this.bgColor='#FCFDEE';" onMouseOut="javascript:this.bgColor='#FFFFFF';" height="25" >
-  <td width="25%" height="25" align="right"><strong><font color="#333333">线路名称</font></strong></td>
+  <td width="25%" height="25" align="right"><strong><font color="#333333">*线路名称</font></strong></td>
   <td width="75%" align="left">
     <label>
      

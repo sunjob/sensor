@@ -167,8 +167,8 @@ public class ImportExcel {
 	    HSSFSheet demoSheet = demoWorkBook.createSheet("sensordateExcel");
            try {
            	   ImportExcel pd = new ImportExcel();
+           	   fos = new FileOutputStream(savePath);
                createExcelSheeet(sensordatas,demoSheet);
-               fos = new FileOutputStream(savePath);
                pd.exportExcel(demoSheet,fos,demoWorkBook);
                
            } catch (Exception e) {

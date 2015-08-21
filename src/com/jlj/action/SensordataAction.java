@@ -177,7 +177,6 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 	public String getnewtemp()
 	{			
 		//1-查询出该sensorid和stype的最新温度值
-		stype=1;
 		sensordata = sensordataService.getSensordataBySensoridAndStype(stype,sensorid);
 		Date newtimeDate = sensordata.getSdatetime();
 		String nowDatestr = DateTimeKit.getDateString(new Date());
@@ -194,7 +193,12 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 				SensordataVO dataVO = new SensordataVO();
 				String msg = "success";
 				dataVO.setMsg(msg);
-				dataVO.setData(sensordata.getSdata());
+				if(othertype==1){
+					dataVO.setData(sensordata.getVdata());//电压
+				}else{
+					dataVO.setData(sensordata.getSdata());//温度或其他值
+				}
+				
 				dataVO.setTime(DateTimeKit.getDateTimeString(newtimeDate));
 				JSONObject jsonObj = JSONObject.fromObject(dataVO);
 				PrintWriter out;
@@ -209,7 +213,7 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 					e.printStackTrace();
 				}
 				lastdata = tablelastdata;//更新计数器
-				System.out.println("lastdata is --------------"+lastdata);
+//				System.out.println("lastdata is --------------"+lastdata);
 		}
 		return null;
 	}

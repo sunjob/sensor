@@ -111,7 +111,7 @@ function checkNums(){
 </script>
 </head>
 <body leftmargin="8" topmargin="8" >
-<div class="linedwon"><img src="skin/images/frame/jiantou.gif" width="20" height="20" border="0">当前位置：系统设置&gt;&gt;<a href='javascript:history.back();' target='main'>报警设置</a>&nbsp;<a href="javascript:history.back();" style=" color:red;">[返回]</a></div>
+<div class="linedwon"><img src="skin/images/frame/jiantou.gif" width="20" height="20" border="0">当前位置：系统设置&gt;&gt;<a href='javascript:history.back();' target='rightFrame'>报警设置</a>&nbsp;</div>
   
 <div id="updateform">
 <!--  内容列表   -->
@@ -276,7 +276,7 @@ function checkNums(){
     <s:token></s:token>
       <input type='submit' class="coolbg np" onclick="" value='保存' style="width:80" />&nbsp;&nbsp;
       <input type='reset' class="coolbg np" onClick="" value='重置' style="width:80" />&nbsp;&nbsp;
-      <input type='button' class="coolbg np" onClick="javascript:history.back();" value='返回' style="width:80" />&nbsp;&nbsp;</td>
+    </td>
   </tr>
   <tr>
     <td height="18" align="center">&nbsp;</td>
