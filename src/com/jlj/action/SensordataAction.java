@@ -139,6 +139,10 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 		if(stype==0){
 			stype=1;//温度/电池电压
 		}
+		//如果下拉列表不是温度/电池电压，让他默认选中第一个温度选项
+		if(stype!=1){
+			othertype=0;
+		}
 		//默认显示最后一天
 		if((starttime==null||starttime.trim().equals(""))&&(endtime==null||endtime.trim().equals(""))){
 			//查出最后一次数据的日期并默认翻一天

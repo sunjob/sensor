@@ -126,6 +126,10 @@ $(function () {
         },
         yAxis: {
         	minRange: 10,
+        	<s:if test="othertype==1">
+        		max:4,
+        		min:0,
+        	</s:if>
             title: {
                 text: '数值'
             }
@@ -181,6 +185,9 @@ $(function () {
         }]
     });
 });				
+
+
+
 		</script>
 	</head>
 	<body>
