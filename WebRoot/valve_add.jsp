@@ -11,7 +11,29 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <title>新增外设</title>
 <link rel="stylesheet" type="text/css" href="skin/css/base.css">
 
-<script type="text/javascript" src="js/pageKit.js"></script></head>
+<script type="text/javascript" src="js/pageKit.js"></script>
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript">
+function changeProject_addValve()
+{
+ 	console.log("changeProject_addValve coming....................");
+	var projectid = $("#projects").val();
+	var url = "valveAction!goToAdd?projectid="+projectid;
+	url = encodeURI(url);
+	location.href  = url;
+}
+
+function changeLine_addValve()
+{
+ 	console.log("changeLine_addValve coming....................");
+	var projectid = $("#projects").val();
+	var lineid = $("#lines").val();
+	var url = "valveAction!goToAdd?projectid="+projectid+"&lineid="+lineid;
+	url = encodeURI(url);
+	location.href  = url;
+}
+</script>
+</head>
 <body leftmargin="8" topmargin="8" >
 <div class="linedwon"><img src="skin/images/frame/jiantou.gif" width="20" height="20" border="0">当前位置：系统设置&gt;&gt;新增外设&nbsp;<a href="javascript:history.back();" style=" color:red;">[返回]</a></div>
   
@@ -26,6 +48,26 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	</td>
 </tr>
 
+<s:if test="#session.user.limits==0">
+<tr align='center' bgcolor="#FFFFFF" onMouseMove="javascript:this.bgColor='#FCFDEE';" onMouseOut="javascript:this.bgColor='#FFFFFF';" height="25" >
+  <td height="25" align="right"><strong><font color="#333333">项目选择</font></strong></td>
+  <td align="left">
+    <s:select list="projects" name="gateway.line.project.id" id="projects" value="projectid" listKey="id" listValue="name" onchange="changeProject_addValve()"></s:select>
+</td>
+</tr>
+</s:if>
+<s:else>
+	<s:hidden name="gateway.line.project.id"/>
+	<s:property value="gateway.line.project.name"/>
+</s:else>
+
+<tr align='center' bgcolor="#FFFFFF" onMouseMove="javascript:this.bgColor='#FCFDEE';" onMouseOut="javascript:this.bgColor='#FFFFFF';" height="25" >
+  <td height="25" align="right"><strong><font color="#333333">线路选择</font></strong></td>
+  <td align="left">
+
+    <s:select list="lines" name="gateway.line.id" id="lines" value="lineid" listKey="id" listValue="name" onchange="changeLine_addValve()"></s:select>
+</td>
+</tr>
 
 <tr align='center' bgcolor="#FFFFFF" onMouseMove="javascript:this.bgColor='#FCFDEE';" onMouseOut="javascript:this.bgColor='#FFFFFF';" height="25" >
   <td height="25" align="right"><strong><font color="#333333">所属网关</font></strong></td>

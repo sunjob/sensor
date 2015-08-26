@@ -11,7 +11,32 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <title>修改外设</title>
 <link rel="stylesheet" type="text/css" href="skin/css/base.css">
 
-<script type="text/javascript" src="js/pageKit.js"></script></head>
+<script type="text/javascript" src="js/pageKit.js"></script>
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript">
+function changeProject_updateValve()
+{
+ 	console.log("changeProject_updateValve coming....................");
+	var projectid = $("#projects").val();
+	var vid = $("#vid").val();
+	var url = "valveAction!load?projectid="+projectid+"&id="+vid;
+	url = encodeURI(url);
+	location.href  = url;
+}
+
+function changeLine_updateValve()
+{
+ 	console.log("changeLine_updateValve coming....................");
+	var projectid = $("#projects").val();
+	var vid = $("#vid").val();
+	var lineid = $("#lines").val();
+	var url = "valveAction!load?projectid="+projectid+"&lineid="+lineid+"&id="+vid;
+	url = encodeURI(url);
+	location.href  = url;
+}
+</script>
+
+</head>
 <body leftmargin="8" topmargin="8" >
 <div class="linedwon"><img src="skin/images/frame/jiantou.gif" width="20" height="20" border="0">当前位置：系统设置&gt;&gt;修改外设&nbsp;<a href="javascript:history.back();" style=" color:red;">[返回]</a></div>
   
@@ -22,10 +47,31 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <tr bgcolor="#E7E7E7">
 	<td height="33" colspan="2" align="center">
 	<strong>修改外设</strong>
-	<s:hidden name="valve.id"></s:hidden>
+	<s:hidden name="valve.id" id="vid"></s:hidden>
 	<s:hidden name="valve.controlvalue"></s:hidden>
 	<s:hidden name="valve.status"></s:hidden>
 	</td>
+</tr>
+
+<s:if test="#session.user.limits==0">
+<tr align='center' bgcolor="#FFFFFF" onMouseMove="javascript:this.bgColor='#FCFDEE';" onMouseOut="javascript:this.bgColor='#FFFFFF';" height="25" >
+  <td height="25" align="right"><strong><font color="#333333">项目选择</font></strong></td>
+  <td align="left">
+    <s:select list="projects" name="gateway.line.project.id" id="projects" value="projectid" listKey="id" listValue="name" onchange="changeProject_updateValve()"></s:select>
+</td>
+</tr>
+</s:if>
+<s:else>
+	<s:hidden name="gateway.line.project.id"/>
+	<s:property value="gateway.line.project.name"/>
+</s:else>
+
+<tr align='center' bgcolor="#FFFFFF" onMouseMove="javascript:this.bgColor='#FCFDEE';" onMouseOut="javascript:this.bgColor='#FFFFFF';" height="25" >
+  <td height="25" align="right"><strong><font color="#333333">线路选择</font></strong></td>
+  <td align="left">
+
+    <s:select list="lines" name="gateway.line.id" id="lines" value="lineid" listKey="id" listValue="name" onchange="changeLine_updateValve()"></s:select>
+</td>
 </tr>
 
 

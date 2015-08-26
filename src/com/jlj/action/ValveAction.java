@@ -22,11 +22,13 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.jlj.model.Gateway;
+import com.jlj.model.Line;
 import com.jlj.model.Project;
 import com.jlj.model.User;
 import com.jlj.model.Valve;
 import com.jlj.model.Valvedata;
 import com.jlj.service.IGatewayService;
+import com.jlj.service.ILineService;
 import com.jlj.service.IProjectService;
 import com.jlj.service.IUserService;
 import com.jlj.service.IValveService;
@@ -56,6 +58,7 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 	private IValveService valveService;
 	private IValvedataService valvedataService;
 	private IUserService userService;
+	private ILineService lineService;
 	
 	//分页显示
 	private String[] arg=new String[2];
@@ -189,30 +192,49 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 	 */
 	private List<Gateway> gateways;//界面上获取的网关集合
 	public String goToAdd(){
-		
 		User usero=(User)session.get("user");
 		if(usero==null){
 			return "opsessiongo";
 		}
+		
 		/*
 		 * 当前操作用户权限划分
-		 * 这里保留了需要显示项目名称的功能
 		 */
-//		switch (usero.getLimits()) {
-//		case 0:
-//			projects = projectService.getProjects();
-//			break;
-//		case 1:
-//			if(projectid==0)
-//			{
-//				projectid = usero.getProject().getId();
-//			}
-//			project = projectService.getById(projectid);
-//			break;
-//		default:
-//			break;
-//		}
-		gateways = gatewayService.getGatewaysByProjectId(usero.getProject().getId());
+		switch (usero.getLimits()) {
+		case 0:
+			//系统管理员
+			projects = projectService.getProjects();//首先是获得全部的项目
+			if(projectid==0){
+				projectid = projects.get(0).getId();
+			}
+			lines = lineService.getLinesByPid(projectid);//查询出该项目的所有线路
+			if(lineid==0){
+				lineid = lines.get(0).getId();
+			}
+			gateways = gatewayService.getGatewaysByLineid(lineid);//查询出该项目的所有网关
+			break;
+		case 1:
+			//超级管理员
+			projectid = usero.getProject().getId();
+			lines = lineService.getLinesByPid(projectid);//查询出该项目的所有线路
+			if(lineid==0){
+				lineid = lines.get(0).getId();
+			}
+			gateways = gatewayService.getGatewaysByLineid(lineid);//查询出该项目的所有网关
+			break;
+		case 2:
+			//普通管理员
+			projectid = usero.getProject().getId();
+			lines = lineService.getLinesByPid(projectid);//查询出该项目的所有线路
+			if(lineid==0){
+				lineid = lines.get(0).getId();
+			}
+			gateways = gatewayService.getGatewaysByLineid(lineid);//查询出该项目的所有网关
+			break;
+		default:
+			break;
+		}
+		
 		return "add";
 	}
 	
@@ -284,32 +306,62 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 	 * 跳转到修改页面
 	 * @return
 	 */
+	private List<Line> lines;
+	private int lineid;
+	private int gatewayid;
 	public String load() throws Exception{
-		
 		User usero=(User)session.get("user");
 		if(usero==null){
 			return "opsessiongo";
 		}
+		//获取项目id作为查询的条件
+//		gateways = gatewayService.getGatewaysByProjectId(usero.getProject().getId());
+		valve=valveService.loadById(id);
 		/*
 		 * 当前操作用户权限划分
-		 * 这里保留了需要显示项目名称的功能
 		 */
-//		switch (usero.getLimits()) {
-//		case 0:
-//			projects = projectService.getProjects();
-//			break;
-//		case 1:
-//			if(projectid==0)
-//			{
-//				projectid = usero.getProject().getId();
-//			}
-//			project = projectService.getById(projectid);
-//			break;
-//		default:
-//			break;
-//		}
-		gateways = gatewayService.getGatewaysByProjectId(usero.getProject().getId());
-		valve=valveService.loadById(id);
+		switch (usero.getLimits()) {
+		case 0:
+			//系统管理员
+			if(projectid==0){
+				projectid =valve.getGateway().getLine().getProject().getId();//获得当前网关的项目ID
+			}
+			if(lineid==0){
+				lineid = valve.getGateway().getLine().getId();//获得当前线路ID
+			}
+			if(gatewayid==0){
+				gatewayid = valve.getGateway().getId();//获得当前网关ID
+			}
+			projects = projectService.getProjects();//首先是获得全部的项目
+			lines = lineService.getLinesByPid(projectid);//查询出该项目的所有线路
+			gateways = gatewayService.getGatewaysByLineid(lineid);//查询出该项目的所有网关
+			break;
+		case 1:
+			//超级管理员
+			if(lineid==0){
+				lineid = valve.getGateway().getLine().getId();//获得当前线路ID
+			}
+			if(gatewayid==0){
+				gatewayid = valve.getGateway().getId();//获得当前网关ID
+			}
+			lines = lineService.getLinesByPid(projectid);//查询出该项目的所有线路
+			gateways = gatewayService.getGatewaysByLineid(lineid);//查询出该项目的所有网关
+			break;
+		case 2:
+			//普通管理员
+			if(lineid==0){
+				lineid = valve.getGateway().getLine().getId();//获得当前线路ID
+			}
+			if(gatewayid==0){
+				gatewayid = valve.getGateway().getId();//获得当前网关ID
+			}
+			lines = lineService.getLinesByPid(projectid);//查询出该项目的所有线路
+			gateways = gatewayService.getGatewaysByLineid(lineid);//查询出该项目的所有网关
+			break;
+		default:
+			break;
+		}
+		
 		return "load";
 	}
 	
@@ -663,6 +715,46 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 
 	public void setStatus(int status) {
 		this.status = status;
+	}
+
+
+	public ILineService getLineService() {
+		return lineService;
+	}
+
+	@Resource
+	public void setLineService(ILineService lineService) {
+		this.lineService = lineService;
+	}
+
+
+	public List<Line> getLines() {
+		return lines;
+	}
+
+
+	public void setLines(List<Line> lines) {
+		this.lines = lines;
+	}
+
+
+	public int getLineid() {
+		return lineid;
+	}
+
+
+	public void setLineid(int lineid) {
+		this.lineid = lineid;
+	}
+
+
+	public int getGatewayid() {
+		return gatewayid;
+	}
+
+
+	public void setGatewayid(int gatewayid) {
+		this.gatewayid = gatewayid;
 	}
 	
 }
