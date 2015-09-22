@@ -44,18 +44,18 @@
 			</script>
 		<style type="text/css">
 #temp table {
-	border: 1px solid #F00;
+	border: 1px solid #FFF;
 }
 
 #temp table td {
-	border: 1px solid #F00;
+	border: 1px solid #FFF;
 	text-align: center;
 }
 #temp table tr {
 	height: 45px;
 }
 #temp table th {
-	border: 1px solid #F00;
+	border: 1px solid #FFF;
 	text-align: center;
 	background-color: #E7E7E7;
 	
@@ -75,36 +75,35 @@
 	<body>
 		<div style="width: 100%;margin: 0px;padding: 0px;">
 			<div style="width: 100%;" id="query">
-				<form action="sensordataAction!reportdetailformobile" method="post" onsubmit="return checkform();">
+				<form action="sensordataAction!reportdetailformobile" method="post" onsubmit="return checkform();" id="rform">
 				<table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-bottom: 10px;">
 					<tr height="40px">
-						<td width="40%">
+						<td width="35%">
 							<s:hidden name="limits"></s:hidden>
 							<s:hidden name="projectid"></s:hidden>
 							<s:hidden name="linetext"></s:hidden>
 							<s:hidden name="upuserid"></s:hidden>
 						
-							<s:select list="#{0:'选择属性',1:'线路名称',2:'网关名称',3:'传感器编号'}" name="con" id="selectvalue" listKey="key" listValue="value" cssStyle="height: 30px;width:80%"></s:select>:
+							<s:select list="#{0:'选择属性',1:'线路',2:'网关',3:'传感器'}" name="con" id="selectvalue" listKey="key" listValue="value" cssStyle="height: 30px;width:80%"></s:select>:
 						</td>
-						<td width="40%" >	
+						<td width="65%" colspan="2" align="left">	
 							<s:textfield name="convalue" cssStyle="height: 26px;width:80%;line-height:25px;" id="attrivalue" placeholder="属性值"></s:textfield>
 						</td>
-						<td width="20%">
-						<!-- 
-							<input type="submit" value="查询"  style="height: 32px;width: 60px;"/>
-							 -->
-						</td>
+						
 					</tr>
 					<tr>
-						<td width="40%">
+						<td width="35%">
 						
 							<input type="text"  name="starttime" value="<s:property value="starttime"/>" style="height: 30px;width: 80%;" id="startdate" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',readOnly:true,maxDate:'#F{$dp.$D(\'enddate\')}'})"/>
 						</td>
-						<td width="40%" >	
+						<td width="35%"  align="left">	
 							<input type="text"  name="endtime" value="<s:property value="endtime"/>" style="height: 30px;width: 80%;" id="enddate" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',readOnly:true,minDate:'#F{$dp.$D(\'startdate\')}',startDate:'#F{$dp.$D(\'startdate\',{d:+1})}'})"/>
 						</td>
-						<td width="20%">
+						<td width="30%">
+						<a href="#" onclick="javascript:document.getElementById('rform').submit();"><img src="img/chaxun1.png" width="90" height="35"/></a>
+							<!-- 
 							<input type="submit" value="查询"  style="height: 32px;width: 60px;"/>
+							 -->
 						</td>
 					</tr>
 				</table>
@@ -114,16 +113,16 @@
 				<table width="100%" border="0" cellspacing="0" cellpadding="0">
 					<tr>
 						<th>
-							所属项目
+							项目
 						</th>
 						<th>
-							所属线路
+							线路
 						</th>
 						<th>
-							所属网关
+							网关
 						</th>
 						<th>
-							传感器编号
+							传感器
 						</th>
 						<th>
 							日期
@@ -142,7 +141,10 @@
 					</s:if>
 					
 					<s:iterator value="sensordatas" var="sensordata" status="index">
-					<tr>
+					<tr style="
+					background-color:<s:if test="#status.count%2==0">#d0d8e8;</s:if>
+					<s:else>#e9edf4;</s:else> 
+					">
 						<td><s:property value="sensor.gateway.line.project.name"/></td>
 						<td><s:property value="sensor.gateway.line.name"/></td>
 						<td><s:property value="sensor.gateway.name"/></td>
@@ -178,6 +180,7 @@
 			
 			<div style="width: 100%;" id="pageshow">
 				<table width="100%" border="0" cellspacing="0" cellpadding="0">
+					<!-- 
 					<tr>
 						<td>
 							<input type="button" value="首页" style="height: 32px;width: 60px;" onClick="javascript:jumpReportPage('sensordataAction!reportdetailformobile',1,'<s:property value="starttime"/>','<s:property value="endtime"/>',<s:property value="con"/>,'<s:property value="convalue"/>',<s:property value="stype"/>,<s:property value="limits"/>,<s:property value="projectid"/>,'<s:property value="linetext"/>',<s:property value="upuserid"/>);"/>
@@ -195,6 +198,22 @@
 							当前页<s:property value="page" />/共<s:property value="pageCount" />页
 						</td>
 					</tr>
+					 -->
+					 <tr>
+					 	<td style="text-align: center;">
+							<a href="#" onClick="javascript:jumpReportPage('sensordataAction!reportdetailformobile',1,'<s:property value="starttime"/>','<s:property value="endtime"/>',<s:property value="con"/>,'<s:property value="convalue"/>',<s:property value="stype"/>,<s:property value="limits"/>,<s:property value="projectid"/>,'<s:property value="linetext"/>',<s:property value="upuserid"/>);"><img src="img/shouye1.png" width="35" height="30" style="vertical-align: middle;"/></a>
+							&nbsp;
+							<a href="#" onClick="javascript:jumpReportPage('sensordataAction!reportdetailformobile',<s:property value="page-1"/>,'<s:property value="starttime"/>','<s:property value="endtime"/>',<s:property value="con"/>,'<s:property value="convalue"/>',<s:property value="stype"/>,<s:property value="limits"/>,<s:property value="projectid"/>,'<s:property value="linetext"/>',<s:property value="upuserid"/>);"><img src="img/shangyiye1.png" width="35" height="30" style="vertical-align: middle;"/></a>
+							&nbsp;
+							<input onpaste="return false" onKeyPress="checkPage();" id="page" type="text" name="page" value="1" size="2" style="ime-mode=disabled;width:50px; height:25px;line-height:18px; BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; FONT-SIZE: 16px; BORDER-LEFT: #cccccc 1px solid; COLOR: #000000; BORDER-BOTTOM: #cccccc 1px solid; FONT-FAMILY: 宋体; BACKGROUND-COLOR: #ffffff;vertical-align: baseline;"/>
+							<input type='button' class="coolbg np" onClick="javascript:jumpReportPage('sensordataAction!reportdetailformobile',document.getElementById('page').value,'<s:property value="starttime"/>','<s:property value="endtime"/>',<s:property value="con"/>,'<s:property value="convalue"/>',<s:property value="stype"/>,<s:property value="limits"/>,<s:property value="projectid"/>,'<s:property value="linetext"/>',<s:property value="upuserid"/>);" value='GO' width="30" height="30" style="vertical-align: middle;"/>
+							&nbsp;
+							<a href="#" onClick="javascript:jumpReportPage('sensordataAction!reportdetailformobile',<s:property value="page+1"/>,'<s:property value="starttime"/>','<s:property value="endtime"/>',<s:property value="con"/>,'<s:property value="convalue"/>',<s:property value="stype"/>,<s:property value="limits"/>,<s:property value="projectid"/>,'<s:property value="linetext"/>',<s:property value="upuserid"/>);"><img src="img/xiayiye1.png" width="35" height="30" style="vertical-align: middle;"/></a>
+							&nbsp;
+							<a href="#" onClick="javascript:jumpReportPage('sensordataAction!reportdetailformobile',<s:property value="pageCount"/>,'<s:property value="starttime"/>','<s:property value="endtime"/>',<s:property value="con"/>,'<s:property value="convalue"/>',<s:property value="stype"/>,<s:property value="limits"/>,<s:property value="projectid"/>,'<s:property value="linetext"/>',<s:property value="upuserid"/>);"><img src="img/weiye1.png" width="35" height="30" style="vertical-align: middle;"/></a>
+							
+						</td>
+					 </tr>
 				</table>
 				
 			</div>

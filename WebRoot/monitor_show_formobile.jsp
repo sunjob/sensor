@@ -25,20 +25,21 @@
 			</script>
 		<style type="text/css">
 #temp table {
-	border: 1px solid #F00;
+	border: 1px solid #FFF;
 }
 
 #temp table td {
-	border: 1px solid #F00;
+	border: 1px solid #FFF;
 	text-align: center;
 }
 #temp table tr {
 	height: 45px;
+	
 }
 #temp table th {
-	border: 1px solid #F00;
+	border: 1px solid #FFF;
 	text-align: center;
-	background-color: #E7E7E7;
+	background-color: #a0a0a0;
 	
 	
 }
@@ -56,8 +57,8 @@
 	<body>
 		<div style="width: 100%;margin: 0px;padding: 0px;">
 			<div style="width: 100%;" id="query">
-				<form action="lineAction!monitorshowformobile" method="post" onsubmit="return checkform();">
-				<table width="100%" border="0" cellspacing="0" cellpadding="0">
+				<form action="lineAction!monitorshowformobile" method="post" onsubmit="return checkform();" id="mform">
+				<table width="98%" border="0" cellspacing="0" cellpadding="0">
 					<tr>
 						<td width="60%" align="right" style="padding-right:20px;">
 							<s:hidden name="limits"></s:hidden>
@@ -65,10 +66,14 @@
 							<s:hidden name="linetext"></s:hidden>
 							<s:hidden name="upuserid"></s:hidden>
 							<s:hidden name="con" value="1"></s:hidden>
-							<s:textfield name="convalue" cssStyle="height: 26px;width: 150px;line-height:25px;" id="linename" placeholder="线路名称"/>
+							线路：
+							<s:textfield name="convalue" cssStyle="height: 26px;width: 120px;line-height:25px;" id="linename" />
 						</td>
-						<td width="40%" align="left" style="padding-left:10px;">
-							<input type="submit" value="查询"  style="height: 32px;width: 100px;"/>
+						<td width="40%" align="left">
+							<a href="#" onclick="javascript:document.getElementById('mform').submit();"><img src="img/chaxun1.png" width="90" height="35"/></a>
+							<!-- 
+							<input type="submit" value="查询"  style="height: 32px;width: 80px;"/>
+							 -->
 						</td>
 					</tr>
 				</table>
@@ -81,13 +86,13 @@
 							序号
 						</th>
 						<th>
-							所属项目
+							项目
 						</th>
 						<th>
-							线路名称
+							线路
 						</th>
 						<th>
-							查看地图
+							查看
 						</th>
 					</tr>
 					<s:if test="%{lines.size()==0}">
@@ -96,7 +101,11 @@
 						</td>
 					</s:if>
 					<s:iterator value="lines" var="line" status="status">
-					<tr>
+					
+					<tr style="
+					background-color:<s:if test="#status.count%2==0">#d0d8e8;</s:if>
+					<s:else>#e9edf4;</s:else> 
+					">
 						<td>
 							<s:property value="#status.count" />
 						</td>
@@ -119,6 +128,7 @@
 			<div style="width: 100%;" id="pageshow">
 				<table width="100%" border="0" cellspacing="0" cellpadding="0">
 					<tr>
+					<!-- 
 						<td>
 							<input type="button" value="首页" style="height: 32px;width: 60px;" onClick="javascript:jumpYoukeLinePage('lineAction!monitorshowformobile',1,<s:property value="con"/>,'<s:property value="convalue"/>',<s:property value="limits"/>,<s:property value="projectid"/>,'<s:property value="linetext"/>',<s:property value="upuserid"/>);"/>
 							&nbsp;
@@ -129,12 +139,28 @@
 							<input type="submit" value="尾页"  style="height: 32px;width: 60px;" onClick="javascript:jumpYoukeLinePage('lineAction!monitorshowformobile',<s:property value="pageCount" />,<s:property value="con"/>,'<s:property value="convalue"/>',<s:property value="limits"/>,<s:property value="projectid"/>,'<s:property value="linetext"/>',<s:property value="upuserid"/>);"/>
 							
 						</td>
+					 -->
+					 	<td style="text-align: center;">
+							<a href="#" onClick="javascript:jumpYoukeLinePage('lineAction!monitorshowformobile',1,<s:property value="con"/>,'<s:property value="convalue"/>',<s:property value="limits"/>,<s:property value="projectid"/>,'<s:property value="linetext"/>',<s:property value="upuserid"/>);"><img src="img/shouye1.png" width="35" height="30" style="vertical-align: middle;"/></a>
+							&nbsp;
+							<a href="#" onClick="javascript:jumpYoukeLinePage('lineAction!monitorshowformobile',<s:property value="page-1" />,<s:property value="con"/>,'<s:property value="convalue"/>',<s:property value="limits"/>,<s:property value="projectid"/>,'<s:property value="linetext"/>',<s:property value="upuserid"/>);"><img src="img/shangyiye1.png" width="35" height="30" style="vertical-align: middle;"/></a>
+							&nbsp;
+							<input onpaste="return false" onKeyPress="checkPage();" id="page" type="text" name="page" value="1" size="2" style="ime-mode=disabled;width:50px; height:25px;line-height:18px; BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; FONT-SIZE: 16px; BORDER-LEFT: #cccccc 1px solid; COLOR: #000000; BORDER-BOTTOM: #cccccc 1px solid; FONT-FAMILY: 宋体; BACKGROUND-COLOR: #ffffff;vertical-align: baseline;"/>
+							<input type='button' class="coolbg np" onClick="javascript:jumpYoukeLinePage('lineAction!monitorshowformobile',document.getElementById('page').value,<s:property value="con"/>,'<s:property value="convalue"/>',<s:property value="limits"/>,<s:property value="projectid"/>,'<s:property value="linetext"/>',<s:property value="upuserid"/>);" value='GO' width="30" height="30" style="vertical-align: middle;"/>
+							&nbsp;
+							<a href="#" onClick="javascript:jumpYoukeLinePage('lineAction!monitorshowformobile',<s:property value="page+1" />,<s:property value="con"/>,'<s:property value="convalue"/>',<s:property value="limits"/>,<s:property value="projectid"/>,'<s:property value="linetext"/>',<s:property value="upuserid"/>);"><img src="img/xiayiye1.png" width="35" height="30" style="vertical-align: middle;"/></a>
+							&nbsp;
+							<a href="#" onClick="javascript:jumpYoukeLinePage('lineAction!monitorshowformobile',<s:property value="pageCount" />,<s:property value="con"/>,'<s:property value="convalue"/>',<s:property value="limits"/>,<s:property value="projectid"/>,'<s:property value="linetext"/>',<s:property value="upuserid"/>);"><img src="img/weiye1.png" width="35" height="30" style="vertical-align: middle;"/></a>
+							
+						</td>
 					</tr>
+					<!-- 
 					<tr>
 						<td>
 							当前页<s:property value="page" />/共<s:property value="pageCount" />页
 						</td>
 					</tr>
+					 -->
 				</table>
 				
 			</div>
