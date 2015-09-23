@@ -94,7 +94,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<tr align='center' bgcolor="#FFFFFF" onMouseMove="javascript:this.bgColor='#FCFDEE';" onMouseOut="javascript:this.bgColor='#FFFFFF';" height="22" >
 		<td><s:property value="#status.count" /></td>
 		<td><s:property value="project.name" /></td>
-	  	<td><a href="addresslistAction!view?id=<s:property value="id" />"><s:property value="username" /></a></td>
+	  	<td><s:property value="username" /></td>
 	    <td><s:property value="phone" /></td>
 		<td><a href="addresslistAction!load?id=<s:property value="id" />"><img src="skin/images/frame/huiwu_3.gif" width="20" height="20" border="0"></a></td>
 		<td><a href="addresslistAction!delete?id=<s:property value="id" />" onclick="return confirm('你确定删除该信息吗？')"><img src="skin/images/frame/huiwu_2.gif" width="20" height="20" border="0"></a></td>

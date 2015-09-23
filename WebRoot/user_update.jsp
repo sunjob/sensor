@@ -19,17 +19,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script type="text/javascript" src="js/jsp_util.js"></script>
 <script type="text/javascript">
 	function checkform(){
-		var userlines = document.getElementsByName("user.linetext");
-        var valueArray = new Array();
-        for(var i = 0; i < userlines.length; i++){
-        	if(userlines[i].checked)
-        	valueArray.push(userlines[i].value);
-        } 
-        var valueStr = valueArray.toString();
-		if(valueStr==""||valueStr.length==0){
-			alert("管理线路未选择");
-			return false;
-		}
+		<s:if test="ulimit>1">
+			var userlines = document.getElementsByName("user.linetext");
+	        var valueArray = new Array();
+	        for(var i = 0; i < userlines.length; i++){
+	        	if(userlines[i].checked)
+	        	valueArray.push(userlines[i].value);
+	        } 
+	        var valueStr = valueArray.toString();
+			if(valueStr==""||valueStr.length==0){
+				alert("管理线路未选择");
+				return false;
+			}
+		</s:if>
 		return true;
 	}
 
@@ -40,7 +42,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <div class="linedwon"><img src="skin/images/frame/jiantou.gif" width="20" height="20" border="0">当前位置：修改用户信息&gt;&gt;修改用户&nbsp;<a href="javascript:history.back();" style=" color:red;">[返回]</a></div>
   
 <!--  内容列表   -->
-<s:form name="form2" action="userAction!update" method="post"  enctype="multipart/form-data" onsubmit="return checkform()">
+<s:form name="form2" action="userAction!update" method="post"  onsubmit="return checkform()">
 
 <table width="50%" border="0" cellpadding="2" cellspacing="1" bgcolor="#D1DDAA" align="center" style="margin-top:8px">
 <tr bgcolor="#E7E7E7">
@@ -65,17 +67,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </tr>
 </s:if>
 <s:else>
-	<s:hidden name="user.project.id"/>
+	<s:hidden id="projects" name="user.project.id"/>
 </s:else>
 
 <tr align="center" bgcolor="#FFFFFF" onMouseMove="javascript:this.bgColor='#FCFDEE';" onMouseOut="javascript:this.bgColor='#FFFFFF';" height="25" >
 	<td width="25%" height="25" align="right"><strong><font color="#333333">用户名称</font></strong></td>
 	<td width="75%" align="left">
 	  <label>
-	<s:property value="user.username"/>
+	<s:property  value="user.username"/>
 	  </label></td>
 </tr>
-
 
 
 <s:if test="ulimit>1">
@@ -87,6 +88,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     </label></td>
 </tr>
 </s:if>
+<s:else>
+	<s:hidden id="linetext" name="user.linetext"/>
+</s:else>
 
 <tr align='center' bgcolor="#FFFFFF" onMouseMove="javascript:this.bgColor='#FCFDEE';" onMouseOut="javascript:this.bgColor='#FFFFFF';" height="25" >
   <td height="25" align="right"><strong><font color="#333333">权限级别</font></strong></td>
@@ -97,7 +101,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<s:select list="#{0:'系统管理员',1:'超级管理员',2:'普通管理员',3:'普通用户'}" onchange="changeLimit_update()" id="limit" name="ulimit" listKey="key" listValue="value" value="ulimit"></s:select>
 </s:if>
 <s:if test="session.user.limits==1">
-	<s:select list="#{1:'超级管理员',2:'普通管理员',3:'普通用户'}" onchange="changeLimit_update()" id="limit" name="user.limits" listKey="key" listValue="value" value="ulimit"></s:select>
+	<s:select list="#{1:'超级管理员',2:'普通管理员',3:'普通用户'}" onchange="changeLimit_update()" id="limit" name="ulimit" listKey="key" listValue="value" value="ulimit"></s:select>
 </s:if>
   	
 </td>
