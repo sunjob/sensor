@@ -277,7 +277,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<td width="25%" height="25" align="right"><strong><font color="#333333">报警温度上限</font></strong></td>
 	<td width="75%" align="left">
 	  <label>
-		<s:textfield cssClass="ck"  name="sensor.alarmtemp" cssStyle="width:40%"></s:textfield> ℃
+		<s:textfield cssClass="ck"  name="alarmtemp"  value="%{sensor.alarmtemp}" cssStyle="width:40%"></s:textfield> ℃
 	  </label></td>
 </tr>
 
@@ -286,7 +286,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<td width="75%" align="left">
 	  <label>
 
-		<s:textfield cssClass="ck" id="normaltemp" name="sensor.normaltemp" cssStyle="width:40%"></s:textfield> ℃
+		<s:textfield cssClass="ck" id="normaltemp" name="normaltemp" value="%{sensor.normaltemp}" cssStyle="width:40%"></s:textfield> ℃
 	  </label></td>
 </tr>
 
@@ -297,7 +297,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<td width="75%" align="left">
 	  <label>
 
-		<s:textfield cssClass="ck" id="normaltemp" name="sensor.normaltempdown" cssStyle="width:40%"></s:textfield> ℃
+		<s:textfield cssClass="ck" id="normaltemp" name="normaltempdown" value="%{sensor.normaltempdown}" cssStyle="width:40%"></s:textfield> ℃
 	  </label></td>
 </tr>
 
@@ -305,7 +305,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<td width="25%" height="25" align="right"><strong><font color="#333333">报警温度下限</font></strong></td>
 	<td width="75%" align="left">
 	  <label>
-		<s:textfield cssClass="ck"  name="sensor.alarmtempdown" cssStyle="width:40%"></s:textfield> ℃
+		<s:textfield cssClass="ck"  name="alarmtempdown" value="%{sensor.alarmtempdown}" cssStyle="width:40%"></s:textfield> ℃
 	  </label></td>
 </tr>
 
@@ -313,7 +313,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<td width="25%" height="25" align="right"><strong><font color="#333333">报警电池电压</font></strong></td>
 	<td width="75%" align="left">
 	  <label>
-				<s:textfield cssClass="ck"  name="sensor.alarmvoltage" cssStyle="width:40%"></s:textfield> V
+				<s:textfield cssClass="ck"  name="alarmvoltage" value="%{sensor.alarmvoltage}" cssStyle="width:40%"></s:textfield> V
 	  </label></td>
 </tr>
 
@@ -321,7 +321,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<td width="25%" height="25" align="right"><strong><font color="#333333">正常电池电压</font></strong></td>
 	<td width="75%" align="left">
 	  <label>
-				<s:textfield cssClass="ck" id="normalvoltage"  name="sensor.normalvoltage" style="width:40%"></s:textfield> V
+				<s:textfield cssClass="ck" id="normalvoltage"  name="normalvoltage" value="%{sensor.normalvoltage}" style="width:40%"></s:textfield> V
 	  </label></td>
 </tr>
 
@@ -330,7 +330,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<td width="25%" height="25" align="right"><strong><font color="#333333">报警压力</font></strong></td>
 	<td width="75%" align="left">
 	  <label>
-				<s:textfield cssClass="ck"  id="alarmpressure"  name="sensor.alarmpressure" style="width:40%"></s:textfield> KPa
+				<s:textfield cssClass="ck"  id="alarmpressure"  name="alarmpressure" value="%{sensor.alarmpressure}" style="width:40%"></s:textfield> KPa
 	  </label></td>
 </tr>
 
@@ -338,7 +338,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<td width="25%" height="25" align="right"><strong><font color="#333333">正常压力</font></strong></td>
 	<td width="75%" align="left">
 	  <label>
-				<s:textfield  cssClass="ck" id="normalpressure"  name="sensor.normalpressure" style="width:40%"></s:textfield> KPa
+				<s:textfield  cssClass="ck" id="normalpressure"  name="normalpressure" value="%{sensor.normalpressure}" style="width:40%"></s:textfield> KPa
 	  </label></td>
 </tr>
 
@@ -347,7 +347,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<td width="25%" height="25" align="right"><strong><font color="#333333">报警流量</font></strong></td>
 	<td width="75%" align="left">
 	  <label>
-				<s:textfield cssClass="ck"  name="sensor.alarmflow" cssStyle="width:40%"></s:textfield> m³/H
+				<s:textfield cssClass="ck"  name="alarmflow" value="%{sensor.alarmflow}" cssStyle="width:40%"></s:textfield> m³/H
 	  </label></td>
 </tr>
 
@@ -355,7 +355,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<td width="25%" height="25" align="right"><strong><font color="#333333">正常流量</font></strong></td>
 	<td width="75%" align="left">
 	  <label>
-				<s:textfield cssClass="ck"   id="normalflow" name="sensor.normalflow" style="width:40%"></s:textfield> m³/H
+				<s:textfield cssClass="ck"   id="normalflow" name="normalflow" value="%{sensor.normalflow}" style="width:40%"></s:textfield> m³/H
 	  </label></td>
 </tr>
 

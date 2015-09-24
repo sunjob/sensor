@@ -497,12 +497,14 @@ $(document).ready(function(){
 		}else 
 		{
 			ckvalue = Number(ckvalue);
+			/*
 			if(ckvalue==0)
 			{
 				alert("无效数值自动清空.");
 				$(this).val('');
 				return;
 			}
+			*/
 			if(isNaN(ckvalue))
 			{
 				alert("请输入正确数字");

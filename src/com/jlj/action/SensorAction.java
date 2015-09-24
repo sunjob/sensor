@@ -264,6 +264,29 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 		
 		//修改数据库
 		
+		Float alarmtemp=Float.parseFloat(req.getParameter("alarmtemp"));
+		Float normaltemp=Float.parseFloat(req.getParameter("normaltemp"));
+		Float normaltempdown=Float.parseFloat(req.getParameter("normaltempdown"));
+		Float alarmtempdown=Float.parseFloat(req.getParameter("alarmtempdown"));
+		Float alarmvoltage=Float.parseFloat(req.getParameter("alarmvoltage"));
+		Float normalvoltage=Float.parseFloat(req.getParameter("normalvoltage"));
+		Float alarmpressure=Float.parseFloat(req.getParameter("alarmpressure"));
+		Float normalpressure=Float.parseFloat(req.getParameter("normalpressure"));
+		Float alarmflow=Float.parseFloat(req.getParameter("alarmflow"));
+		Float normalflow=Float.parseFloat(req.getParameter("normalflow"));
+//		alarmtemp-normaltemp-normaltempdown-alarmtempdown-alarmvoltage-normalvoltage-alarmpressure-normalpressure-alarmflow-normalflow
+		sensor.setAlarmtemp(alarmtemp);
+		sensor.setNormaltemp(normaltemp);
+		sensor.setNormaltempdown(normaltempdown);
+		sensor.setAlarmtempdown(alarmtempdown);
+		sensor.setAlarmvoltage(alarmvoltage);
+		sensor.setNormalvoltage(normalvoltage);
+		sensor.setAlarmpressure(alarmpressure);
+		sensor.setNormalpressure(normalpressure);
+		sensor.setAlarmflow(alarmflow);
+		sensor.setNormalflow(normalflow);
+		
+		
 		logInterceptor.addLog("传感器信息操作", user.getUsername()+"修改传感器["+sensor.toString()+"]", gateway.getLine().getProject().getId());
 		sensorService.update(sensor);
 		arg[0]="sensorAction!list";

@@ -150,7 +150,7 @@ function checkNums(){
 	<td width="75%" align="left">
 	  <label>
 	      
-		<s:textfield name="alarm.temp" cssStyle="width:80%" id="temp"></s:textfield>℃
+		<s:textfield name="temp" value="%{alarm.temp}" cssStyle="width:80%" id="temp"></s:textfield>℃
 	  </label></td>
 </tr>
 
@@ -159,7 +159,7 @@ function checkNums(){
 	<td width="75%" align="left">
 	  <label>
 	      
-		<s:textfield name="alarm.normaltemp" cssStyle="width:80%" id="normaltemp"></s:textfield>℃
+		<s:textfield name="normaltemp" value="%{alarm.normaltemp}" cssStyle="width:80%" id="normaltemp"></s:textfield>℃
 	  </label></td>
 </tr>
 
@@ -168,7 +168,7 @@ function checkNums(){
 	<td width="75%" align="left">
 	  <label>
 	      
-		<s:textfield name="alarm.normaltempdown" cssStyle="width:80%" id="normaltempdown"></s:textfield>℃
+		<s:textfield name="normaltempdown" value="%{alarm.normaltempdown}" cssStyle="width:80%" id="normaltempdown"></s:textfield>℃
 	  </label></td>
 </tr>
 
@@ -177,7 +177,7 @@ function checkNums(){
 	<td width="75%" align="left">
 	  <label>
 	      
-		<s:textfield name="alarm.tempdown" cssStyle="width:80%"  id="tempdown"></s:textfield>℃
+		<s:textfield name="tempdown" value="%{alarm.tempdown}" cssStyle="width:80%"  id="tempdown"></s:textfield>℃
 	  </label></td>
 </tr>
 
@@ -190,7 +190,7 @@ function checkNums(){
   <td width="75%" align="left">
     <label>
         
-  	<s:textfield name="alarm.voltage" cssStyle="width:80%" id="voltage"></s:textfield>
+  	<s:textfield name="voltage" value="%{alarm.voltage}" cssStyle="width:80%" id="voltage"></s:textfield>
   V
     </label></td>
 </tr>
@@ -200,7 +200,7 @@ function checkNums(){
   <td width="75%" align="left">
     <label>
         
-  	<s:textfield name="alarm.normalvoltage" cssStyle="width:80%" id="normalvoltage"></s:textfield>
+  	<s:textfield name="normalvoltage" value="%{alarm.normalvoltage}" cssStyle="width:80%" id="normalvoltage"></s:textfield>
   V
     </label></td>
 </tr>
@@ -211,7 +211,7 @@ function checkNums(){
   <td width="75%" align="left">
     <label>
         
-  	<s:textfield name="alarm.pressure" cssStyle="width:80%" id="pressure"></s:textfield>
+  	<s:textfield name="pressure" value="%{alarm.pressure}" cssStyle="width:80%" id="pressure"></s:textfield>
   KPa
     </label></td>
 </tr>
@@ -221,7 +221,7 @@ function checkNums(){
   <td width="75%" align="left">
     <label>
         
-  	<s:textfield name="alarm.normalpressure" cssStyle="width:80%" id="normalpressure"></s:textfield>
+  	<s:textfield name="normalpressure" value="%{alarm.normalpressure}" cssStyle="width:80%" id="normalpressure"></s:textfield>
   KPa
     </label></td>
 </tr>
@@ -232,7 +232,7 @@ function checkNums(){
   <td width="75%" align="left">
     <label>
         
-  	<s:textfield name="alarm.flow" cssStyle="width:80%" id="flow"></s:textfield>
+  	<s:textfield name="flow" value="%{alarm.flow}" cssStyle="width:80%" id="flow"></s:textfield>
   m³/H
     </label></td>
 </tr>
@@ -242,7 +242,7 @@ function checkNums(){
   <td width="75%" align="left">
     <label>
         
-  	<s:textfield name="alarm.normalflow" cssStyle="width:80%"  id="normalflow"></s:textfield>
+  	<s:textfield name="normalflow" value="%{alarm.normalflow}" cssStyle="width:80%"  id="normalflow"></s:textfield>
   m³/H
     </label></td>
 </tr>

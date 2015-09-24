@@ -146,7 +146,31 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 		//设置所属项目
 //		alarm.setProject(user.getProject());
 		//修改数据库
+//		Float normalbmtemp=Float.parseFloat(req.getParameter("normalbmtemp"));
+		Float normalflow=Float.parseFloat(req.getParameter("normalflow"));
+		Float normalpressure=Float.parseFloat(req.getParameter("normalpressure"));
+		Float normaltemp=Float.parseFloat(req.getParameter("normaltemp"));
+		Float normaltempdown=Float.parseFloat(req.getParameter("normaltempdown"));
+		Float normalvoltage=Float.parseFloat(req.getParameter("normalvoltage"));
+//		Float bmtemp=Float.parseFloat(req.getParameter("bmtemp"));
+		Float flow=Float.parseFloat(req.getParameter("flow"));
+		Float pressure=Float.parseFloat(req.getParameter("pressure"));
+		Float temp=Float.parseFloat(req.getParameter("temp"));
+		Float tempdown=Float.parseFloat(req.getParameter("tempdown"));
+		Float voltage=Float.parseFloat(req.getParameter("voltage"));
 		
+//		alarm.setNormalbmtemp(normalbmtemp);
+		alarm.setNormalflow(normalflow);
+		alarm.setNormalpressure(normalpressure);
+		alarm.setNormaltemp(normaltemp);
+		alarm.setNormaltempdown(normaltempdown);
+		alarm.setNormalvoltage(normalvoltage);
+//		alarm.setBmtemp(bmtemp);
+		alarm.setFlow(flow);
+		alarm.setPressure(pressure);
+		alarm.setTemp(temp);
+		alarm.setTempdown(tempdown);
+		alarm.setVoltage(voltage);
 		
 		alarmService.update(alarm);
 		
