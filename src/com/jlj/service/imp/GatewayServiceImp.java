@@ -288,6 +288,13 @@ public class GatewayServiceImp implements IGatewayService{
 		Object[] values = new Object[] { channel,gatewayid };
 		gatewayDao.updateByHql(queryString, paramNames, values);
 	}
+	//根据网关地址和线路id查看对象
+	public Gateway getGatewayByGateaddressAndLineid(int gateaddress, int lineid) {
+		String queryString = "from Gateway mo where mo.gateaddress=:gateaddress and mo.line.id=:lineid";
+		String[] paramNames = new String[] { "gateaddress","lineid" };
+		Object[] values = new Object[] { gateaddress,lineid };
+		return gatewayDao.queryByNamedParam(queryString, paramNames, values);
+	}
 	
 	
 }

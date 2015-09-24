@@ -58,12 +58,14 @@ function checkGateaddress()
 	console.log("检查。。");
 	var gateaddress = $("#gateaddress").val();
 	var gid = $("#gid").val();
+	var lineid =  $("#lineid").val();
+	console.log("lineid:"+lineid);
 	console.log(gateaddress);
 	$.ajax({   
 	            url:'checkGateaddress',//这里是你的action或者servlert的路径地址   
 	            type:'post', //数据发送方式   
 	            async:false,
-	            data: { "gateaddress":gateaddress,"id":gid},
+	            data: { "gateaddress":gateaddress,"lineid":lineid,"id":gid},
 	            dataType:'json',
 	            error: function(msg)
 	            { //失败   

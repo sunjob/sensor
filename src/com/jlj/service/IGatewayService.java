@@ -60,4 +60,7 @@ public interface IGatewayService {
 
 	public abstract void updateChannelById(int channel, int gatewayid);
 
+	public abstract Gateway getGatewayByGateaddressAndLineid(int gateaddress,
+			int lineid);
+
 }

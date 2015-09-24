@@ -430,7 +430,9 @@ SessionAware,ServletResponseAware,ServletRequestAware {
 	public String checkGateaddress()
 	{
 			Gateway currentgateway = gatewayService.getGatewayById(id);
-			gateway = gatewayService.getGatewayByGateaddress(gateaddress);
+//			gateway = gatewayService.getGatewayByGateaddress(gateaddress);
+			gateway = gatewayService.getGatewayByGateaddressAndLineid(gateaddress,lineid);
+			
 			if(gateway!=null)
 			{
 			

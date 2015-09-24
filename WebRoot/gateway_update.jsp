@@ -92,7 +92,7 @@ function checkform(){
   <td height="25" align="right"><strong><font color="#333333">线路选择</font></strong></td>
   <td align="left">
 
-    <s:select list="lines" name="gateway.line.id" listKey="id" listValue="name"></s:select>
+    <s:select list="lines" name="gateway.line.id" listKey="id" listValue="name" id="lineid"></s:select>
 </td>
 </tr>
 

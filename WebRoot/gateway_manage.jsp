@@ -115,7 +115,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
      <td><a href="gatewayAction!view?id=<s:property value="id" />"><s:property value="name" /></a></td>
        <td><s:property value="gateaddress" /></td>
           <td><s:property value="macaddress" /></td>
-          <td><a href="gatewayAction!loadchannel?id=<s:property value="id" />" title="配置通道"><s:property value="channel" /></a></td>
+          <td><a href="gatewayAction!loadchannel?id=<s:property value="id" />" title="配置通道">
+          <s:if test="channel!=null">
+          	<s:property value="channel" />
+          </s:if>
+          <s:else>
+          	未设置
+          </s:else>
+          
+          </a>
+          </td>
             <td><s:property value="phonenumber" /></td>
     <td><input type="button" value="查看" onclick="window.location.href='gatewayAction!showStreetpic?id=<s:property value="id" />'"/></td>
     
