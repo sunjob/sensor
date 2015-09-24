@@ -86,7 +86,7 @@ $(function(){
 	            <li><cite></cite><a href="alarmAction!load" target="rightFrame">报警短信设置</a></li>
             </s:if>
             	<li><cite></cite><a href="operationAction!list" target="rightFrame">操作日志</a></li>
-            <s:if test="#session.user.limits<2">
+            <s:if test="#session.user.limits<1">
             	<li><cite></cite><a href="sensordataAction!databak" target="rightFrame">数据管理</a></li>
             </s:if>
         </ul>    

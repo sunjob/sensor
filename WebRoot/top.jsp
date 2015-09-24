@@ -48,7 +48,7 @@ function logout(){
 </head>
 
 <body style="background: url(img/topbg.jpg); background-color:#DEEFFF; background-repeat: repeat-x; background-position: 500px 0px;" >
-<div class="topleft">能源物联网管理系统<font size="10">&nbsp;v1.0</font></div>
+<div class="topleft" style="text-align: left;vertical-align: middle;"><img src="img/logo.png" width="90" height="60" style="vertical-align:middle;margin-top: 0px;padding-top: 0px;"/>&nbsp;能源物联网管理系统<font size="10">&nbsp;v1.0</font></div>
 <div class="topright">    
     <ul>
       <li><span> ${user.username} 	<s:if test="#session.user.limits==0">系统管理员</s:if>

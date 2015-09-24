@@ -116,8 +116,8 @@ function checkIsUp(){
 
 			<div class="loginbox png">
 				<div
-					style="margin-top: 40px; padding-left: 120px; font-size: 20px; color: #FFF;">
-					能源物联网系统
+					style="margin-top: 30px; padding-left: 120px; font-size: 20px; color: #FFF;">
+					<img src="img/logo.png" width="80" height="50" style="vertical-align:middle;"/>&nbsp;&nbsp;&nbsp;&nbsp;能源物联网系统
 				</div>
 				<form action="userAction!login" method="post" onsubmit="return checkIsUp()">
 				<ul style="margin-top: 30px; padding-left: 15px;">
