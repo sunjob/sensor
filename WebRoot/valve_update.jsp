@@ -34,6 +34,56 @@ function changeLine_updateValve()
 	url = encodeURI(url);
 	location.href  = url;
 }
+
+function checkform(){
+			var name = document.getElementById("name");
+			var valveaddress = document.getElementById("valveaddress");
+			var locatenumber = document.getElementById("locatenumber");
+			if(name.value.length==0||name.value==''){
+				alert("外设名称不能为空");
+				name.value="";
+				name.focus();
+				return false;
+			}
+			
+			if(valveaddress.value.length==0||valveaddress.value==''){
+				alert("外设地址不能为空");
+				valveaddress.value="";
+				valveaddress.focus();
+				return false;
+			}
+			if(isNaN(valveaddress.value)){
+				alert("外设地址输入不正确,请输入数字");
+				valveaddress.value="";
+				valveaddress.focus();
+				return false;
+			}else if(valveaddress.value<0||valveaddress.value>255){
+				alert("外设地址输入不正确,请输入正确范围（0~255）");
+				valveaddress.value="";
+				valveaddress.focus();
+				return false;
+			}
+			
+			if(locatenumber.value.length==0||locatenumber.value==''){
+				alert("开关位置号不能为空");
+				locatenumber.value="";
+				locatenumber.focus();
+				return false;
+			}
+			if(isNaN(locatenumber.value)){
+				alert("开关位置号输入不正确,请输入数字");
+				locatenumber.value="";
+				locatenumber.focus();
+				return false;
+			}else if(locatenumber.value<0||locatenumber.value>255){
+				alert("开关位置号输入不正确,请输入正确范围（0~255）");
+				locatenumber.value="";
+				locatenumber.focus();
+				return false;
+			}
+			
+			return true;
+}
 </script>
 
 </head>
@@ -41,7 +91,7 @@ function changeLine_updateValve()
 <div class="linedwon"><img src="skin/images/frame/jiantou.gif" width="20" height="20" border="0">当前位置：系统设置&gt;&gt;修改外设&nbsp;<a href="javascript:history.back();" style=" color:red;">[返回]</a></div>
   
 <!--  内容列表   -->
-<form name="form2" action="valveAction!update" method="post">
+<form name="form2" action="valveAction!update" method="post" onsubmit="return checkform()">
 
 <table width="98%" border="0" cellpadding="2" cellspacing="1" bgcolor="#D1DDAA" align="center" style="margin-top:8px">
 <tr bgcolor="#E7E7E7">
