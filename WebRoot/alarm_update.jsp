@@ -26,8 +26,8 @@ function checkNums(){
 	var normalpressure = document.getElementById("normalpressure");
 	var flow = document.getElementById("flow");
 	var normalflow = document.getElementById("normalflow");
-	if(temptime.value.length==0||temptime.value<5){
-		alert("时间间隔不能为空，且不能小于5天");
+	if(temptime.value.length==0||temptime.value<1||temptime.value>30){
+		alert("时间间隔不能为空，范围（1~30天）");
 		temptime.value="";
 		temptime.focus();
 		return false;
